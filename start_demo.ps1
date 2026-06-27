@@ -1,4 +1,4 @@
-# SnowLabel demo — start all three services, each in its own window.
+﻿# SnowLabel demo — start all three services, each in its own window.
 # Run:  powershell -ExecutionPolicy Bypass -File start_demo.ps1
 $ErrorActionPreference = "Stop"
 $py   = "$env:USERPROFILE\miniconda3\envs\snowlabel\python.exe"

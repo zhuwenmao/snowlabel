@@ -1,4 +1,4 @@
-# 停掉公网 Demo：关闭 9090 服务器 + cloudflared 隧道。
+﻿# 停掉公网 Demo：关闭 9090 服务器 + cloudflared 隧道。
 #   powershell -ExecutionPolicy Bypass -File stop_public_demo.ps1
 $srv = Get-NetTCPConnection -LocalPort 9090 -State Listen -ErrorAction SilentlyContinue
 if ($srv) {
