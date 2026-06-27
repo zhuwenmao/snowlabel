@@ -1,0 +1,64 @@
+# =====================================================================
+#  SnowLabel .gitignore  —— 发布到 GitHub 前请保持这份完整版
+#  原则:代码 / 文档 / 配置进仓库;模型权重、数据、数据库、用户上传、
+#        基础设施二进制、本地状态与密钥一律不进。
+# =====================================================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+build/
+dist/
+
+# --- 模型 / 权重(几 GB,绝不进仓库;用脚本/文档说明如何下载) ---
+weights/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+checkpoints/
+
+# --- 数据:数据集 / 缓存 / 数据库 / 用户上传 / 记忆库 全部排除 ---
+#   含 data/datasets(CUB 等有再分发限制)、data/cache(MinIO/MariaDB/cloudflared
+#   二进制 + milvus-lite)、data/uploads(访客上传的图,隐私)、data/memory*(学到的
+#   向量记忆,与具体权重指纹绑定且含访客数据)、data/*_data(数据库落盘)。
+data/
+
+# --- 基础设施 / 可执行二进制 ---
+*.exe
+*.dll
+
+# --- 本地状态 & 密钥(.ls_state.json 含真实 token,务必排除) ---
+.ls_state.json
+.claude/
+*.secret
+.env
+.env.*
+
+# --- Notebook 输出(用 jupytext 的 .py 进仓库,.ipynb 不进) ---
+notebooks/*.ipynb
+!notebooks/*.tracked.ipynb
+
+# --- 编辑器 / 操作系统 ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- 生成物 / 日志 ---
+results/
+figures/*.png
+figures/*.pdf
+*.log

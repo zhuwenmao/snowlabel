@@ -1,0 +1,38 @@
+# SnowLabel — Phase 0 (algorithm validation)
+# Tested on Python 3.10 / 3.11 / 3.12, Windows & Linux
+
+# --- Core deep learning ---
+# torch / torchvision: install matching your CUDA from pytorch.org if you have a GPU
+# Default below installs CPU build (slow but works everywhere)
+torch>=2.3.0
+torchvision>=0.18.0
+
+# --- Feature backbone ---
+# DINOv2 is fetched via torch.hub at runtime (no extra package needed)
+# DINOv3 will be added in Phase 1 — see facebookresearch/dinov3
+
+# --- Retrieval (Phase 0 substitute for Milvus) ---
+scikit-learn>=1.3.0
+numpy>=1.24.0
+
+# --- Image / data ---
+Pillow>=10.0.0
+pycocotools>=2.0.7
+pandas>=2.0.0
+
+# --- Visualization & utilities ---
+matplotlib>=3.7.0
+tqdm>=4.66.0
+requests>=2.31.0
+
+# --- Notebook tooling ---
+jupytext>=1.16.0      # convert .py <-> .ipynb
+ipykernel>=6.25.0     # so VS Code / Jupyter can run the kernel
+
+# --- 图片处理缓存三库客户端(SNOWLABEL_IMGCACHE=1 时需要) ---
+minio>=7.2.0          # MinIO 对象存储客户端(存图片本体)
+PyMySQL>=1.1.0        # MySQL/MariaDB 驱动(mask 元数据)
+SQLAlchemy>=2.0.0     # ORM/Core(images/masks 两张表)
+cryptography>=41.0.0  # PyMySQL 连 MySQL8 caching_sha2 认证需要
+# 注:Milvus 用上面已有的 pymilvus(milvus-lite);MinIO/MariaDB 服务端二进制不走 pip,
+#    见 start_infra.ps1(MinIO 用 ghproxy 镜像、MySQL 改用 MariaDB 清华镜像)。

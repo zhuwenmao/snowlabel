@@ -1,0 +1,54 @@
+{
+  "_readme": "SnowLabel 监督程序的评价标准。gates = 硬/软门槛(supervise.py 判 PASS/FAIL);effort_costs = 仿真标注员成本模型(单位=人工操作数,对照组是'有SAM无记忆'的纯手动);regression = 对比 baseline 的回归红线;benchmark = 基准协议参数。首次全量跑为校准跑,审阅后锁定数值。",
+
+  "gates": {
+    "auto_precision_late":  {"op": ">=", "value": 0.97, "hard": true,
+                             "why": "auto 贴错=污染数据集,比沉默更糟"},
+    "poison_rate":          {"op": "<=", "value": 0.02, "hard": true,
+                             "why": "全程 auto 错标占比,数据集质量底线"},
+    "openset_false_auto":   {"op": "<=", "value": 0.02, "hard": true,
+                             "why": "没学过的类必须沉默,不许硬贴"},
+    "openset_false_any":    {"op": "<=", "value": 0.15, "hard": false,
+                             "why": "未见类连 suggest 都不该太频繁"},
+    "effort_saving_late":   {"op": ">=", "value": 0.30, "hard": false,
+                             "why": "北极星:后半程相对纯手动省的人工"},
+    "latency_p95_ms":       {"op": "<=", "value": 1500, "hard": false,
+                             "why": "单击交互流畅底线"}
+  },
+
+  "warnings": {
+    "mask_miou":            {"op": ">=", "value": 0.70,
+                             "why": "低于此值说明 SAM 切割在拖后腿,识别优化是无用功"},
+    "mask_fail_rate":       {"op": "<=", "value": 0.15,
+                             "why": "IoU<0.5 的点击占比;高了该换/调 SAM,不是调检索"}
+  },
+
+  "effort_costs": {
+    "manual": 2,
+    "auto_ok": 0,
+    "auto_wrong": 4,
+    "suggest_ok": 1,
+    "suggest_wrong": 2,
+    "silent": 2,
+    "mask_fix": 3,
+    "_note": "manual=点击+选类;auto_wrong=发现+改正(且计入 poison);suggest_ok=确认一下;mask_fix=SAM 切错(IoU<0.5)时用户修 mask+选类,覆盖 tier 成本"
+  },
+
+  "regression": {
+    "auto_precision_late_max_drop_pp": 1.0,
+    "effort_saving_late_max_drop_pp": 5.0,
+    "latency_p50_max_increase_frac": 0.50,
+    "_note": "延迟回归用 p50(中位数稳);p95 在百余样本上受 GPU 状态扰动大,只做绝对门槛(gates.latency_p95_ms),不做相对比较"
+  },
+
+  "benchmark": {
+    "classes": ["cat", "dog", "bird", "bottle", "car"],
+    "n_per": 25,
+    "openset_n": 50,
+    "openset_per_class_cap": 4,
+    "min_area": 4096,
+    "seed": 17,
+    "rolling_window": 20,
+    "quick": {"n_per": 10, "openset_n": 20}
+  }
+}

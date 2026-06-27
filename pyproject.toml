@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snowlabel"
+version = "0.1.0"
+description = "Auto-labeling that snowballs — every correction makes the next image better."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "zhuwenmao" }]
+keywords = ["labeling", "annotation", "sam", "dino", "milvus", "label-studio", "computer-vision"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+# Core runtime deps. Heavier ones (torch, ultralytics, label-studio) are listed
+# in requirements.txt so users can install matching CUDA wheels first.
+dependencies = [
+    "numpy>=1.24",
+    "Pillow>=10.0",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "requests>=2.31",
+    "pydantic>=2.5",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "ruff>=0.4",
+]
+
+[project.scripts]
+snowlabel = "snowlabel.server:run"
+
+[tool.setuptools.packages.find]
+include = ["snowlabel*"]
+exclude = ["data*", "results*", "notebooks*", "scripts*"]

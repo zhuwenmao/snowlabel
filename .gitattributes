@@ -1,0 +1,9 @@
+# 统一换行:文本默认 LF,Windows 脚本保持 CRLF,二进制不动
+* text=auto eol=lf
+*.ps1   text eol=crlf
+*.bat   text eol=crlf
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.pt    binary
+*.pth   binary

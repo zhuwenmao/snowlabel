@@ -1,0 +1,82 @@
+[
+  {
+    "file": "000000223747.jpg",
+    "label_hint": "cat"
+  },
+  {
+    "file": "000000205834.jpg",
+    "label_hint": "dog"
+  },
+  {
+    "file": "000000106881.jpg",
+    "label_hint": "bird"
+  },
+  {
+    "file": "000000180751.jpg",
+    "label_hint": "bottle"
+  },
+  {
+    "file": "000000136715.jpg",
+    "label_hint": "car"
+  },
+  {
+    "file": "000000245764.jpg",
+    "label_hint": "cat"
+  },
+  {
+    "file": "000000182805.jpg",
+    "label_hint": "dog"
+  },
+  {
+    "file": "000000082696.jpg",
+    "label_hint": "bird"
+  },
+  {
+    "file": "000000166426.jpg",
+    "label_hint": "bottle"
+  },
+  {
+    "file": "000000169996.jpg",
+    "label_hint": "car"
+  },
+  {
+    "file": "000000047121.jpg",
+    "label_hint": "cat"
+  },
+  {
+    "file": "000000061471.jpg",
+    "label_hint": "dog"
+  },
+  {
+    "file": "000000100489.jpg",
+    "label_hint": "bird"
+  },
+  {
+    "file": "000000173091.jpg",
+    "label_hint": "bottle"
+  },
+  {
+    "file": "000000067616.jpg",
+    "label_hint": "car"
+  },
+  {
+    "file": "000000119828.jpg",
+    "label_hint": "cat"
+  },
+  {
+    "file": "000000267300.jpg",
+    "label_hint": "dog"
+  },
+  {
+    "file": "000000264335.jpg",
+    "label_hint": "bird"
+  },
+  {
+    "file": "000000080949.jpg",
+    "label_hint": "bottle"
+  },
+  {
+    "file": "000000191013.jpg",
+    "label_hint": "car"
+  }
+]

@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnowLabel ❄️ 标注台</title>
+<style>
+  :root{--bg:#0f1115;--card:#1a1d24;--fg:#e6e8eb;--muted:#9aa0a8;--accent:#4da3ff;--line:#262a33;
+        --auto:#52c41a;--suggest:#f5a623;--silent:#8a8f98;}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:system-ui,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg);
+       display:flex;flex-direction:column;overflow:hidden}
+  header{padding:10px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;flex:0 0 auto}
+  header h1{font-size:16px;margin:0;font-weight:600}
+  header .snow{font-size:20px}
+  header .sub{color:var(--muted);font-size:12px}
+  header .grow{flex:1}
+  header a{color:var(--accent);font-size:12px;text-decoration:none;margin-left:14px}
+  .pill{background:var(--line);border-radius:20px;padding:5px 12px;font-size:12px;color:var(--fg)}
+  main{flex:1;display:grid;grid-template-columns:210px 1fr 330px;min-height:0}
+  /* ---- left filmstrip ---- */
+  .left{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+  .left .top{padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .left .top label{display:flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer;color:var(--fg)}
+  #strip{overflow:auto;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start}
+  .thumb{position:relative;border:2px solid transparent;border-radius:8px;overflow:hidden;cursor:pointer;background:#000;height:92px}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb.cur{border-color:var(--accent)}
+  .thumb .badge{position:absolute;top:3px;right:3px;background:var(--auto);color:#fff;border-radius:50%;
+                width:18px;height:18px;font-size:12px;display:flex;align-items:center;justify-content:center}
+  /* ---- center canvas ---- */
+  .center{display:flex;flex-direction:column;min-width:0;min-height:0}
+  .toolbar{padding:8px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;flex:0 0 auto}
+  .toolbar .name{color:var(--muted);font-size:12px;margin-left:auto;max-width:40%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;padding:14px;min-height:0}
+  #cImg{max-width:100%;max-height:74vh;display:block;cursor:crosshair;background:#000;border-radius:6px}
+  .hint{flex:0 0 auto;padding:8px 14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);min-height:34px}
+  /* ---- right panel ---- */
+  .right{border-left:1px solid var(--line);overflow:auto;padding:14px 16px}
+  h2{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:18px 0 10px}
+  h2:first-child{margin-top:0}
+  .predhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .tierbadge{color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+  .bar{display:flex;align-items:center;gap:8px;margin:5px 0}
+  .bar .lbl{width:58px;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bar .track{flex:1;background:var(--line);border-radius:6px;height:14px;overflow:hidden}
+  .bar .fill{height:100%;border-radius:6px;transition:width .35s}
+  .bar .cnt{width:34px;text-align:right;font-variant-numeric:tabular-nums;font-size:12px}
+  .chip{display:inline-block;padding:3px 11px;border-radius:11px;font-size:13px;color:#fff;font-weight:600}
+  .classes{display:flex;flex-wrap:wrap;gap:7px}
+  button{background:var(--accent);border:0;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px}
+  button.ghost{background:var(--line);color:var(--fg)}
+  button.tool{background:var(--line);color:var(--fg);border:1px solid #333}
+  button.tool.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .cls{background:var(--card);color:var(--fg);border:1.5px solid var(--line);border-radius:18px;padding:6px 12px;
+       display:inline-flex;align-items:center;gap:7px;font-size:13px}
+  .cls.sel{background:#222732;box-shadow:0 0 0 2px var(--accent) inset}
+  .cls .dot{width:10px;height:10px;border-radius:50%}
+  .addrow{display:flex;gap:6px;margin-top:9px}
+  .addrow input{flex:1;background:var(--line);color:var(--fg);border:1px solid #333;border-radius:8px;padding:7px 10px;font-size:13px}
+  #commitImgBtn{width:100%;margin-top:8px;padding:11px;font-size:14px;font-weight:600}
+  #commitImgBtn:disabled{opacity:.45;cursor:not-allowed}
+  #addDraftBtn{width:100%;margin-top:10px}
+  .muted{color:var(--muted);font-size:12px}
+  .memhead{display:flex;justify-content:space-between;align-items:baseline}
+  .memhead .big{font-size:22px;font-weight:600}
+  #queue{margin-top:8px;line-height:1.9}
+  /* ---- 上传(图片/文件夹):左栏顶部醒目入口 ---- */
+  .uploadwrap{position:relative;margin-top:10px}
+  #uploadMain{width:100%;padding:11px 10px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px}
+  #uploadMenu{position:absolute;left:0;right:0;top:calc(100% + 5px);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px;z-index:40;box-shadow:0 10px 28px rgba(0,0,0,.45)}
+  #uploadMenu.hidden{display:none}
+  #uploadMenu button{width:100%;background:transparent;color:var(--fg);text-align:left;padding:9px 10px;border-radius:7px;font-size:13px;line-height:1.25}
+  #uploadMenu button:hover{background:var(--line)}
+  #uploadMenu .sub{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+  /* ---- header tagline + help ---- */
+  header .tagline{color:var(--accent);font-size:12px;opacity:.92;white-space:nowrap}
+  .helpbtn{background:var(--line);color:var(--fg);font-size:12px;padding:5px 12px;border-radius:20px;font-weight:600}
+  .helpbtn:hover{background:#2f3540}
+  /* ---- 重新开始(清空我这次的数据,演示从零用) ---- */
+  .resetbtn{margin-top:11px;width:100%;background:transparent;color:var(--muted);border:1px solid var(--line);
+            padding:7px;font-size:12px;font-weight:600}
+  .resetbtn:hover{color:#ff6b6b;border-color:#ff6b6b}
+  /* ---- empty welcome state (canvas 区无图时) ---- */
+  .empty{display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+  .empty.hidden{display:none}
+  .ecard{max-width:470px;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:36px 32px}
+  .ecard .eemoji{font-size:42px;margin-bottom:4px}
+  .ecard h3{margin:8px 0 10px;font-size:21px}
+  .ecard p{color:var(--muted);font-size:13px;line-height:1.75;margin:8px 0}
+  .ecard b{color:var(--fg)}
+  .ebig{margin-top:15px;padding:13px 24px;font-size:15px;font-weight:700}
+  .ecard .emini{font-size:12px;margin-top:11px}
+  .elink{background:transparent;color:var(--accent);padding:6px;font-size:13px;margin-top:2px}
+  .elink:hover{text-decoration:underline}
+  /* ---- onboarding modal ---- */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.66);display:flex;align-items:center;justify-content:center;z-index:100;padding:18px}
+  .modal.hidden{display:none}
+  .mcard{position:relative;width:min(560px,94vw);max-height:90vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 32px 26px;box-shadow:0 24px 70px rgba(0,0,0,.6)}
+  .mclose{position:absolute;top:14px;right:14px;background:var(--line);color:var(--fg);width:30px;height:30px;border-radius:50%;padding:0;font-size:14px;line-height:1}
+  .mhead{font-size:22px;font-weight:700;display:flex;align-items:center;gap:9px}
+  .mhead .snow{font-size:25px}
+  .mlead{color:var(--muted);font-size:14px;line-height:1.75;margin:14px 0 18px}
+  .mlead b{color:var(--accent)}
+  .steps{display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
+  .step{display:flex;gap:13px;align-items:flex-start}
+  .snum{flex:0 0 28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .step b{display:block;font-size:14px;margin-bottom:3px}
+  .step span{color:var(--muted);font-size:13px;line-height:1.55}
+  .mtip{background:var(--line);border-radius:10px;padding:11px 14px;font-size:13px;line-height:1.6;margin-bottom:18px}
+  .mstart{width:100%;padding:13px;font-size:15px;font-weight:700}
+  /* ---- 空状态里的示例按钮(次级) ---- */
+  .esample{margin-top:9px;background:var(--line);color:var(--fg);padding:10px 18px;font-size:13px;font-weight:600}
+  .esample:hover{background:#2f3540}
+  /* ---- 啊哈时刻 toast ---- */
+  #toast{position:fixed;left:50%;top:18px;z-index:120;
+         background:linear-gradient(135deg,#1f9d55,#52c41a);color:#fff;font-weight:600;font-size:14px;
+         padding:13px 20px;border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.45);
+         max-width:min(560px,92vw);opacity:0;pointer-events:none;transition:opacity .35s,transform .35s;
+         transform:translateX(-50%) translateY(-26px)}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  /* ---- 行内术语帮助小标 ---- */
+  .hq{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;
+      background:var(--line);color:var(--muted);font-size:10px;font-weight:700;margin-left:5px;cursor:help;vertical-align:middle}
+  .hq:hover{background:var(--accent);color:#fff}
+  /* ---- 响应式:公网链接常被手机打开,别让三栏挤崩 ---- */
+  @media (max-width:860px){
+    body{overflow:auto}
+    header{flex-wrap:wrap;row-gap:6px}
+    header .tagline{display:none}
+    main{display:block;height:auto}
+    .left,.center,.right{border-left:0;border-right:0}
+    .left{border-bottom:1px solid var(--line)}
+    .right{border-top:1px solid var(--line);overflow:visible}
+    #strip{grid-template-columns:repeat(auto-fill,minmax(74px,1fr));max-height:184px}
+    #cImg{max-height:54vh}
+    .stage{padding:8px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <span class="snow">&#10052;&#65039;</span>
+  <h1>SnowLabel</h1>
+  <span class="tagline">越标越准 · 你教过的，下次自动认出</span>
+  <span class="pill" id="progress">0 / 0</span>
+  <span class="grow"></span>
+  <span class="sub" id="statusline">连接中&hellip;</span>
+  <button id="helpBtn" class="helpbtn" title="使用帮助">? 使用帮助</button>
+  <a href="/inspector" target="_blank">记忆面板 ↗</a>
+</header>
+<main>
+  <!-- LEFT: filmstrip -->
+  <div class="left">
+    <div class="top">
+      <div>数据集</div>
+      <div class="muted" id="dsdir" style="word-break:break-all">&mdash;</div>
+      <div class="uploadwrap">
+        <button id="uploadMain" title="上传你自己的图片或整个文件夹来标注">⬆ 上传图片 / 文件夹</button>
+        <div id="uploadMenu" class="hidden">
+          <button id="pickFiles">🖼 选择图片<span class="sub">一张或多张</span></button>
+          <button id="pickDir">📁 选择整个文件夹<span class="sub">含子文件夹里所有图片</span></button>
+          <button id="pickSamples">🐦 载入示例鸟图<span class="sub">3 种鸟,零门槛试玩</span></button>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
+        <input type="file" id="dirInput" webkitdirectory directory multiple style="display:none">
+      </div>
+      <label><input type="checkbox" id="onlyUnlabeled"> 只看未标注</label>
+      <button id="resetBtn" class="resetbtn" title="清空你自己这次的所有标注和上传的图片，从零开始（只影响你，不影响别人）">🔄 重新开始</button>
+    </div>
+    <div id="strip"></div>
+  </div>
+
+  <!-- CENTER: canvas -->
+  <div class="center">
+    <div class="toolbar">
+      <button class="tool sel" data-t="point" id="toolPoint" title="左键点中物体，SAM 自动抠出它的轮廓；右键打排除点">● 点击 (P)</button>
+      <button class="tool" data-t="box" id="toolBox" title="拖一个框圈住物体，SAM 在框内分割">▭ 框选 (B)</button>
+      <button class="tool" data-t="all" id="toolAll" title="一键分割整张图的所有物体，记忆里认得出的会自动打好标签">✦ 全分割 (E)</button>
+      <span class="name" id="imgname">&mdash;</span>
+    </div>
+    <div class="stage">
+      <canvas id="cImg"></canvas>
+      <div id="emptyState" class="empty hidden">
+        <div class="ecard">
+          <div class="eemoji">👋&#10052;&#65039;</div>
+          <h3>欢迎试用 SnowLabel</h3>
+          <p>一个<b>越标越准</b>的自动标注工具——不用训练模型，<br>你教过几个例子后，它就能自动认出同类物体。</p>
+          <button id="emptyUpload" class="ebig">⬆ 上传图片 / 文件夹，开始标注</button>
+          <p class="emini">支持单张、多张，或整个文件夹（jpg / png / webp …）</p>
+          <button id="emptySample" class="esample">🐦 没有图？一键载入示例鸟图试玩</button>
+          <button id="emptyHelp" class="elink">先看看 30 秒怎么用 →</button>
+        </div>
+      </div>
+    </div>
+    <div class="hint" id="hint"></div>
+  </div>
+
+  <!-- RIGHT: prediction + classes + memory -->
+  <div class="right">
+    <h2>当前 mask<span class="hq" title="模型对当前物体的预测。tier：auto=高置信可直接用 · suggest=建议你确认 · silent=没学过先不猜；conf=匹配置信分(绝对混合分)">?</span></h2>
+    <div id="pred"><span class="muted">点击/框选物体,或按 E 全分割</span></div>
+
+    <h2>类别（点选 = 确认/修改）</h2>
+    <div class="classes" id="classes"></div>
+    <div class="addrow">
+      <input id="newcls" placeholder="+ 新类别，回车添加">
+      <button class="ghost" id="addBtn">添加</button>
+    </div>
+    <button id="addDraftBtn" class="ghost" style="display:none">＋ 加入本图 (Space)</button>
+    <button id="commitImgBtn" disabled title="只把模型『没做对』的存进记忆：你改了类的、或手动加的漏检；识别对的不必重复存。">入库本图 (0) · Enter</button>
+    <div id="queue"></div>
+
+    <h2>雪球记忆<span class="hq" title="你每次入库的物体都被编码成向量存进这里。它越大，模型认得越多、越准——而且模型从不重训，全靠检索记忆。">?</span></h2>
+    <div class="memhead"><span class="muted">已记忆实例</span><span class="big" id="memTotal">0</span></div>
+    <div id="memBars" style="margin-top:8px"></div>
+  </div>
+</main>
+
+<!-- 首次访问引导:讲清"这是什么 / 怎么用 / 为什么越标越准",可用「? 使用帮助」重开 -->
+<div id="guide" class="modal hidden">
+  <div class="mcard">
+    <button id="guideClose" class="mclose" title="关闭">&#10005;</button>
+    <div class="mhead"><span class="snow">&#10052;&#65039;</span> 欢迎试用 SnowLabel</div>
+    <p class="mlead"><b>越标越准</b>的渐进式自动标注：模型从不重训，你教过的物体被存进向量记忆，下次遇到相似的就自动帮你认出来。</p>
+    <div class="steps">
+      <div class="step"><span class="snum">1</span><div><b>选一张图</b><span>上传你自己的图片 / 文件夹，或直接用左侧已有的图。</span></div></div>
+      <div class="step"><span class="snum">2</span><div><b>点物体 → 选类别 → 入库</b><span>左键点中物体，SAM 自动抠图；在右侧给它起个类别名，按 Enter 入库本图。</span></div></div>
+      <div class="step"><span class="snum">3</span><div><b>见证"它学会了"</b><span>同一类标到第 3~4 个，右侧会自动预测出类别——那一刻就是它学会了。越标越准。</span></div></div>
+    </div>
+    <div class="mtip">💡 想快点见效，试试顶部「✦ 全分割」：一键分割整张图所有物体，认得出的会自动打好标签。</div>
+    <button id="guideStart" class="mstart">开始体验 →</button>
+  </div>
+</div>
+
+<!-- 啊哈时刻提示:模型第一次靠记忆自动认出物体时弹一下 -->
+<div id="toast"></div>
+
+<script>
+const API = location.origin;
+const TIER_COLOR = {auto:"var(--auto)", suggest:"var(--suggest)", silent:"var(--silent)"};
+const COLORS = {cat:"#FF6F00",dog:"#1976D2",car:"#388E3C",bird:"#7B1FA2",bottle:"#D32F2F",other:"#616161"};
+// 默认不预置任何类别 —— "你从零教它"才是产品叙事;类别从你新增的 + 记忆分布里长出来。
+const DEFAULT_CLASSES = [];
+// 一键载入示例鸟图后,顺手把这 3 个类名塞进来,让示例标注是"点选"而非"打字"。
+const SAMPLE_CLASSES = ["赫氏鸥","裏海燕鸥","仙人掌鹪鹩"];
+
+let DS=[], curIdx=-1, onlyUnlabeled=false;
+let img=new Image();
+let classes=[...DEFAULT_CLASSES];
+let tool="point";
+let masks=[];        // per-image finalized set: {mask_png,bbox,off,bA,pred_label,tier,confidence,top_k,label,source}
+let setOverlay=null; // composited tinted overlay of masks[]
+let _owner=null;     // Int32Array: per-pixel owning-mask index (exclusive, no overlap)
+let draft=null;      // in-progress point/box mask: {mask_png,bbox,tier,confidence,top_k,pred_label,off,label}
+let pts=[];          // points building the current draft: {x,y,label}  (1=pos,0=neg)
+let drag=null;       // box drag {x0,y0,x1,y1}
+let picked=-1;       // index into masks[] selected for relabel
+let selectedLabel=null;
+let busy=false;
+
+const cImg = document.getElementById("cImg");
+const base = s => (s||"").split(/[\\/]/).pop();
+// Stable anonymous visitor id — scopes this browser's images + memory anchors
+// on the multi-tenant public demo (ignored by the single-tenant local server).
+const UID = (()=>{let u=localStorage.getItem('snow_uid');if(!u||!/^[A-Za-z0-9_-]{1,64}$/.test(u)){u=((self.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(36).slice(2))).replace(/[^A-Za-z0-9_-]/g,'').slice(0,64);localStorage.setItem('snow_uid',u);}return u;})();
+// 把 UID 同步进 cookie:浏览器原生请求(<img src=/api/image/..>)带不了自定义头,但会自动带 cookie,
+// 后端 _user_id 用它兜底解析租户,缩略图/画布才能按本用户目录取到图(否则上传成功却显示不出来)。
+try{ document.cookie="snow_user="+UID+";path=/;max-age=31536000;SameSite=Lax"; }catch(e){}
+async function j(path,opts){opts=opts||{};const headers=Object.assign({'X-Snow-User':UID},opts.headers||{});const r=await fetch(API+path,Object.assign({},opts,{headers}));if(!r.ok){let t="";try{t=(await r.json()).detail||"";}catch(e){}throw new Error((t||r.status));}return r.json();}
+function hexToRgb(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+function colorFor(c){if(!c)return"#555";if(COLORS[c])return COLORS[c];let h=0;for(const ch of c)h=(h*37+ch.charCodeAt(0))%360;return `hsl(${h},55%,52%)`;}
+function loadImg(src){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src;});}
+function flash(msg){document.getElementById("hint").textContent=msg||"";}
+function toolHint(){
+  return tool==="point" ? "左键=正点＋  右键=排除点－  ·  Space 加入本图  ·  Enter 入库本图  ·  C 清除"
+       : tool==="box"   ? "拖拽框选物体  ·  Space 加入本图  ·  Enter 入库本图  ·  C 清除"
+       :                  "✦ 全分割:点物体=改类  ·  点空白=补漏检(左键＋/右键－ 多点精修)  ·  Space 收下一个  ·  C 清/重跑  ·  Enter 入库";
+}
+
+/* ---------------- dirty logic ----------------
+   只把"模型没做对"的 mask 入库:
+     - source==="added"  → 你手动加的(模型漏检)         → 入库
+     - source==="auto" 且 label!==pred_label → 你改了类(模型分错) → 入库
+     - source==="auto" 且 未改                              → 识别对了,免入库 */
+function isDirty(m){ return m.source==="added" || m.label!==m.pred_label; }
+function dirtyMasks(){ return masks.filter(isDirty); }
+
+/* ---------------- mask tinting / render ---------------- */
+async function maskOffscreen(mask_png){
+  const im=await loadImg("data:image/png;base64,"+mask_png);
+  const w=img.naturalWidth,h=img.naturalHeight;
+  const off=document.createElement("canvas");off.width=w;off.height=h;
+  off.getContext("2d").drawImage(im,0,0,w,h);
+  return off;
+}
+function tintedFrom(off,hex,alpha){
+  const w=off.width,h=off.height;
+  const t=document.createElement("canvas");t.width=w;t.height=h;
+  const od=off.getContext("2d").getImageData(0,0,w,h),d=od.data;
+  const [r,g,b]=hexToRgb(hex);
+  for(let i=0;i<d.length;i+=4){ if(d[i]>127){d[i]=r;d[i+1]=g;d[i+2]=b;d[i+3]=alpha;} else {d[i+3]=0;} }
+  t.getContext("2d").putImageData(od,0,0);
+  return t;
+}
+function centroidOf(off,w,h){
+  const d=off.getContext("2d").getImageData(0,0,w,h).data;
+  let sx=0,sy=0,n=0;
+  for(let y=0,q=0;y<h;y++)for(let x=0;x<w;x++,q+=4){ if(d[q]>127){sx+=x;sy+=y;n++;} }
+  return n?{cx:sx/n,cy:sy/n,count:n}:{cx:w/2,cy:h/2,count:0};
+}
+/* Exclusive ownership: every pixel belongs to AT MOST ONE mask (the smallest /
+   most-specific covering it), so no pixel is ever shown as two labels. Builds a
+   per-pixel owner index + each mask's owned-region centroid. Expensive — call
+   only when the mask geometry changes (segment_all / addDraft), then cheap
+   paintSetOverlay() on relabel. */
+function recomputeOwnership(){
+  if(!img.naturalWidth){setOverlay=null;_owner=null;return;}
+  const w=img.naturalWidth,h=img.naturalHeight;
+  const live=masks.filter(m=>m.off);
+  if(!live.length){ _owner=null; setOverlay=null; return; }
+  const owner=new Int32Array(w*h).fill(-1);
+  // larger bbox first; smaller masks overwrite -> smallest wins each pixel
+  live.slice().sort((a,b)=>b.bA-a.bA).forEach(m=>{
+    const idx=masks.indexOf(m);
+    const md=m.off.getContext("2d").getImageData(0,0,w,h).data;
+    for(let p=0,q=0;p<owner.length;p++,q+=4){ if(md[q]>127) owner[p]=idx; }
+  });
+  const sx=new Float64Array(masks.length),sy=new Float64Array(masks.length),cn=new Int32Array(masks.length);
+  for(let p=0,y=0;y<h;y++)for(let x=0;x<w;x++,p++){ const o=owner[p]; if(o>=0){sx[o]+=x;sy[o]+=y;cn[o]++;} }
+  masks.forEach((m,i)=>{
+    m.ownedCount=cn[i];
+    m.cx=cn[i]?sx[i]/cn[i]:(m.bbox?(m.bbox[0]+m.bbox[2])/2:w/2);
+    m.cy=cn[i]?sy[i]/cn[i]:(m.bbox?(m.bbox[1]+m.bbox[3])/2:h/2);
+  });
+  _owner=owner;
+  // ownership kept for centroids + ownedMaskPng (commit); display is now the
+  // thin contour outline drawn in render(), not the filled overlay.
+}
+function paintSetOverlay(){
+  if(!_owner||!img.naturalWidth){setOverlay=null;return;}
+  const w=img.naturalWidth,h=img.naturalHeight;
+  const out=document.createElement("canvas");out.width=w;out.height=h;
+  const od=out.getContext("2d").createImageData(w,h),d=od.data;
+  const rgb=masks.map(m=>hexToRgb(m.label?colorFor(m.label):"#9aa0a8"));
+  const al=masks.map(m=>isDirty(m)?150:95);
+  for(let p=0,q=0;p<_owner.length;p++,q+=4){ const o=_owner[p]; if(o>=0&&rgb[o]){ d[q]=rgb[o][0];d[q+1]=rgb[o][1];d[q+2]=rgb[o][2];d[q+3]=al[o]; } }
+  out.getContext("2d").putImageData(od,0,0);
+  setOverlay=out;
+}
+/* PNG of only the pixels this mask exclusively OWNS (overlaps trimmed away), so
+   committing never teaches the same pixel two labels. Returns null if empty. */
+function ownedMaskPng(m){
+  const i=masks.indexOf(m);
+  if(!_owner||i<0) return m.mask_png;   // no ownership map -> fall back to raw
+  const w=img.naturalWidth,h=img.naturalHeight;
+  const c=document.createElement("canvas");c.width=w;c.height=h;
+  const id=c.getContext("2d").createImageData(w,h),d=id.data;
+  let n=0;
+  for(let p=0,q=0;p<_owner.length;p++,q+=4){ if(_owner[p]===i){ d[q]=d[q+1]=d[q+2]=255; d[q+3]=255; n++; } }
+  if(!n) return null;
+  c.getContext("2d").putImageData(id,0,0);
+  return c.toDataURL("image/png").split(",",2)[1];
+}
+function drawPoints(ctx){
+  const r=Math.max(5,cImg.width/110);
+  for(const p of pts){
+    ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);
+    ctx.fillStyle=p.label?"#52c41a":"#ff4d4f";ctx.fill();
+    ctx.lineWidth=Math.max(2,r/3);ctx.strokeStyle="#fff";ctx.stroke();
+    ctx.beginPath();ctx.moveTo(p.x-r*0.45,p.y);ctx.lineTo(p.x+r*0.45,p.y);
+    if(p.label){ctx.moveTo(p.x,p.y-r*0.45);ctx.lineTo(p.x,p.y+r*0.45);}
+    ctx.lineWidth=Math.max(2,r/3.2);ctx.strokeStyle="#fff";ctx.stroke();
+  }
+}
+function roundRectPath(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function drawTag(ctx,cx,cy,text,col,highlight){
+  const f=Math.max(12,cImg.width/48); ctx.font=`700 ${f}px system-ui`; ctx.textAlign="center"; ctx.textBaseline="middle";
+  const tw=ctx.measureText(text).width, bw=tw+14, bh=f+8;
+  roundRectPath(ctx,cx-bw/2,cy-bh/2,bw,bh,7);
+  ctx.fillStyle="rgba(0,0,0,0.62)"; ctx.fill();
+  if(highlight){ ctx.strokeStyle="#fff"; ctx.lineWidth=Math.max(2,cImg.width/350); ctx.stroke(); }
+  ctx.fillStyle=col; ctx.fillText(text,cx,cy);
+  ctx.textAlign="left"; ctx.textBaseline="alphabetic";
+}
+function drawSetTags(ctx){
+  // label sits at the centroid of each mask's OWNED region (no overlap, in the middle)
+  masks.forEach((m,i)=>{
+    if(!(m.ownedCount>0)) return;
+    const col=m.label?colorFor(m.label):"#9aa0a8", d=isDirty(m);
+    drawTag(ctx, m.cx, m.cy, `${d?'✎ ':''}${m.label||'?'}`, col, i===picked);
+  });
+}
+/* thin class-colored OUTLINE, expanded ~10% outward from the mask centroid —
+   replaces the filled overlay so the object stays visible. */
+function contourCentroid(c){ let sx=0,sy=0; for(const p of c){sx+=p[0];sy+=p[1];} return [sx/c.length, sy/c.length]; }
+function bboxContour(bb){ return bb?[[bb[0],bb[1]],[bb[2],bb[1]],[bb[2],bb[3]],[bb[0],bb[3]]]:null; }
+function drawContour(ctx, contour, color, sel){
+  if(!contour || contour.length<3) return;
+  const [cx,cy]=contourCentroid(contour), k=1.10;   // 向外扩 10%
+  ctx.beginPath();
+  contour.forEach((p,i)=>{ const X=cx+(p[0]-cx)*k, Y=cy+(p[1]-cy)*k; i?ctx.lineTo(X,Y):ctx.moveTo(X,Y); });
+  ctx.closePath();
+  ctx.lineJoin="round";
+  ctx.lineWidth=Math.max(1.5, cImg.width/720)*(sel?2.2:1);   // 很细;选中略粗
+  ctx.strokeStyle=color; ctx.stroke();
+}
+function render(){
+  if(!img.naturalWidth) return;
+  const ctx=cImg.getContext("2d");
+  ctx.clearRect(0,0,cImg.width,cImg.height);
+  ctx.drawImage(img,0,0);
+  masks.forEach((m,i)=>drawContour(ctx, m.contour||bboxContour(m.bbox),
+                                   m.label?colorFor(m.label):"#9aa0a8", i===picked));
+  drawSetTags(ctx);
+  if(draft){
+    const col=draft.label?colorFor(draft.label):"#4da3ff";
+    drawContour(ctx, draft.contour||bboxContour(draft.bbox), col, true);
+    if(draft.label&&draft.cx!=null) drawTag(ctx,draft.cx,draft.cy,draft.label,col,true);
+  }
+  drawPoints(ctx);
+  if(drag){
+    ctx.strokeStyle="#4da3ff";ctx.lineWidth=Math.max(2,cImg.width/350);ctx.setLineDash([7,5]);
+    ctx.strokeRect(Math.min(drag.x0,drag.x1),Math.min(drag.y0,drag.y1),Math.abs(drag.x1-drag.x0),Math.abs(drag.y1-drag.y0));
+    ctx.setLineDash([]);
+  }
+}
+function toPix(e){
+  const r=cImg.getBoundingClientRect();
+  return {x:Math.round((e.clientX-r.left)*(cImg.width/r.width)),
+          y:Math.round((e.clientY-r.top)*(cImg.height/r.height))};
+}
+function inBox(bb,x,y){return bb&&x>=bb[0]&&x<=bb[2]&&y>=bb[1]&&y<=bb[3];}
+function maskHit(m,x,y){ try{ return m.off.getContext("2d").getImageData(x,y,1,1).data[0]>127; }catch(e){ return false; } }
+
+/* ---------------- draft (point / box) ---------------- */
+function segmentDraft(){ if(pts.length) doDraft({type:"point",points:pts.map(p=>[p.x,p.y]),labels:pts.map(p=>p.label)}); }
+async function doDraft(body){
+  if(curIdx<0||busy) return;
+  busy=true; cImg.style.cursor="progress"; flash("SAM 分割中…");
+  try{
+    const res=await j("/api/segment",{method:"POST",headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(Object.assign({image_id:DS[curIdx].id},body))});
+    if(!res.ok){ draft=null; render(); flash("没分出 mask（增减点 / 换位置）"); }
+    else{
+      draft={mask_png:res.mask_png,bbox:res.bbox,tier:res.tier,confidence:res.confidence,
+             top_k:res.top_k,pred_label:res.label,contour:res.contour};
+      draft.off=await maskOffscreen(res.mask_png);
+      {const c=centroidOf(draft.off,img.naturalWidth,img.naturalHeight); draft.cx=c.cx; draft.cy=c.cy;}
+      selectedLabel=res.label||(res.top_k&&res.top_k[0]&&res.top_k[0][0])||selectedLabel||null;
+      draft.label=selectedLabel; picked=-1;
+      if(res.tier==="auto") maybeAha();
+      showPrediction(draft); renderClasses(); render(); updateCommitBtn();
+      flash(toolHint());
+    }
+  }catch(err){ flash("分割失败: "+err.message); }
+  busy=false; cImg.style.cursor=(tool==="point"?"crosshair":tool==="box"?"cell":"default");
+}
+function addDraft(){
+  if(!(draft&&draft.label)){ if(draft)flash("先给这个 mask 选个类别"); return; }
+  const bb=draft.bbox;
+  masks.push({mask_png:draft.mask_png,bbox:bb,off:draft.off,contour:draft.contour,
+    bA:bb?(bb[2]-bb[0])*(bb[3]-bb[1]):1e12,
+    pred_label:draft.pred_label,tier:draft.tier,confidence:draft.confidence,top_k:draft.top_k,
+    label:draft.label,source:"added"});
+  draft=null; pts=[];
+  recomputeOwnership(); render(); clearPrediction(); updateCommitBtn();
+  flash("已加入本图 ✎ — 继续画下一个,或 Enter 入库本图");
+}
+function clearDraft(){ draft=null; pts=[]; picked=-1; if(img.naturalWidth)render(); clearPrediction(); updateCommitBtn(); flash(toolHint()); }
+
+/* ---------------- everything 模式:合并嵌套部件 ----------------
+   SAM 全分割对一个大物体常同时给出"整只/头/身"等嵌套 mask,各自检索成同一类 →
+   同一物体叠出多个标签。这里做贪心去重:按面积从大到小,若某 mask 的像素绝大部分
+   (>75%)落在已保留的、同标签的更大 mask 里,就判为它的部件,丢掉,只留"整只"那个。
+   同类但彼此独立的两个物体(并排两只鸟)互相包含度低,不会被误合。 */
+function _maskAlpha(off){            // 缓存 off 的前景位图(0/1),供包含度计算
+  if(off._a) return off._a;
+  const w=off.width,h=off.height,d=off.getContext("2d").getImageData(0,0,w,h).data;
+  const a=new Uint8Array(w*h);
+  for(let p=0,q=0;p<a.length;p++,q+=4) a[p]=d[q]>127?1:0;
+  off._a=a; return a;
+}
+function _containment(small,big){   // small 的前景像素有多大比例落在 big 内
+  if(!small.off||!big.off||small.off.width!==big.off.width) return 0;
+  const a=_maskAlpha(small.off),b=_maskAlpha(big.off);
+  let inter=0,area=0;
+  for(let p=0;p<a.length;p+=2){ if(a[p]){ area++; if(b[p]) inter++; } }  // 隔点采样提速,比例不变
+  return area? inter/area : 0;
+}
+function dedupOverlaps(cands){
+  const sorted=cands.slice().sort((a,b)=>b.bA-a.bA), kept=[];
+  for(const c of sorted){
+    let part=false;
+    for(const k of kept){ if(k.label===c.label && _containment(c,k)>0.75){ part=true; break; } }
+    if(!part) kept.push(c);
+  }
+  return kept;
+}
+
+/* ---------------- everything mode ---------------- */
+async function runSegmentAll(){
+  if(curIdx<0||busy) return;
+  busy=true; cImg.style.cursor="progress"; flash("SAM 全图分割中…(稍慢)");
+  try{
+    const res=await j("/api/segment_all",{method:"POST",headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({image_id:DS[curIdx].id,max_masks:20})});
+    masks=masks.filter(m=>m.source==="added");   // keep manual adds, refresh autos
+    let hidden=0;
+    const cands=[];
+    for(const m of (res.masks||[])){
+      if(!m.label){ hidden++; continue; }   // drop silent/unrecognized SAM bits — no "?" clutter
+      const bb=m.bbox;
+      cands.push({mask_png:m.mask_png,bbox:bb,off:await maskOffscreen(m.mask_png),
+        contour:m.contour,
+        bA:bb?(bb[2]-bb[0])*(bb[3]-bb[1]):1e12,
+        pred_label:m.label,tier:m.tier,confidence:m.confidence,top_k:m.top_k,
+        label:m.label,source:"auto"});
+    }
+    const kept=dedupOverlaps(cands), merged=cands.length-kept.length;
+    kept.forEach(c=>masks.push(c));
+    const shown=kept.length;
+    picked=-1; draft=null; pts=[]; recomputeOwnership(); render(); clearPrediction(); updateCommitBtn();
+    if(kept.some(m=>m.tier==="auto")) maybeAha();
+    flash(`全分割:认出 ${shown} 个物体${merged?`,合并 ${merged} 个重叠部件`:''}${hidden?`(隐藏 ${hidden} 个没认出的碎块)`:''} — 对的直接下一张;点物体改类 / 点空白补漏检`);
+  }catch(err){ flash("全分割失败: "+err.message); }
+  busy=false; cImg.style.cursor="default";
+}
+// 命中点所在的最小 mask 的下标(没有则 -1)。pickSetMaskAt 的纯查找版,供右键抠图用。
+function maskIdxAt(x,y){
+  const cand=masks.map((m,i)=>({m,i})).filter(o=>inBox(o.m.bbox,x,y)).sort((a,b)=>a.m.bA-b.m.bA);
+  for(const o of cand){ if(maskHit(o.m,x,y)) return o.i; }
+  return -1;
+}
+function pickSetMaskAt(x,y){
+  const cand=masks.map((m,i)=>({m,i})).filter(o=>inBox(o.m.bbox,x,y)).sort((a,b)=>a.m.bA-b.m.bA);
+  for(const o of cand){ if(maskHit(o.m,x,y)){
+    picked=o.i; draft=null; pts=[]; selectedLabel=masks[o.i].label;
+    showPrediction(masks[o.i]); renderClasses(); render(); updateCommitBtn();
+    flash(`选中「${masks[o.i].label||'?'}」— 按数字/点类别改类(改了才会入库)`); return true;
+  }}
+  return false;
+}
+
+/* ---------------- commit (one per image) ---------------- */
+async function commitImage(){
+  if(draft&&draft.label) addDraft();        // fold the active draft in
+  // commit each dirty mask's EXCLUSIVE region (overlaps trimmed) so a pixel is
+  // never stored under two labels.
+  const meta=m=>({pred_label:m.pred_label??null,tier:m.tier??null,
+                  confidence:m.confidence??null,source:m.source??null});
+  const items=dirtyMasks().map(m=>({mask_png:ownedMaskPng(m),label:m.label,...meta(m)})).filter(it=>it.mask_png);
+  // accepted = predictions the user did NOT touch — not stored (redundant),
+  // but reported so the real acceptance rate is measurable.
+  const accepted=masks.filter(m=>!isDirty(m)&&m.pred_label).map(m=>({label:m.label??null,...meta(m)}));
+  if(!items.length&&!accepted.length){ flash("本图没有改过/加过的 mask — 无需入库(识别对的不必存)"); return; }
+  busy=true; flash(items.length?`入库本图 ${items.length} 个…`:"本图全部识别正确,记录确认…");
+  try{
+    const res=await j("/api/commit_batch",{method:"POST",headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({image_id:DS[curIdx].id,items,accepted})});
+    DS[curIdx].labeled=true; DS[curIdx].n_labels=(DS[curIdx].n_labels||0)+res.committed;
+    masks=[]; draft=null; pts=[]; picked=-1; setOverlay=null; _owner=null;
+    renderFilmstrip(); updateProgress(); clearPrediction(); updateCommitBtn();
+    await refreshMemory();
+    flash(res.committed?`入库本图 ${res.committed} 个 → 记忆 ${res.memory_size} 条`
+                       :"已记录全对确认 ✓(识别对的不重复入库)");
+    nextImage();
+  }catch(err){ flash("入库失败: "+err.message); }
+  busy=false;
+}
+function updateCommitBtn(){
+  const dq=dirtyMasks();
+  const n=dq.length+((draft&&draft.label)?1:0);
+  const b=document.getElementById("commitImgBtn"); b.textContent=`入库本图 (${n}) · Enter`; b.disabled=n===0;
+  document.getElementById("addDraftBtn").style.display=(draft&&draft.label)?"block":"none";
+  const cnt={}; dq.forEach(m=>cnt[m.label]=(cnt[m.label]||0)+1); if(draft&&draft.label)cnt[draft.label]=(cnt[draft.label]||0)+1;
+  const parts=Object.entries(cnt).map(([k,v])=>`<span class="chip" style="background:${colorFor(k)};font-size:11px;padding:2px 8px">${k}×${v}</span>`).join(" ");
+  document.getElementById("queue").innerHTML = n? `<span class="muted">本图待入库:</span> ${parts}`
+                                                 : '<span class="muted">本图暂无待入库(识别对的不必存;改错类/加漏检才需要)</span>';
+}
+
+/* ---------------- right panel ---------------- */
+function showPrediction(o){
+  const box=document.getElementById("pred");
+  if(!o){ box.innerHTML='<span class="muted">点击/框选物体,或按 E 全分割</span>'; return; }
+  const tier=o.tier, tc=TIER_COLOR[tier]||"#888", lbl=o.label||"—";
+  const changed = o.pred_label!==undefined && o.label!==o.pred_label;
+  const tk=(o.top_k||[]).slice(0,5).map(([k,s])=>
+    `<div class="bar"><div class="lbl">${k}</div><div class="track"><div class="fill" style="width:${Math.max(2,Math.round(100*s))}%;background:${colorFor(k)}"></div></div><div class="cnt">${(+s).toFixed(2)}</div></div>`).join("");
+  box.innerHTML=`
+    <div class="predhead">
+      <span class="chip" style="background:${colorFor(o.label)}">${lbl}</span>
+      <span class="tierbadge" style="background:${tc}" title="auto=高置信可直接用 · suggest=建议你确认 · silent=没学过先不猜">${tier}</span>
+      <span class="muted">conf ${(+o.confidence).toFixed(2)}</span>
+      ${changed?`<span class="muted">· 原预测 ${o.pred_label||'—'}</span>`:''}
+    </div>
+    <div>${tk||'<span class="muted">记忆为空,先手动选类入库</span>'}</div>`;
+}
+function clearPrediction(){ showPrediction(null); }
+function chooseLabel(c){
+  c=(c||"").trim(); if(!c)return;
+  selectedLabel=c;
+  if(draft){ draft.label=c; showPrediction(draft); }
+  else if(picked>=0){ masks[picked].label=c; paintSetOverlay(); showPrediction(masks[picked]); }
+  renderClasses(); render(); updateCommitBtn();
+}
+function renderClasses(){
+  const host=document.getElementById("classes");
+  host.innerHTML=classes.map((c,i)=>
+    `<button class="cls ${c===selectedLabel?'sel':''}" data-c="${c}" title="按 ${i+1} 选择"><span class="dot" style="background:${colorFor(c)}"></span>${c}</button>`).join("");
+  host.querySelectorAll(".cls").forEach(b=>b.onclick=()=>chooseLabel(b.dataset.c));
+}
+function addClass(c){ c=(c||"").trim(); if(!c)return; if(!classes.includes(c))classes.push(c); chooseLabel(c); }
+
+/* ---------------- dataset / filmstrip ---------------- */
+function updateProgress(){
+  const lab=DS.filter(d=>d.labeled).length;
+  document.getElementById("progress").textContent=`${lab} / ${DS.length}`;
+}
+function renderFilmstrip(){
+  const host=document.getElementById("strip");
+  const list=onlyUnlabeled?DS.filter(d=>!d.labeled):DS;
+  host.innerHTML=list.map(d=>{
+    const i=DS.indexOf(d);
+    return `<div class="thumb ${i===curIdx?'cur':''}" data-i="${i}" title="${d.name}">
+      <img src="${API+d.url}" loading="lazy">${d.labeled?'<span class="badge">&#10003;</span>':''}</div>`;
+  }).join("")||'<div class="muted" style="padding:10px">无图片</div>';
+  host.querySelectorAll(".thumb").forEach(t=>t.onclick=()=>selectImage(+t.dataset.i));
+}
+function selectImage(i){
+  if(i<0||i>=DS.length) return;
+  curIdx=i; masks=[]; draft=null; pts=[]; drag=null; picked=-1; setOverlay=null; _owner=null;
+  clearPrediction(); updateCommitBtn();
+  document.getElementById("imgname").textContent=DS[i].name;
+  img=new Image();
+  img.onload=()=>{cImg.width=img.naturalWidth;cImg.height=img.naturalHeight;render();if(tool==="all")runSegmentAll();};
+  img.onerror=()=>flash("图片加载失败");
+  img.src=API+DS[i].url;
+  renderFilmstrip(); flash(toolHint());
+}
+function nextImage(){
+  if(!DS.length) return;
+  for(let k=1;k<=DS.length;k++){const i=(curIdx+k)%DS.length;if(!DS[i].labeled){selectImage(i);return;}}
+  selectImage((curIdx+1)%DS.length);
+}
+
+/* ---------------- memory panel ---------------- */
+async function refreshMemory(){
+  try{
+    const [dist,stats]=await Promise.all([j("/memory/distribution"),j("/stats")]);
+    Object.keys(dist.classes||{}).forEach(c=>{if(!classes.includes(c))classes.push(c);});
+    document.getElementById("memTotal").textContent=dist.total||0;
+    const max=Math.max(1,...Object.values(dist.classes||{}));
+    document.getElementById("memBars").innerHTML=
+      Object.entries(dist.classes||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
+        `<div class="bar"><div class="lbl">${k}</div><div class="track"><div class="fill" style="width:${100*v/max}%;background:${colorFor(k)}"></div></div><div class="cnt">${v}</div></div>`
+      ).join("")||'<span class="muted">空 — 标几张就长出来了</span>';
+    document.getElementById("statusline").textContent=
+      `${base(stats.dino_variant)} · SAM ${stats.sam_variant} · ${stats.memory_backend} · auto≥${stats.thresholds.auto_apply} suggest≥${stats.thresholds.suggest}`;
+    renderClasses();
+  }catch(err){ /* model may still be loading */ }
+}
+
+/* ---------------- tools / events ---------------- */
+function setTool(t){
+  tool=t; drag=null; draft=null; pts=[]; picked=-1;
+  document.getElementById("toolPoint").classList.toggle("sel",t==="point");
+  document.getElementById("toolBox").classList.toggle("sel",t==="box");
+  document.getElementById("toolAll").classList.toggle("sel",t==="all");
+  cImg.style.cursor=(t==="point"?"crosshair":t==="box"?"cell":"default");
+  if(img.naturalWidth) render();
+  clearPrediction(); updateCommitBtn(); flash(toolHint());
+  if(t==="all" && !masks.some(m=>m.source==="auto")) runSegmentAll();
+}
+cImg.addEventListener("click",e=>{
+  if(busy||curIdx<0) return; const p=toPix(e);
+  if(tool==="point"){ pts.push({x:p.x,y:p.y,label:1}); render(); segmentDraft(); }
+  else if(tool==="all"){
+    // mid-draft → keep adding positive points to refine THIS new mask;
+    // otherwise click a labeled mask to re-class it, or empty space to start one.
+    if(pts.length||draft){ pts.push({x:p.x,y:p.y,label:1}); render(); segmentDraft(); }
+    else if(!pickSetMaskAt(p.x,p.y)){ pts=[{x:p.x,y:p.y,label:1}]; render(); segmentDraft(); }
+  }
+});
+cImg.addEventListener("contextmenu",e=>{ e.preventDefault(); if(busy||curIdx<0)return;
+  const p=toPix(e);
+  // 排除点(负点)。point 模式随时可用;all 模式正在精修某个 draft 时也可用。
+  if(tool==="point" || (tool==="all" && (pts.length||draft))){
+    if(tool==="point" && !pts.some(pt=>pt.label===1)){
+      // SAM 的负点需要先有正点才有东西可扣减;否则给提示而非沉默失败。
+      flash("右键是『排除点』:先左键点中物体,再用右键抠掉多余部分"); return;
+    }
+    pts.push({x:p.x,y:p.y,label:0}); render(); segmentDraft();
+  } else if(tool==="all"){
+    // 全分割模式、没有进行中的 draft 时,过去右键是“死的”(必须先左键)。改成:右键点在某个
+    // 已分出的 mask 上 = 直接抠掉它的一块——把该 mask 转成可编辑 draft(正点取它质心 + 这个负点)。
+    const i=maskIdxAt(p.x,p.y);
+    if(i>=0){
+      const m=masks[i]; selectedLabel=m.label;
+      pts=[{x:Math.round(m.cx),y:Math.round(m.cy),label:1},{x:p.x,y:p.y,label:0}];
+      masks.splice(i,1); picked=-1; recomputeOwnership(); render(); segmentDraft();
+    } else {
+      flash("右键是『排除点』:先左键点中要补的物体,再右键抠掉多余部分");
+    }
+  }});
+cImg.addEventListener("mousedown",e=>{ if(tool!=="box")return; const p=toPix(e); drag={x0:p.x,y0:p.y,x1:p.x,y1:p.y}; });
+cImg.addEventListener("mousemove",e=>{ if(!drag)return; const p=toPix(e); drag.x1=p.x; drag.y1=p.y; render(); });
+window.addEventListener("mouseup",e=>{
+  if(!drag)return; const p=toPix(e); drag.x1=p.x; drag.y1=p.y;
+  const bb=[Math.min(drag.x0,drag.x1),Math.min(drag.y0,drag.y1),Math.max(drag.x0,drag.x1),Math.max(drag.y0,drag.y1)];
+  drag=null; render();
+  if(bb[2]-bb[0]>4 && bb[3]-bb[1]>4) doDraft({type:"box",bbox:bb});
+});
+window.addEventListener("keydown",e=>{
+  if(!document.getElementById("guide").classList.contains("hidden")){ if(e.key==="Escape")closeGuide(); return; }
+  if(e.target.tagName==="INPUT"){ if(e.key==="Enter"){document.getElementById("addBtn").click();} return; }
+  if(e.key==="Enter"){ e.preventDefault(); commitImage(); }
+  else if(e.key===" "){ e.preventDefault(); addDraft(); }
+  else if(e.key==="ArrowRight"){ if(DS.length)selectImage((curIdx+1)%DS.length); }
+  else if(e.key==="ArrowLeft"){ if(DS.length)selectImage((curIdx-1+DS.length)%DS.length); }
+  else if(e.key==="u"){ nextImage(); }
+  else if(e.key==="b"){ setTool("box"); }
+  else if(e.key==="p"){ setTool("point"); }
+  else if(e.key==="e"){ setTool("all"); }
+  else if(e.key==="c"||e.key==="C"||e.key==="Escape"){
+    if(tool==="all" && !(pts.length||draft)){ runSegmentAll(); }  // re-run only when not mid-draft
+    else { clearDraft(); }                                        // else cancel the in-progress mask
+  }
+  else if(/^[1-9]$/.test(e.key)){ const i=+e.key-1; if(classes[i]) chooseLabel(classes[i]); }
+});
+document.getElementById("toolPoint").onclick=()=>setTool("point");
+document.getElementById("toolBox").onclick=()=>setTool("box");
+document.getElementById("toolAll").onclick=()=>setTool("all");
+document.getElementById("addDraftBtn").onclick=addDraft;
+document.getElementById("commitImgBtn").onclick=commitImage;
+document.getElementById("addBtn").onclick=()=>{const inp=document.getElementById("newcls");addClass(inp.value);inp.value="";};
+document.getElementById("onlyUnlabeled").addEventListener("change",e=>{onlyUnlabeled=e.target.checked;renderFilmstrip();});
+document.getElementById("resetBtn").onclick=resetAll;
+
+/* ---------------- init ---------------- */
+async function reloadDataset(selectName){
+  const d=await j("/api/dataset");
+  DS=d.images||[];
+  document.getElementById("dsdir").textContent=d.dir;
+  updateProgress(); renderFilmstrip();
+  let idx = selectName ? DS.findIndex(x=>x.id===selectName) : -1;
+  if(idx<0){ idx=DS.findIndex(x=>!x.labeled); if(idx<0)idx=0; }
+  const empty=!DS.length;
+  document.getElementById("emptyState").classList.toggle("hidden",!empty);
+  cImg.style.display=empty?"none":"block";
+  if(!empty) selectImage(idx);
+  else flash("还没有图片 — 点画布中间的大按钮，上传你自己的图片开始标注");
+}
+
+async function uploadFiles(files){
+  // 支持单张/多张/整个文件夹:文件夹会带进非图片文件,这里按 MIME 或扩展名滤掉。
+  const raw=[...files];
+  const IMG=/\.(jpe?g|png|bmp|webp|gif)$/i;
+  files=raw.filter(f=>f && ((f.type&&f.type.startsWith("image/"))||IMG.test(f.name||f.webkitRelativePath||"")));
+  console.log("[SnowLabel] uploadFiles 收到", raw.length, "个文件 → 过滤出", files.length, "张图");
+  if(!files.length){ flash(raw.length? `选中的 ${raw.length} 个文件里没有图片(支持 jpg/png/bmp/webp/gif)` : "没选到文件"); return; }
+  const total=files.length; let done=0, ok=0, last=null;
+  flash(`上传中… 0/${total}`);
+  // 并发上传(文件夹可能上百张),失败的单张跳过不中断整批。
+  let i=0;
+  async function worker(){
+    while(i<files.length){
+      const f=files[i++];
+      const fd=new FormData(); fd.append("file", f);
+      try{ const r=await j("/api/upload",{method:"POST",body:fd}); ok++; last=r.id; }
+      catch(err){}
+      flash(`上传中… ${++done}/${total}`);
+    }
+  }
+  await Promise.all(Array.from({length:Math.min(5,total)}, worker));
+  if(ok){ await reloadDataset(last); flash(`上传了 ${ok}/${total} 张图 — 点物体开始标注`); }
+  else flash("上传失败:一张都没成功(可能太大>12MB 或格式不支持)");
+}
+
+/* ---------------- 一键示例图 ---------------- */
+async function loadSamples(btn){
+  if(busy) return;
+  if(btn) btn.disabled=true;
+  flash("载入示例鸟图中…");
+  try{
+    const r=await j("/api/load_samples",{method:"POST"});
+    SAMPLE_CLASSES.forEach(c=>{ if(!classes.includes(c))classes.push(c); });
+    renderClasses();
+    await reloadDataset();
+    flash(`已载入 ${r.copied} 张示例鸟图 — 点物体选类入库,同一种鸟标到第 3~4 只就会自动认出`);
+  }catch(err){ flash("载入示例失败: "+err.message); }
+  if(btn) btn.disabled=false;
+}
+
+/* ---------------- 重新开始:清空我这次的图 + 记忆,回到全新状态 ---------------- */
+async function resetAll(){
+  if(busy) return;
+  if(!confirm("确定清空你这次的所有标注和上传的图片、从零开始吗？\n（只影响你自己，不影响别人）")) return;
+  flash("重置中…");
+  try{
+    const r=await j("/api/reset",{method:"POST"});
+    classes=[...DEFAULT_CLASSES]; selectedLabel=null; ahaShown=false;
+    masks=[]; draft=null; pts=[]; picked=-1; curIdx=-1;
+    await reloadDataset(); await refreshMemory(); renderClasses(); updateCommitBtn();
+    flash(`已重新开始:清掉 ${r.deleted_images} 张图 + ${r.removed_memory} 条记忆 — 现在是全新的你`);
+  }catch(err){ flash("重置失败: "+err.message); }
+}
+
+/* ---------------- 啊哈时刻 toast(模型首次靠记忆自动认出物体时弹一下) ---------------- */
+let ahaShown=false;
+function toast(msg,ms){
+  const t=document.getElementById("toast"); if(!t)return;
+  t.textContent=msg; t.classList.add("show");
+  clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("show"), ms||4200);
+}
+function maybeAha(){
+  if(ahaShown) return; ahaShown=true;
+  toast("🎉 它学会了！这个标签是模型靠雪球记忆自动认出来的 —— 越标越准");
+}
+
+async function init(){
+  setTool("point"); renderClasses(); updateCommitBtn();
+  const main=document.getElementById("uploadMain"), menu=document.getElementById("uploadMenu");
+  const fi=document.getElementById("fileInput"), di=document.getElementById("dirInput");
+  if(main&&menu){
+    main.onclick=e=>{ e.stopPropagation(); menu.classList.toggle("hidden"); };
+    menu.onclick=e=>e.stopPropagation();
+    document.getElementById("pickFiles").onclick=()=>{ menu.classList.add("hidden"); console.log("[SnowLabel] 点了:选择图片"); fi.click(); };
+    document.getElementById("pickDir").onclick=()=>{ menu.classList.add("hidden"); console.log("[SnowLabel] 点了:选择文件夹"); di.click(); };
+    const ps=document.getElementById("pickSamples"); if(ps)ps.onclick=()=>{ menu.classList.add("hidden"); loadSamples(ps); };
+    document.addEventListener("click",()=>menu.classList.add("hidden"));
+  }
+  // 关键修复:先把 FileList 快照成数组,再清空 input。否则 e.target.value="" 会把
+  // 同一个 FileList 引用一并清空,uploadFiles 收到的就是空 → 表现为"点了没反应"。
+  const onPick=e=>{ const fs=[...e.target.files]; e.target.value=""; console.log("[SnowLabel] onchange 选中", fs.length, "个文件"); uploadFiles(fs); };
+  if(fi) fi.onchange=onPick;
+  if(di) di.onchange=onPick;
+  flash("加载数据集与模型(首次约需十几秒载入 SAM/DINO)…");
+  try{
+    await reloadDataset();
+  }catch(err){ flash("无法连接后端: "+err.message+" — 是否已 python -m snowlabel.server ?"); }
+  await refreshMemory();
+}
+
+/* ---------------- onboarding guide ---------------- */
+function openGuide(){ document.getElementById("guide").classList.remove("hidden"); }
+function closeGuide(){ document.getElementById("guide").classList.add("hidden"); try{localStorage.setItem("snow_onboarded","1");}catch(e){} }
+function setupGuide(){
+  const guide=document.getElementById("guide");
+  document.getElementById("guideClose").onclick=closeGuide;
+  document.getElementById("guideStart").onclick=closeGuide;
+  guide.addEventListener("click",e=>{ if(e.target===guide)closeGuide(); });   // 点遮罩关闭
+  document.getElementById("helpBtn").onclick=openGuide;
+  const eh=document.getElementById("emptyHelp"); if(eh)eh.onclick=openGuide;
+  const eu=document.getElementById("emptyUpload"); if(eu)eu.onclick=()=>document.getElementById("fileInput").click();
+  const esm=document.getElementById("emptySample"); if(esm)esm.onclick=()=>loadSamples(esm);
+  let seen=false; try{seen=!!localStorage.getItem("snow_onboarded");}catch(e){}
+  if(!seen) openGuide();   // 首次访问自动弹一次
+}
+setupGuide();
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnowLabel Memory Inspector</title>
+<style>
+  :root{--bg:#0f1115;--card:#1a1d24;--fg:#e6e8eb;--muted:#9aa0a8;--accent:#4da3ff;--line:#262a33;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg)}
+  header{padding:18px 28px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}
+  header h1{font-size:18px;margin:0;font-weight:600}
+  header .snow{font-size:22px}
+  .sub{color:var(--muted);font-size:13px;margin-top:3px}
+  main{padding:24px 28px;max-width:1080px;margin:0 auto}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .card .k{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+  .card .v{font-size:24px;font-weight:600;margin-top:6px}
+  h2{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:26px 0 12px}
+  .bar{display:flex;align-items:center;gap:10px;margin:6px 0}
+  .bar .lbl{width:64px;font-size:13px}
+  .bar .track{flex:1;background:var(--line);border-radius:6px;height:18px;overflow:hidden}
+  .bar .fill{height:100%;border-radius:6px;transition:width .4s}
+  .bar .cnt{width:36px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:500}
+  .chip{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12px;color:#fff}
+  .v-yes{color:#52c41a}.v-no{color:#777}
+  button{background:var(--accent);border:0;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px}
+  button.ghost{background:var(--line);color:var(--fg)}
+  .row{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+  select{background:var(--line);color:var(--fg);border:1px solid #333;border-radius:8px;padding:7px 10px}
+  .err{color:#ff6b6b;font-size:13px;margin:10px 0}
+  .muted{color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <span class="snow">&#10052;&#65039;</span>
+  <div>
+    <h1>SnowLabel Memory Inspector</h1>
+    <div class="sub" id="sub">connecting&hellip;</div>
+  </div>
+</header>
+<main>
+  <div class="cards" id="cards"></div>
+  <h2>Class distribution</h2>
+  <div id="dist"></div>
+  <h2>Entries</h2>
+  <div class="row">
+    <select id="filter"><option value="">all classes</option></select>
+    <button class="ghost" onclick="load()">&#8635; Refresh</button>
+    <span class="muted" id="count"></span>
+  </div>
+  <div id="err" class="err"></div>
+  <table>
+    <thead><tr><th>ID</th><th>Class</th><th>Image</th><th>Verified</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</main>
+<script>
+const API = location.origin;
+const COLORS = {cat:"#FF6F00",dog:"#1976D2",car:"#388E3C",bird:"#7B1FA2",bottle:"#D32F2F",other:"#616161"};
+const base = s => (s||"").split(/[\\/]/).pop();
+async function j(path,opts){const r=await fetch(API+path,opts);if(!r.ok)throw new Error(path+" -> "+r.status);return r.json();}
+async function load(){
+  document.getElementById("err").textContent="";
+  try{
+    const [stats,dist] = await Promise.all([j("/stats"), j("/memory/distribution")]);
+    document.getElementById("sub").textContent =
+      `${base(stats.dino_variant)} · SAM ${stats.sam_variant} · ${stats.memory_backend} · ${stats.predict_mode}`;
+    const total = dist.total||0;
+    document.getElementById("cards").innerHTML = `
+      <div class="card"><div class="k">Entries</div><div class="v">${total}</div></div>
+      <div class="card"><div class="k">Classes</div><div class="v">${Object.keys(dist.classes||{}).length}</div></div>
+      <div class="card"><div class="k">Embedding dim</div><div class="v">${dist.dim||"&ndash;"}</div></div>
+      <div class="card"><div class="k">Auto / Suggest thr</div><div class="v">${stats.thresholds.auto_apply} / ${stats.thresholds.suggest}</div></div>`;
+    const max = Math.max(1, ...Object.values(dist.classes||{}));
+    document.getElementById("dist").innerHTML =
+      Object.entries(dist.classes||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
+        `<div class="bar"><div class="lbl">${k}</div><div class="track"><div class="fill" style="width:${100*v/max}%;background:${COLORS[k]||"#888"}"></div></div><div class="cnt">${v}</div></div>`
+      ).join("") || '<span class="muted">memory is empty &mdash; go label something!</span>';
+    const fil = document.getElementById("filter");
+    const cur = fil.value;
+    fil.innerHTML = '<option value="">all classes</option>' +
+      Object.keys(dist.classes||{}).map(k=>`<option ${k===cur?"selected":""}>${k}</option>`).join("");
+    const q = fil.value ? `/memory/by-class/${encodeURIComponent(fil.value)}` : "/memory?limit=300";
+    const data = await j(q);
+    const entries = data.entries||[];
+    document.getElementById("count").textContent = `${entries.length} shown`;
+    document.getElementById("rows").innerHTML = entries.map(e=>
+      `<tr><td>${e.entry_id}</td><td><span class="chip" style="background:${COLORS[e.label]||"#888"}">${e.label}</span></td>`+
+      `<td class="muted">${base(e.image_uri)}</td><td class="${e.verified?"v-yes":"v-no"}">${e.verified?"&#10003;":"&mdash;"}</td></tr>`
+    ).join("") || '<tr><td colspan="4" class="muted">no entries</td></tr>';
+  }catch(err){
+    document.getElementById("err").textContent =
+      "Cannot reach SnowLabel server at "+API+" — is `python -m snowlabel.server` running? ("+err.message+")";
+  }
+}
+document.getElementById("filter").addEventListener("change", load);
+load();
+</script>
+</body>
+</html>

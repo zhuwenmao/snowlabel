@@ -1,0 +1,56 @@
+<!--
+  SnowLabel — Label Studio project template.
+
+  Copy this XML into a new Label Studio project's "Labeling Interface" tab.
+  Add or remove <Label> entries to fit your dataset. The <Choice> list must
+  mirror the <Label> list so that the "confirm class" dropdown shows the
+  same options as the brush color picker.
+
+  Interactive flow:
+    1. Click anywhere on the image (KeyPoint, smart) -> SAM segments,
+       SnowLabel suggests a class.
+    2. Or drag a box (Rectangle, smart) -> SAM segments inside it.
+    3. Or click "Get prediction" (Auto) -> all masks for the image.
+    4. Accept or correct the label; save.
+    5. On save, the webhook sends the (mask, label) pair to the backend
+       which appends it to the snowball memory.
+-->
+<View>
+  <Header value="SnowLabel — click on an object, SAM gives you the mask, the snowball memory predicts the class."/>
+
+  <Image name="image" value="$image" zoom="true" zoomControl="true" rotateControl="false" />
+
+  <!--
+    BrushLabels carries both the mask and the predicted class.
+    name="tag" must match cfg_brush in snowlabel/server.py.
+  -->
+  <BrushLabels name="tag" toName="image">
+    <Label value="cat"     background="#FF6F00"/>
+    <Label value="dog"     background="#1976D2"/>
+    <Label value="car"     background="#388E3C"/>
+    <Label value="bird"    background="#7B1FA2"/>
+    <Label value="bottle"  background="#D32F2F"/>
+    <Label value="other"   background="#616161"/>
+  </BrushLabels>
+
+  <!--
+    Smart point / box prompts. `smart="true"` flags these as ML-callable.
+    The KeyPoint with `smart="true"` is the click trigger for our backend.
+  -->
+  <KeyPoint name="point" toName="image" smartOnly="true" strokeWidth="3" />
+  <Rectangle name="rect" toName="image" smartOnly="true" />
+
+  <!--
+    Predicted-class dropdown. The backend pre-fills this when confidence
+    is high; the user confirms or changes it. name="choice" must match
+    cfg_choice in snowlabel/server.py.
+  -->
+  <Choices name="choice" toName="image" choice="single-radio" showInLine="true">
+    <Choice value="cat"/>
+    <Choice value="dog"/>
+    <Choice value="car"/>
+    <Choice value="bird"/>
+    <Choice value="bottle"/>
+    <Choice value="other"/>
+  </Choices>
+</View>
