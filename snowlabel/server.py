@@ -427,25 +427,34 @@ def preannotate_endpoint(req: PreannotateRequest) -> dict:
 # ----------------------------------------------------------------------
 # SnowLabel-specific routes (memory inspector / admin)
 # ----------------------------------------------------------------------
+def _static_html(name: str, *, no_store: bool = True) -> HTMLResponse:
+    from pathlib import Path as _P
+    html = _P(__file__).parent / "static" / name
+    headers = {}
+    if no_store:
+        headers = {"Cache-Control": "no-store, no-cache, must-revalidate", "Pragma": "no-cache"}
+    return HTMLResponse(html.read_text(encoding="utf-8"), headers=headers)
+
+
 @app.get("/", response_class=HTMLResponse)
+def home() -> HTMLResponse:
+    """Serve the short public demo landing page."""
+    return _static_html("home.html")
+
+
+@app.get("/try", response_class=HTMLResponse)
 @app.get("/label", response_class=HTMLResponse)
+@app.get("/labeler", response_class=HTMLResponse)
 def labeler() -> HTMLResponse:
     """Serve the canvas labeling tool — the primary SnowLabel UI.
     no-store:demo 前端迭代频繁,禁止浏览器/CDN 缓存此页,免得改了前端用户却拿到旧版。"""
-    from pathlib import Path as _P
-    html = _P(__file__).parent / "static" / "labeler.html"
-    return HTMLResponse(
-        html.read_text(encoding="utf-8"),
-        headers={"Cache-Control": "no-store, no-cache, must-revalidate", "Pragma": "no-cache"},
-    )
+    return _static_html("labeler.html")
 
 
 @app.get("/inspector", response_class=HTMLResponse)
-def inspector() -> str:
+def inspector() -> HTMLResponse:
     """Serve the Memory Inspector single-page UI (reads the /memory/* APIs)."""
-    from pathlib import Path as _P
-    html = _P(__file__).parent / "static" / "inspector.html"
-    return html.read_text(encoding="utf-8")
+    return _static_html("inspector.html")
 
 
 @app.get("/stats")

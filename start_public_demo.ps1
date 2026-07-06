@@ -97,32 +97,35 @@ if ($proxy) { Say "检测到本地代理：$proxy" Green
               $env:HTTPS_PROXY=$proxy; $env:HTTP_PROXY=$proxy; $env:ALL_PROXY=$proxy }
 else { Say "没检测到本地代理——cloudflared 直连国内大概率失败。请先打开你的科学上网工具再重跑。" Yellow }
 
-# --- 5) 起 cloudflared 隧道，等公网链接 ---------------------------------
+# --- 5) 起 cloudflared 命名隧道（固定网址 snowlabel.zhuwenmao.com，永久不变）---
+#  一次性配置已完成：~/.cloudflared 里有 cert.pem + <tunnelID>.json，DNS 已把
+#  snowlabel.zhuwenmao.com CNAME 到隧道 snowlabel。这里只是把它跑起来，URL 不再变。
+#  仍需代理：QUIC 走不通时 cloudflared 回退 HTTP/2(走代理)连 argotunnel。
+$fixedUrl = "https://snowlabel.zhuwenmao.com"
 $err = Join-Path $root "data\cache\cf.err.log"
 $out = Join-Path $root "data\cache\cf.out.log"
 Remove-Item $err,$out -ErrorAction SilentlyContinue
-Say "建立公网隧道…" Cyan
+Say "启动命名隧道 snowlabel → $fixedUrl …" Cyan
 Start-Process -FilePath $cf `
-  -ArgumentList "tunnel","--url","http://localhost:9090","--protocol","http2","--no-autoupdate" `
+  -ArgumentList "tunnel","--edge-ip-version","4","--no-prechecks","--protocol","quic","--no-autoupdate","run","--url","http://localhost:9090","snowlabel" `
   -RedirectStandardOutput $out -RedirectStandardError $err -WindowStyle Minimized
-$url = $null
+# 等隧道注册上连接
+$connected = $false
 for ($i=0; $i -lt 30; $i++) {
   Start-Sleep -Seconds 1
-  $txt = (Get-Content $err -Raw -EA SilentlyContinue)+(Get-Content $out -Raw -EA SilentlyContinue)
-  $m = [regex]::Match($txt,'https://[a-z0-9]+(-[a-z0-9]+)+\.trycloudflare\.com')
-  if ($m.Success) { $url=$m.Value; break }
+  if ((Get-Content $err -Raw -EA SilentlyContinue) -match 'Registered tunnel connection') { $connected=$true; break }
 }
 
 Write-Host ""
-if ($url) {
-  Say "============================================================" Green
-  Say "  公网链接（发给别人，用浏览器直接打开即可）：" Green
-  Say "    $url" Green
-  Say "  本机标注界面： http://localhost:9090/" Gray
-  Say "  记忆面板：     http://localhost:9090/inspector" Gray
-  Say "============================================================" Green
-  Say "  关闭：把弹出的两个最小化窗口关掉即可。" Gray
+Say "============================================================" Green
+Say "  固定公网链接（永久不变，发给别人直接打开）：" Green
+Say "    $fixedUrl" Green
+Say "  本机标注界面： http://localhost:9090/" Gray
+Say "  记忆面板：     http://localhost:9090/inspector" Gray
+Say "============================================================" Green
+if ($connected) {
+  Say "  隧道已连接 ✔  关闭：把弹出的两个最小化窗口关掉即可。" Gray
 } else {
-  Say "隧道没建起来。99% 是代理没开/端口没命中。打开科学上网工具后重跑本脚本；" Red
-  Say "或看 data\cache\cf.err.log 里的报错。" Red
+  Say "  隧道还在连接中——十几秒后访问上面网址即可；若长时间不通，多半是代理没开，" Yellow
+  Say "  打开科学上网工具后重跑本脚本；或看 data\cache\cf.err.log 里的报错。" Yellow
 }

@@ -14,8 +14,23 @@ $datadir   = Join-Path $root "data\mariadb_data"
 $minio     = Join-Path $root "data\cache\minio.exe"
 $miniodata = Join-Path $root "data\minio_data"
 
+function NormalizePathEnv {
+  # Some shells inject both Path and PATH. PowerShell's Env: provider and
+  # Start-Process treat environment keys case-insensitively and can throw.
+  $pathValue = [System.Environment]::GetEnvironmentVariable("Path", "Process")
+  if (-not $pathValue) {
+    $pathValue = [System.Environment]::GetEnvironmentVariable("PATH", "Process")
+  }
+  [System.Environment]::SetEnvironmentVariable("PATH", $null, "Process")
+  if ($pathValue) {
+    [System.Environment]::SetEnvironmentVariable("Path", $pathValue, "Process")
+  }
+}
+
 function PortUp($p){ [bool](Get-NetTCPConnection -LocalPort $p -State Listen -ErrorAction SilentlyContinue) }
 function Say($m,$c="Gray"){ Write-Host $m -ForegroundColor $c }
+
+NormalizePathEnv
 
 if ($Fresh) {
   Say "[-Fresh] 清空所有缓存数据(MariaDB / MinIO / Milvus 缓存)…" Yellow

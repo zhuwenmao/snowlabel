@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnowLabel · 越标越准的自动标注</title>
+<style>
+  :root{--bg:#050609;--panel:#11141b;--panel2:#171b24;--fg:#f4f6fb;--muted:#a2a9b6;--line:#272d39;
+        --accent:#3880F3;--accent2:#FB73A5;--auto:#28D232;--suggest:#F0AA19;
+        --grad:linear-gradient(135deg,#595FEF 0%,#FB73A5 100%)}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:"Inter","Segoe UI Variable","Segoe UI","Microsoft YaHei UI","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .hero{min-height:86svh;position:relative;overflow:hidden;background:#050609;padding-bottom:42px}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    linear-gradient(115deg,rgba(56,128,243,.12),transparent 38%),
+    linear-gradient(24deg,transparent 55%,rgba(251,115,165,.08));
+    pointer-events:none}
+  nav{height:72px;display:flex;align-items:center;gap:24px;padding:0 max(32px,6vw);position:relative;z-index:3}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+  .snow{font-size:20px}
+  .navlinks{margin-left:auto;display:flex;align-items:center;gap:26px;color:var(--fg);font-size:14px;font-weight:700}
+  .navlinks a{opacity:.9}
+  .navlinks a:hover{text-decoration:underline}
+  .heroScene{position:relative;z-index:1;width:min(1040px,calc(100% - 96px));height:178px;margin:56px auto 0}
+  .mockVideo{position:absolute;inset:0;border-radius:22px;overflow:hidden;background:#1a1f2b;border:1px solid rgba(255,255,255,.08);box-shadow:0 24px 70px rgba(0,0,0,.42)}
+  .mockVideo::before{content:"";position:absolute;inset:0;background:
+    linear-gradient(120deg,rgba(255,255,255,.08),transparent 28%),
+    linear-gradient(180deg,#252d3b,#11151e 62%,#080a0f)}
+  .subject{position:absolute;left:43%;top:23%;width:14%;height:58%;border:3px solid #28D232;border-radius:46% 44% 38% 42%;box-shadow:0 0 0 999px rgba(0,0,0,.28),0 0 28px rgba(40,210,50,.38)}
+  .subject::before{content:"学过类别";position:absolute;left:50%;top:-31px;transform:translateX(-50%);background:rgba(0,0,0,.72);color:#28D232;border:1px solid rgba(40,210,50,.45);border-radius:999px;padding:5px 11px;font-weight:800;font-size:12px;white-space:nowrap}
+  .rays{position:absolute;inset:0;background:repeating-conic-gradient(from 8deg at 50% 50%,rgba(255,255,255,.18) 0deg 9deg,transparent 9deg 24deg);mix-blend-mode:screen;opacity:.22}
+  .hud{position:absolute;right:22px;bottom:18px;display:grid;gap:8px;width:min(290px,34vw)}
+  .hudrow{background:rgba(8,10,15,.72);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;backdrop-filter:blur(10px)}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--auto);box-shadow:0 0 18px var(--auto)}
+  .dot.s{background:var(--suggest);box-shadow:0 0 18px var(--suggest)}
+  .hudrow b{font-size:13px}.hudrow span{margin-left:auto;color:var(--muted);font-size:12px}
+  .copy{position:relative;z-index:2;width:min(860px,calc(100% - 96px));margin:62px auto 0;text-align:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:800;margin-bottom:20px;text-transform:uppercase;letter-spacing:0}
+  .eyebrow::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--auto);box-shadow:0 0 16px var(--auto)}
+  h1{font-size:72px;line-height:1.05;margin:0 auto 20px;font-weight:800;letter-spacing:0;max-width:860px}
+  .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{font-size:24px;line-height:1.42;color:var(--fg);margin:0 auto 32px;max-width:720px}
+  .actions{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+  .primary{display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:0 30px;border-radius:999px;border:2px solid transparent;background:linear-gradient(#050609,#050609) padding-box,var(--grad) border-box;font-weight:800;font-size:17px;box-shadow:0 0 34px rgba(89,95,239,.24)}
+  .primary:hover{background:var(--grad)}
+  .secondary{font-size:15px;color:var(--muted);font-weight:700}
+  .secondary:hover{color:var(--fg);text-decoration:underline}
+  .section{background:#0b0d12;border-top:1px solid var(--line);padding:68px 32px 84px}
+  .inner{max-width:1180px;margin:0 auto}
+  .section h2{font-size:30px;line-height:1.2;margin:0 0 30px}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:28px;min-height:188px}
+  .step .n{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;background:var(--panel2);color:var(--fg);font-weight:800;margin-bottom:24px}
+  .step b{display:block;font-size:19px;margin-bottom:10px}
+  .step p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}
+  footer{background:#050609;border-top:1px solid var(--line);padding:24px 28px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  @media (max-width:760px){
+    nav{height:66px;padding:0 20px}.navlinks{gap:14px;font-size:13px}.navlinks a:nth-child(2){display:none}
+    .hero{min-height:88svh;padding-bottom:32px}
+    .copy{width:calc(100% - 40px);margin:46px auto 0;text-align:left}
+    .eyebrow{margin-bottom:18px}
+    h1{font-size:44px;line-height:1.08;margin-left:0;margin-right:0}
+    .lead{font-size:18px;margin-left:0;margin-right:0}
+    .actions{justify-content:flex-start}
+    .heroScene{width:calc(100% - 40px);height:190px;margin-top:48px}
+    .mockVideo{border-radius:18px}
+    .hud{display:none}
+    .steps{grid-template-columns:1fr}
+    .section{padding:54px 20px 68px}
+  }
+</style>
+</head>
+<body>
+<main class="hero">
+  <nav>
+    <a class="brand" href="/"><span class="snow">&#10052;&#65039;</span><span>SnowLabel</span></a>
+    <div class="navlinks">
+      <a href="/try?guide=1">立即尝试 ↗</a>
+      <a href="/inspector">记忆面板 ↗</a>
+    </div>
+  </nav>
+  <section class="copy">
+    <div class="eyebrow">渐进式自动标注 demo</div>
+    <h1><span class="grad">越标越准</span>的自动标注</h1>
+    <p class="lead">点一下抠出物体，确认类别后存进雪球记忆。下一张遇到相似物体，SnowLabel 会自动认出来。</p>
+    <div class="actions">
+      <a class="primary" href="/try?guide=1">立即尝试</a>
+      <a class="secondary" href="#how">看 20 秒流程</a>
+    </div>
+  </section>
+  <div class="heroScene" aria-hidden="true">
+    <div class="mockVideo">
+      <div class="rays"></div>
+      <div class="subject"></div>
+      <div class="hud">
+        <div class="hudrow"><i class="dot"></i><b>自动命中</b><span>学过的直接认出</span></div>
+        <div class="hudrow"><i class="dot s"></i><b>建议确认</b><span>不确定的交给你</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+<section class="section" id="how">
+  <div class="inner">
+    <h2>20 秒闭环</h2>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><b>选图并点物体</b><p>上传图片或载入示例图，SAM 自动抠出当前物体的轮廓。</p></div>
+      <div class="step"><span class="n">2</span><b>确认类别</b><p>选择类别或新建类别，只把新增和改错的样本存进记忆。</p></div>
+      <div class="step"><span class="n">3</span><b>下一张自动复用</b><p>标过几个同类样本后，全分割会自动给学过的物体打标签。</p></div>
+    </div>
+  </div>
+</section>
+<footer>
+  <span>SnowLabel demo</span>
+  <span>公网试用会按浏览器隔离上传图片和记忆。</span>
+</footer>
+</body>
+</html>
