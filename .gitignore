@@ -35,6 +35,7 @@ checkpoints/
 #   二进制 + milvus-lite)、data/uploads(访客上传的图,隐私)、data/memory*(学到的
 #   向量记忆,与具体权重指纹绑定且含访客数据)、data/*_data(数据库落盘)。
 data/
+/demo_manifest.json
 
 # --- 基础设施 / 可执行二进制 ---
 *.exe
@@ -43,6 +44,8 @@ data/
 # --- 本地状态 & 密钥(.ls_state.json 含真实 token,务必排除) ---
 .ls_state.json
 .claude/
+.codex/
+resume_claude.bat
 *.secret
 .env
 .env.*
@@ -62,3 +65,7 @@ results/
 figures/*.png
 figures/*.pdf
 *.log
+*.jsonl
+*.sqlite
+*.sqlite3
+*.db

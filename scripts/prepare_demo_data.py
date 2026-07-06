@@ -1,9 +1,10 @@
 """Pick a small balanced COCO subset for the Label Studio snowball demo.
 
 Each of the 5 classes gets a few images where that class is prominent (big,
-non-crowd instance), copies them to demo_images/, and writes demo_manifest.json
-with an *interleaved* order (cat,dog,bird,bottle,car,cat,...) so the snowball
-curve is visible: each class's first appearance is a cold miss, later ones hit.
+non-crowd instance), copies them to demo_images/, and writes
+demo_images/demo_manifest.json with an *interleaved* order
+(cat,dog,bird,bottle,car,cat,...) so the snowball curve is visible: each
+class's first appearance is a cold miss, later ones hit.
 """
 import json
 import shutil
@@ -47,10 +48,14 @@ manifest = []
 for i in range(PER):
     for c in classes:
         if i < len(by_class[c]):
-            manifest.append({"file": by_class[c][i], "label_hint": c})
+            manifest.append({"file": by_class[c][i], "cls": c})
 
-(ROOT / "demo_manifest.json").write_text(json.dumps(manifest, indent=2))
+manifest_path = out / "demo_manifest.json"
+manifest_path.write_text(
+    json.dumps({"classes": classes, "per": PER, "order": manifest}, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)
 print(f"Copied {sum(len(v) for v in by_class.values())} images to demo_images/")
 for c in classes:
     print(f"  {c:8s}: {len(by_class[c])}")
-print(f"Manifest ({len(manifest)} tasks, interleaved) -> demo_manifest.json")
+print(f"Manifest ({len(manifest)} tasks, interleaved) -> {manifest_path.relative_to(ROOT)}")

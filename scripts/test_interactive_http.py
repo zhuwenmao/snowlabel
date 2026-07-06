@@ -9,11 +9,16 @@ import requests
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-manifest = json.loads((ROOT / "demo_manifest.json").read_text())
-catfile = next(m["file"] for m in manifest if m["label_hint"] == "cat")
-W, H = Image.open(ROOT / "demo_images" / catfile).size
-url = f"http://localhost:8081/{catfile}"
-print(f"image: {catfile} ({W}x{H})  -> {url}")
+manifest = json.loads((ROOT / "demo_images" / "demo_manifest.json").read_text(encoding="utf-8"))
+items = manifest.get("order", manifest if isinstance(manifest, list) else [])
+if not items:
+    raise SystemExit("demo_images/demo_manifest.json has no demo images")
+item = items[0]
+image_file = item["file"]
+label_hint = item.get("cls") or item.get("label_hint") or "object"
+W, H = Image.open(ROOT / "demo_images" / image_file).size
+url = f"http://localhost:8081/{image_file}"
+print(f"image: {image_file} ({W}x{H}) label={label_hint} -> {url}")
 
 body = {
     "tasks": [{"data": {"image": url}}],
