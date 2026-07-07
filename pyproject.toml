@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "snowlabel"
 version = "0.1.0"
-description = "Auto-labeling that snowballs — every correction makes the next image better."
+description = "Progressive mask auto-labeling with SAM, DINO feature memory, and FastAPI."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -15,7 +15,7 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: Apache Software License",
+    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",

@@ -44,11 +44,22 @@ data/
 # --- 本地状态 & 密钥(.ls_state.json 含真实 token,务必排除) ---
 .ls_state.json
 .claude/
+.agents/
 .codex/
 resume_claude.bat
 *.secret
 .env
 .env.*
+
+# --- 本地/历史 Markdown:保留在本机,不发布到公开仓库 ---
+AGENTS.md
+CLAUDE.md
+DEMO_GUIDE.md
+DEMO_GUIDE_CN.md
+SETUP.md
+PHASE*.md
+RESEARCH_REPORT.md
+docs/SESSION_*.md
 
 # --- Notebook 输出(用 jupytext 的 .py 进仓库,.ipynb 不进) ---
 notebooks/*.ipynb
