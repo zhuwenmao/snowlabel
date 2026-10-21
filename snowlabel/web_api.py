@@ -385,6 +385,7 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
             "dataset": sample_ds.slug,
             "dataset_title": sample_ds.title,
             "classes": [c.label for c in sample_ds.classes],
+            "recommended": list(sample_ds.recommended or (c.label for c in sample_ds.classes)),
             "copied": copied,
             "total": existing + copied,
         }

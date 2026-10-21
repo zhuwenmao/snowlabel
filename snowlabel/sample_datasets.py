@@ -39,6 +39,11 @@ class SampleDataset:
     source_dir: str
     per_class: int = 5
     style: str = ""
+    # 载入后直接给用户的「物体级」类别。classes 是按场景组织的图片文件夹,
+    # 例如「缺件槽位」是一类图,图上真正要点选标注的是零件、空槽位这些物体。
+    recommended: tuple[str, ...] = ()
+    featured: bool = False      # 首次推荐:类别直观、最容易看出越标越准
+    level: str = "进阶"
 
     def public_dict(self, project_root: Path) -> dict:
         available = self.kind == "generated" or bool(_collect_images(project_root, self))
@@ -51,6 +56,9 @@ class SampleDataset:
             "license_note": self.license_note,
             "summary": self.summary,
             "classes": [c.label for c in self.classes],
+            "recommended": list(self.recommended or (c.label for c in self.classes)),
+            "featured": self.featured,
+            "level": self.level,
             "per_class": self.per_class,
             "available": available,
             "image_count": _expected_count(project_root, self),
@@ -60,21 +68,43 @@ class SampleDataset:
 
 SAMPLE_DATASETS: tuple[SampleDataset, ...] = (
     SampleDataset(
-        slug="industrial_mvtec_ad2",
-        title="合成挑战：微小与透明缺陷",
-        group="industrial",
-        source_name="任务参考 MVTec AD 2",
-        source_url="https://www.mvtec.com/research-teaching/datasets/mvtec-ad-2",
-        license_note="内置为合成演示图；真实 MVTec AD 2 数据需按 CC BY-NC-SA 4.0 自行下载。",
-        summary="覆盖透明/重叠、暗场光照漂移、极小缺陷，比传统表面划痕更接近真实难题。",
+        slug="common_coco_vehicles",
+        title="常识物体：车辆",
+        group="common",
+        source_name="COCO common objects",
+        source_url="https://cocodataset.org/",
+        license_note="复用仓库内 demo_images 小样本；用于常识物体体验。",
+        summary="汽车、卡车、公交车，人人都认得。教几张后就能看到记忆自动认出车辆。",
         classes=(
-            SampleClass("极小缺陷", "micro_defect"),
-            SampleClass("透明重叠", "transparent_overlap"),
-            SampleClass("光照漂移", "lighting_shift"),
+            SampleClass("汽车", "car"),
+            SampleClass("卡车", "truck"),
+            SampleClass("公交车", "bus"),
         ),
-        kind="generated",
-        source_dir="data/generated_samples/industrial_mvtec_ad2/images",
-        style="ad2",
+        kind="coco_manifest",
+        source_dir="demo_images",
+        per_class=6,
+        recommended=("汽车", "卡车", "公交车"),
+        featured=True,
+        level="入门",
+    ),
+    SampleDataset(
+        slug="common_cub_birds",
+        title="鸟类细分类",
+        group="common",
+        source_name="CUB-200 local subset",
+        source_url="https://www.vision.caltech.edu/datasets/cub_200_2011/",
+        license_note="仅当本机 data/datasets/cub3_demo 存在时可用；不随公开仓库分发。",
+        summary="三种外形相近的鸟。体验细粒度类别：教几只之后，记忆能分清相似物种。",
+        classes=(
+            SampleClass("赫氏鸥", "061.Heermann_Gull"),
+            SampleClass("里海燕鸥", "143.Caspian_Tern"),
+            SampleClass("仙人掌鹪鹩", "194.Cactus_Wren"),
+        ),
+        kind="class_dirs",
+        source_dir="data/datasets/cub3_demo/images",
+        recommended=("赫氏鸥", "里海燕鸥", "仙人掌鹪鹩"),
+        featured=True,
+        level="入门",
     ),
     SampleDataset(
         slug="industrial_loco_logical",
@@ -92,6 +122,7 @@ SAMPLE_DATASETS: tuple[SampleDataset, ...] = (
         kind="generated",
         source_dir="data/generated_samples/industrial_loco_logical/images",
         style="loco",
+        recommended=("零件", "空槽位", "多余零件"),
     ),
     SampleDataset(
         slug="industrial_realiad_multiview",
@@ -109,6 +140,7 @@ SAMPLE_DATASETS: tuple[SampleDataset, ...] = (
         kind="generated",
         source_dir="data/generated_samples/industrial_realiad_multiview/images",
         style="realiad",
+        recommended=("零件", "磨损", "凹陷", "异物"),
     ),
     SampleDataset(
         slug="industrial_3d_geometry",
@@ -126,6 +158,7 @@ SAMPLE_DATASETS: tuple[SampleDataset, ...] = (
         kind="generated",
         source_dir="data/generated_samples/industrial_3d_geometry/images",
         style="geometry3d",
+        recommended=("凸起", "凹陷", "孔洞"),
     ),
     SampleDataset(
         slug="industrial_hss_iad",
@@ -143,39 +176,7 @@ SAMPLE_DATASETS: tuple[SampleDataset, ...] = (
         kind="generated",
         source_dir="data/generated_samples/industrial_hss_iad/images",
         style="hss",
-    ),
-    SampleDataset(
-        slug="common_coco_vehicles",
-        title="常识物体：车辆",
-        group="common",
-        source_name="COCO common objects",
-        source_url="https://cocodataset.org/",
-        license_note="复用仓库内 demo_images 小样本；用于常识物体体验。",
-        summary="汽车、卡车、公交车是普通用户能立即理解的类别，用来验证基础体验。",
-        classes=(
-            SampleClass("汽车", "car"),
-            SampleClass("卡车", "truck"),
-            SampleClass("公交车", "bus"),
-        ),
-        kind="coco_manifest",
-        source_dir="demo_images",
-        per_class=6,
-    ),
-    SampleDataset(
-        slug="common_cub_birds",
-        title="鸟类细分类",
-        group="common",
-        source_name="CUB-200 local subset",
-        source_url="https://www.vision.caltech.edu/datasets/cub_200_2011/",
-        license_note="仅当本机 data/datasets/cub3_demo 存在时可用；不随公开仓库分发。",
-        summary="保留原来的 3 类鸟示例，用于演示细粒度类别记忆。",
-        classes=(
-            SampleClass("赫氏鸥", "061.Heermann_Gull"),
-            SampleClass("裏海燕鸥", "143.Caspian_Tern"),
-            SampleClass("仙人掌鹪鹩", "194.Cactus_Wren"),
-        ),
-        kind="class_dirs",
-        source_dir="data/datasets/cub3_demo/images",
+        recommended=("零件", "安装孔", "毛刺", "微裂", "缺口"),
     ),
 )
 
@@ -185,7 +186,7 @@ def list_sample_datasets(project_root: Path) -> list[dict]:
 
 
 def default_sample_slug(project_root: Path) -> str:
-    for slug in ("industrial_mvtec_ad2", "common_coco_vehicles"):
+    for slug in ("common_coco_vehicles", "common_cub_birds", "industrial_loco_logical"):
         ds = get_sample_dataset(slug)
         if ds.kind == "generated" or _collect_images(project_root, ds):
             return slug
@@ -229,7 +230,8 @@ def sample_preview_paths(project_root: Path, slug: str, limit: int = 3) -> list[
 def _expected_count(project_root: Path, ds: SampleDataset) -> int:
     if ds.kind == "generated":
         return len(ds.classes) * ds.per_class
-    return sum(len(v) for v in _collect_images(project_root, ds).values())
+    # load_samples 每类最多复制 per_class 张,卡片上显示的就是实际会载入的数量
+    return sum(min(len(v), ds.per_class) for v in _collect_images(project_root, ds).values())
 
 
 def _collect_images(project_root: Path, ds: SampleDataset) -> dict[str, list[Path]]:
@@ -292,8 +294,6 @@ def _rng(*parts: object) -> random.Random:
 
 
 def _draw_sample(style: str, class_idx: int, image_idx: int, rng: random.Random) -> Image.Image:
-    if style == "ad2":
-        return _draw_ad2(class_idx, image_idx, rng)
     if style == "loco":
         return _draw_loco(class_idx, image_idx, rng)
     if style == "realiad":
@@ -341,55 +341,6 @@ def _poly(cx: int, cy: int, r: int, n: int, rot: float = 0.0) -> list[tuple[floa
         )
         for i in range(n)
     ]
-
-
-def _draw_ad2(class_idx: int, image_idx: int, rng: random.Random) -> Image.Image:
-    img = _add_noise(_base(size=(760, 520), color=(88, 92, 96)), rng, 13)
-    d = ImageDraw.Draw(img, "RGBA")
-    if class_idx == 0:
-        d.rounded_rectangle((96, 74, 664, 446), radius=22, fill=(126, 131, 135, 255), outline=(202, 205, 207, 180), width=2)
-        for y in range(106, 420, 34):
-            d.line((118, y, 642, y + rng.randint(-2, 2)), fill=(93, 98, 101, 90), width=1)
-        for x in range(122, 640, 42):
-            d.line((x, 90, x + rng.randint(-5, 5), 430), fill=(164, 168, 171, 50), width=1)
-        for _ in range(95):
-            x, y = rng.randint(130, 630), rng.randint(105, 410)
-            shade = rng.randint(82, 118)
-            d.ellipse((x - 2, y - 2, x + 2, y + 2), fill=(shade, shade, shade, 135))
-        for _ in range(4):
-            x, y = rng.randint(160, 610), rng.randint(120, 392)
-            r = rng.randint(3, 6)
-            d.ellipse((x - r, y - r, x + r, y + r), fill=(32, 34, 36, 220))
-            d.ellipse((x - r - 3, y - r - 3, x + r + 3, y + r + 3), outline=(214, 218, 221, 80), width=1)
-    elif class_idx == 1:
-        img = _add_noise(_base(size=(760, 520), color=(52, 57, 63)), rng, 8)
-        d = ImageDraw.Draw(img, "RGBA")
-        for i in range(3):
-            x0 = 120 + i * 102 + rng.randint(-18, 18)
-            y0 = 110 + i * 32 + rng.randint(-14, 14)
-            poly = [(x0, y0 + 26), (x0 + 280, y0), (x0 + 334, y0 + 208), (x0 + 42, y0 + 236)]
-            d.polygon(poly, fill=(160, 205, 220, 48), outline=(225, 246, 255, 155))
-            d.line((poly[0], poly[2]), fill=(245, 255, 255, 82), width=2)
-        for _ in range(7):
-            x, y = rng.randint(170, 610), rng.randint(140, 390)
-            d.ellipse((x - 18, y - 11, x + 21, y + 12), fill=(180, 215, 226, 42), outline=(229, 246, 250, 110), width=1)
-        x = 310 + rng.randint(-55, 60)
-        y = 235 + rng.randint(-46, 56)
-        d.line((x, y, x + 116, y + rng.randint(-28, 28)), fill=(247, 255, 255, 190), width=3)
-    else:
-        img = _add_noise(_base(size=(760, 520), color=(19, 23, 28)), rng, 8)
-        d = ImageDraw.Draw(img, "RGBA")
-        for i in range(9):
-            x = -80 + i * 118 + rng.randint(-18, 18)
-            d.polygon([(x, 0), (x + 74, 0), (x + 210, 520), (x + 92, 520)], fill=(180, 190, 210, 18 + i % 3 * 10))
-        d.rounded_rectangle((120, 92, 640, 426), radius=30, fill=(61, 67, 75, 255), outline=(142, 151, 165, 145), width=2)
-        for y in range(126, 402, 26):
-            d.line((146, y, 612, y + rng.randint(-2, 2)), fill=(84, 92, 101, 100), width=2)
-        x = rng.randint(260, 500)
-        y = rng.randint(170, 340)
-        d.ellipse((x - 46, y - 18, x + 54, y + 22), fill=(92, 96, 105, 130))
-        d.arc((x - 50, y - 22, x + 58, y + 26), 188, 22, fill=(230, 236, 245, 95), width=4)
-    return img
 
 
 def _draw_loco(class_idx: int, image_idx: int, rng: random.Random) -> Image.Image:
