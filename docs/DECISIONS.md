@@ -37,8 +37,8 @@
   开集阈值会把真 car 也一起拒掉。
 - **影响**:这是"数据好看 vs 真正好用"的活教材:单看 mIoU 选 base 会让最终用户
   收到更多贴错的 auto 标签。**监督程序正确抓住了这点**(`results/supervise/` 里
-  `sam-tiny` / `sam-base` 系列跑可对照),所以保留 tiny。详见
-  [`../results/supervise/FINDINGS.md`](../results/supervise/FINDINGS.md)。
+  `sam-tiny` / `sam-base` 系列跑可对照),所以保留 tiny。监督运行结果保存在本地
+  `results/supervise/`,体积较大未随仓库发布;复现方法见 [`../eval/PROTOCOL.md`](../eval/PROTOCOL.md)。
 
 ## D4. 特征空间指纹守卫(`features.feature_space_id`)
 

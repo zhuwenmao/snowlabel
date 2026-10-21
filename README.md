@@ -11,6 +11,8 @@ Progressive auto-annotation prototype with SAM, DINOv3 feature memory, and FastA
   <img alt="License" src="https://img.shields.io/badge/License-MIT-green">
 </p>
 
+<p align="center">English · <a href="README_CN.md">中文</a> · <a href="https://snowlabel.zhuwenmao.com">Live demo</a></p>
+
 ## Description
 
 SnowLabel is a progressive auto-annotation technical prototype for instance
@@ -56,6 +58,44 @@ uncached and 1.039 seconds cached, a 67.24x repeat-run speedup.
 Machine-readable COCO and VisA results, the fixed VisA manifest, per-sample
 predictions, curves, and failure visualizations are stored in
 [`evidence/v0.1`](evidence/v0.1).
+
+## How It Was Built
+
+Most of the implementation code in this repository was written by AI coding
+agents (Claude Code and Codex). My role was the part an agent cannot own:
+deciding what to build, how to measure it, and which changes to accept.
+
+- **Problem framing and metrics.** The north-star metric is human effort saved
+  against a SAM-only manual baseline, so the memory loop only gets credit for
+  work it actually removes. Because a wrong automatic label pollutes a dataset
+  and is worse than silence, auto-label precision is a hard gate and memory
+  pollution is tracked separately; coverage is never bought by loosening
+  thresholds.
+- **The evaluation harness is the acceptance gate.** Any change to features,
+  retrieval, thresholds, memory, models, resolution, or the part grid must pass
+  [`scripts/supervise.py`](scripts/supervise.py): hard gates plus a
+  noise-aware regression check against a baseline
+  ([`eval/PROTOCOL.md`](eval/PROTOCOL.md), [`eval/gates.json`](eval/gates.json)).
+  This is how agent-written code is accepted or rejected.
+- **Technical trade-offs** (reasoning and evidence in
+  [`docs/DECISIONS.md`](docs/DECISIONS.md)):
+  - Kept SAM 2.1 tiny instead of base. Base had a higher mIoU (~0.81), but its
+    finer masks made trucks look more like cars than real cars did, pushing
+    them over the auto threshold and polluting memory.
+  - Redefined confidence as an absolute blend score instead of a
+    class-count-dependent share, and calibrated thresholds on two open-set
+    seeds with zero false auto labels.
+  - Kept an in-memory mirror in front of milvus-lite, because interactive
+    labeling needs read-your-writes and milvus-lite on Windows does not
+    provide it reliably.
+  - Store only corrections and manual additions; accepted predictions are
+    logged for telemetry but never re-stored.
+- **Honest reporting.** The VisA results above include the failure: accepted
+  auto labels stay precise, but only about half of micro-defect masks are
+  usable, so effort saving on VisA is roughly zero. The bottleneck is
+  segmentation, not retrieval.
+- **Product decisions and review.** Interaction model, onboarding flow, and
+  sample datasets; every change was reviewed and checked in the running app.
 
 ## Prerequisites & Installation
 
@@ -107,6 +147,9 @@ or `/inspector` for memory management. The full public stack is started with:
 ```powershell
 powershell -ExecutionPolicy Bypass -File start_public_demo.ps1
 ```
+
+The launch scripts find Python via `SNOWLABEL_PYTHON`, then a conda
+environment named `snowlabel`, then `python` on `PATH`.
 
 The fixed public demo is `https://snowlabel.zhuwenmao.com`.
 
