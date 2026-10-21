@@ -8,7 +8,9 @@
 param([switch]$Fresh)
 $ErrorActionPreference = "Stop"
 $root      = $PSScriptRoot
-$py        = "D:\conda\envs\snowlabel\python.exe"
+. (Join-Path $root "scripts\find_python.ps1")
+$py        = Find-SnowlabelPython
+if (-not $py) { Write-Host "找不到 Python：请设置环境变量 SNOWLABEL_PYTHON，或创建名为 snowlabel 的 conda 环境" -ForegroundColor Red; exit 1 }
 $mdb       = Join-Path $root "data\cache\mariadb-11.4.12-winx64"
 $datadir   = Join-Path $root "data\mariadb_data"
 $minio     = Join-Path $root "data\cache\minio.exe"

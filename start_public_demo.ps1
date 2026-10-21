@@ -19,14 +19,15 @@ param([switch]$Fresh)
 
 $ErrorActionPreference = "Stop"
 $root = $PSScriptRoot
-$py   = "D:\conda\envs\snowlabel\python.exe"
+. (Join-Path $root "scripts\find_python.ps1")
+$py   = Find-SnowlabelPython
 $cf   = Join-Path $root "data\cache\cloudflared.exe"
 Set-Location $root
 
 function Say($m, $c="Gray") { Write-Host $m -ForegroundColor $c }
 
 # --- 0) 前置检查 ---------------------------------------------------------
-if (-not (Test-Path $py)) { Say "找不到 Python：$py" Red; exit 1 }
+if (-not $py) { Say "找不到 Python：请设置环境变量 SNOWLABEL_PYTHON，或创建名为 snowlabel 的 conda 环境" Red; exit 1 }
 if (-not (Test-Path $cf)) { Say "找不到 cloudflared：$cf（请先下载放到 data\cache\）" Red; exit 1 }
 
 # --- 0.5) 起三库基础设施(MariaDB + MinIO),幂等 --------------------------

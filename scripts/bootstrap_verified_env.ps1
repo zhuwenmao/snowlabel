@@ -10,12 +10,9 @@ $VenvPython = Join-Path $VenvPath "Scripts\python.exe"
 $Constraints = Join-Path $Root "constraints\windows-py311-cu121.txt"
 
 if (-not $Python) {
-    $CondaPython = "D:\conda\envs\snowlabel\python.exe"
-    if (Test-Path $CondaPython) {
-        $Python = $CondaPython
-    } else {
-        $Python = (Get-Command python -ErrorAction Stop).Source
-    }
+    . (Join-Path $PSScriptRoot "find_python.ps1")
+    $Python = Find-SnowlabelPython
+    if (-not $Python) { throw "Python not found: set SNOWLABEL_PYTHON or create a conda env named snowlabel" }
 } elseif (-not (Test-Path $Python)) {
     $Python = (Get-Command $Python -ErrorAction Stop).Source
 }
