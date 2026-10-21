@@ -31,6 +31,12 @@ class ObjectStore:
                                length=len(data), content_type=content_type)
         return key
 
+    def put_bytes(self, key: str, data: bytes,
+                  content_type: str = "application/octet-stream") -> str:
+        self.client.put_object(self.bucket, key, io.BytesIO(data),
+                               length=len(data), content_type=content_type)
+        return key
+
     def exists(self, key: str) -> bool:
         try:
             self.client.stat_object(self.bucket, key)
@@ -45,3 +51,9 @@ class ObjectStore:
         finally:
             resp.close()
             resp.release_conn()
+
+    def delete(self, key: str) -> None:
+        try:
+            self.client.remove_object(self.bucket, key)
+        except Exception:
+            log.debug("remove_object ignored for %s", key, exc_info=True)

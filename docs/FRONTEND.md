@@ -16,9 +16,11 @@
 
 ## Everything 模式的交互(本次会话重点打磨)
 
-`runSegmentAll()` 调 `/api/segment_all`(`max_masks:20`),对每个 mask 做检索预测:
-- **隐藏没认出的碎块**:`if(!m.label){ hidden++; continue; }`——silent 档(没学过)
-  不显示,避免满屏"?"干扰。提示里报"隐藏 N 个没认出的碎块"。
+`runSegmentAll()` 调 `/api/segment_all`(`max_masks:80`),对每个 mask 做检索预测:
+- **空记忆冷启动**:保留 SAM 的无标签候选,只画中性轮廓、不画"?"标签;
+  用户点选候选并指定第一个类别后即可入库。
+- **已有记忆**:继续隐藏没有匹配类别的 silent 碎块,避免干扰。
+- 底部提示区分"SAM 无候选""有候选但记忆未匹配""冷启动候选可选"三种状态。
 - 重跑时 `masks=masks.filter(m=>m.source==="added")`:保留手动加的,只刷新 auto。
 
 模式内的鼠标/键盘(`labeler.html` 的 click/contextmenu/keydown 监听):

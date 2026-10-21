@@ -28,15 +28,22 @@ import numpy as np
 from fastapi import APIRouter, File, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse
 from PIL import Image
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 try:
     import cv2  # ships with ultralytics
 except Exception:  # pragma: no cover
     cv2 = None
 
+from .anchors import delete_anchor_preview, store_anchor_preview
 from .config import get_config
 from .predictor import SnowPredictor
+from .sample_datasets import (
+    default_sample_slug,
+    list_sample_datasets,
+    sample_images_by_class,
+    sample_preview_paths,
+)
 
 log = logging.getLogger("snowlabel.web_api")
 
@@ -61,6 +68,18 @@ def _user_id(request: Request) -> str:
         # 缩略图/画布走 /api/image,正是靠这个 cookie 兜底才能按本用户目录取到图。
         uid = (request.cookies.get("snow_user") or "").strip()
     return uid if _USER_RE.match(uid) else ""
+
+
+def require_user_id(request: Request) -> str:
+    """Return the active tenant id, rejecting an unscoped public request.
+
+    Empty ids retain their original global meaning only in local single-tenant
+    mode. In the public demo an empty id must never silently become "all users".
+    """
+    uid = _user_id(request)
+    if get_config().multi_user and not uid:
+        raise HTTPException(401, "missing or invalid SnowLabel session")
+    return uid
 
 
 def mask_to_contour(mask, eps_frac: float = 0.004) -> list[list[int]] | None:
@@ -111,7 +130,7 @@ class SegmentRequest(BaseModel):
 class CommitRequest(BaseModel):
     image_id: str
     mask_png: str
-    label: str
+    label: str = Field(..., max_length=80)
     # telemetry only (optional): what the model had predicted for this mask
     pred_label: str | None = None
     tier: str | None = None
@@ -121,12 +140,17 @@ class CommitRequest(BaseModel):
 
 class SegmentAllRequest(BaseModel):
     image_id: str
-    max_masks: int = 20
+    max_masks: int | None = None
+
+
+class ExplainMaskRequest(BaseModel):
+    image_id: str
+    mask_png: str
 
 
 class CommitItem(BaseModel):
     mask_png: str
-    label: str
+    label: str = Field(..., max_length=80)
     # telemetry only (optional)
     pred_label: str | None = None
     tier: str | None = None
@@ -150,6 +174,10 @@ class CommitBatchRequest(BaseModel):
     accepted: list[AcceptedMeta] = []
 
 
+class LoadSamplesRequest(BaseModel):
+    dataset: str | None = None
+
+
 # ----------------------------------------------------------------- telemetry
 def _telemetry(event: dict) -> None:
     """Append one labeling event to data/telemetry/events.jsonl. Telemetry
@@ -165,7 +193,7 @@ def _telemetry(event: dict) -> None:
 
 
 def _commit_event(image_id: str, label: str, pred_label, tier, confidence,
-                  source) -> dict:
+                  source, user_id: str) -> dict:
     return {
         "type": "commit",
         "image_id": image_id,
@@ -174,6 +202,7 @@ def _commit_event(image_id: str, label: str, pred_label, tier, confidence,
         "tier": tier,
         "confidence": confidence,
         "source": source,
+        "user_id": user_id,
         # corrected = the model HAD a prediction and the user overrode it
         "corrected": bool(pred_label) and label != pred_label,
     }
@@ -231,14 +260,14 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
 
     @router.get("/dataset")
     def dataset(request: Request, limit: int = 500, offset: int = 0) -> dict:
-        user_id = _user_id(request)
+        user_id = require_user_id(request)
         d = _user_dir(user_id)
         files = _list_images(user_id)
         counts = _labeled_counts(user_id)
         labeled_total = sum(1 for f in files if f.name in counts)
         window = files[offset:offset + limit]
         return {
-            "dir": str(d),
+            "dir": None if get_config().multi_user else str(d),
             "total": len(files),
             "labeled": labeled_total,
             "limit": limit,
@@ -257,14 +286,14 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
 
     @router.get("/image/{image_id}")
     def image(image_id: str, request: Request):
-        return FileResponse(_resolve_image(image_id, _user_id(request)))
+        return FileResponse(_resolve_image(image_id, require_user_id(request)))
 
     @router.post("/upload")
     async def upload(request: Request, file: UploadFile = File(...)) -> dict:
         """Accept a visitor-uploaded image into their (per-user) folder so they
         can label their own pictures. Validates type/size and re-checks it's a
         real image before writing under a random filename."""
-        user_id = _user_id(request)
+        user_id = require_user_id(request)
         ext = Path(file.filename or "").suffix.lower()
         if ext not in _IMG_EXT:
             raise HTTPException(400, f"unsupported image type: {ext or '?'}")
@@ -290,32 +319,58 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
             return
         try:
             from .imgcache.cache import image_sha256
-            from .imgcache.prefetch import get_prefetcher
             im = Image.open(io.BytesIO(data))
             predictor.cache.put_image(image_sha256(data), data, ext=ext,
                                       orig_name=name, width=im.width,
                                       height=im.height)
-            get_prefetcher(predictor).enqueue(str(d / name), user_id)
+            if get_config().imgcache_prefetch_enabled:
+                from .imgcache.prefetch import get_prefetcher
+                get_prefetcher(predictor).enqueue(str(d / name), user_id)
         except Exception as e:
             log.warning("imgcache 登记/入队失败: %s", e)
 
+    @router.get("/sample_datasets")
+    def sample_datasets() -> dict:
+        """List built-in sample packs the browser can offer to visitors."""
+        return {"datasets": list_sample_datasets(get_config().project_root)}
+
+    @router.get("/sample_datasets/{slug}/preview/{idx}")
+    def sample_dataset_preview(slug: str, idx: int):
+        """Serve a small representative image for the sample picker."""
+        if idx < 0 or idx > 8:
+            raise HTTPException(400, "invalid preview index")
+        try:
+            previews = sample_preview_paths(get_config().project_root, slug, limit=3)
+        except KeyError:
+            raise HTTPException(404, f"示例数据集不存在: {slug}")
+        except FileNotFoundError:
+            raise HTTPException(404, f"示例数据集不可用: {slug}")
+        if idx >= len(previews):
+            raise HTTPException(404, f"preview not found: {idx}")
+        return FileResponse(previews[idx])
+
     @router.post("/load_samples")
-    def load_samples(request: Request) -> dict:
-        """一键把内置示例数据集 cub3_demo(3 种鸟:赫氏鸥/裏海燕鸥/仙人掌鹪鹩)
-        拷进访客自己的目录,让人零门槛上手 + 顺势演示"越标越准"。已有图就不再重复灌。"""
-        user_id = _user_id(request)
-        src_root = (get_config().project_root / "data" / "datasets"
-                    / "cub3_demo" / "images")
-        if not src_root.is_dir():
-            raise HTTPException(404, "示例数据集 cub3_demo 不存在")
+    def load_samples(request: Request, req: LoadSamplesRequest | None = None) -> dict:
+        """Copy a selected sample pack into this visitor's image folder.
+
+        Generated industrial packs are created lazily under data/generated_samples
+        (ignored by Git). Real local packs can be mounted under data/datasets.
+        """
+        user_id = require_user_id(request)
+        project_root = get_config().project_root
+        slug = (req.dataset if req else None) or default_sample_slug(project_root)
+        try:
+            sample_ds, groups = sample_images_by_class(project_root, slug)
+        except KeyError:
+            raise HTTPException(404, f"示例数据集不存在: {slug}")
+        except FileNotFoundError:
+            raise HTTPException(404, f"示例数据集不可用: {slug}")
         d = _user_dir(user_id)
         d.mkdir(parents=True, exist_ok=True)
         existing = len(_list_images(user_id))
-        per_class = 5
         copied = 0
-        for cls_dir in sorted(p for p in src_root.iterdir() if p.is_dir()):
-            imgs = sorted(p for p in cls_dir.iterdir()
-                          if p.suffix.lower() in _IMG_EXT)[:per_class]
+        for label in [c.label for c in sample_ds.classes]:
+            imgs = groups.get(label, [])[:sample_ds.per_class]
             for src in imgs:
                 data = src.read_bytes()
                 if len(data) > _MAX_UPLOAD_BYTES:
@@ -325,11 +380,18 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
                 (d / name).write_bytes(data)
                 copied += 1
                 _register_cache(d, name, data, ext, user_id)
-        return {"ok": True, "copied": copied, "total": existing + copied}
+        return {
+            "ok": True,
+            "dataset": sample_ds.slug,
+            "dataset_title": sample_ds.title,
+            "classes": [c.label for c in sample_ds.classes],
+            "copied": copied,
+            "total": existing + copied,
+        }
 
     @router.post("/segment")
     def segment(req: SegmentRequest, request: Request) -> dict:
-        user_id = _user_id(request)
+        user_id = require_user_id(request)
         path = _resolve_image(req.image_id, user_id)
         img = Image.open(path).convert("RGB")
         if req.type == "point":
@@ -363,11 +425,44 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
             "confidence": round(float(pred.confidence), 4),
             "tier": pred.tier,
             "top_k": [[lbl, round(float(s), 4)] for lbl, s in pred.top_k],
+            "anchor_refs": pred.anchor_refs,
+        }
+
+    @router.post("/explain_mask")
+    def explain_mask(req: ExplainMaskRequest, request: Request) -> dict:
+        """Recompute memory explanation for an already-rendered mask.
+
+        This keeps anchor highlighting correct for masks that were segmented
+        before the current frontend had anchor_refs, or after a memory refresh.
+        """
+        user_id = require_user_id(request)
+        path = _resolve_image(req.image_id, user_id)
+        img = Image.open(path).convert("RGB")
+        mask = png_b64_to_mask(req.mask_png)
+        if mask.shape[:2] != (img.height, img.width):
+            mask = np.asarray(
+                Image.fromarray((mask.astype(np.uint8) * 255)).resize(
+                    (img.width, img.height), Image.NEAREST)
+            ) > 127
+        if int(mask.sum()) == 0:
+            raise HTTPException(422, "empty mask")
+        with predictor.gpu_lock:
+            mf = predictor.feat.features(img, mask)
+            label, conf, tier, top_k, cw, anchor_refs = predictor._predict_from_features(
+                mf, user_id=user_id, explain=True)
+        return {
+            "ok": True,
+            "label": label,
+            "confidence": round(float(conf), 4),
+            "tier": tier,
+            "top_k": [[lbl, round(float(s), 4)] for lbl, s in top_k],
+            "cw": round(float(cw), 4),
+            "anchor_refs": anchor_refs,
         }
 
     @router.post("/commit")
     def commit(req: CommitRequest, request: Request) -> dict:
-        user_id = _user_id(request)
+        user_id = require_user_id(request)
         path = _resolve_image(req.image_id, user_id)
         img = Image.open(path).convert("RGB")
         mask = png_b64_to_mask(req.mask_png)
@@ -385,25 +480,30 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
             raise HTTPException(400, "label is required")
         entry_id = predictor.remember(
             img, mask, label, image_uri=str(path), verified=True, user_id=user_id)
+        store_anchor_preview(predictor.cache, entry_id, user_id, img, mask)
         _telemetry(_commit_event(req.image_id, label, req.pred_label,
-                                 req.tier, req.confidence, req.source))
+                                 req.tier, req.confidence, req.source, user_id))
         return {"entry_id": int(entry_id), "memory_size": len(predictor.memory)}
 
     @router.post("/segment_all")
     def segment_all(req: SegmentAllRequest, request: Request) -> dict:
         """Everything mode: SAM proposes every object mask; the snowball memory
         tags each with a predicted label/tier. Returns all of them at once."""
-        user_id = _user_id(request)
+        user_id = require_user_id(request)
         path = _resolve_image(req.image_id, user_id)
         img_bytes = path.read_bytes()
         img = Image.open(path).convert("RGB")
+        max_masks = int(req.max_masks or get_config().sam_auto_max_masks)
+        max_masks = max(1, min(max_masks, 200))
         preds, from_cache = predictor.segment_all_cached(
-            img_bytes, img, max_masks=int(req.max_masks), user_id=user_id,
+            img_bytes, img, max_masks=max_masks, user_id=user_id,
             ext=(path.suffix or ".jpg"), orig_name=path.name)
         return {
             "ok": True,
             "from_cache": from_cache,
             "count": len(preds),
+            "max_masks": max_masks,
+            "limit_reached": len(preds) >= max_masks,
             "masks": [
                 {
                     "idx": i,
@@ -414,6 +514,7 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
                     "confidence": round(float(p.confidence), 4),
                     "tier": p.tier,
                     "top_k": [[lbl, round(float(s), 4)] for lbl, s in p.top_k],
+                    "anchor_refs": p.anchor_refs,
                 }
                 for i, p in enumerate(preds)
             ],
@@ -423,7 +524,7 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
     def commit_batch(req: CommitBatchRequest, request: Request) -> dict:
         """Bulk-commit many (mask, label) pairs from one image — encodes DINO
         once. Powers "segment everything → accept all confident"."""
-        user_id = _user_id(request)
+        user_id = require_user_id(request)
         path = _resolve_image(req.image_id, user_id)
         img = Image.open(path).convert("RGB")
         pairs: list[tuple] = []
@@ -439,14 +540,16 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
                 continue
             pairs.append((mask, lbl))
             _telemetry(_commit_event(req.image_id, lbl, it.pred_label,
-                                     it.tier, it.confidence, it.source))
+                                     it.tier, it.confidence, it.source, user_id))
         for acc in req.accepted:
             _telemetry({"type": "accept", "image_id": req.image_id,
                         "label": acc.label, "pred_label": acc.pred_label,
                         "tier": acc.tier, "confidence": acc.confidence,
-                        "source": acc.source})
+                        "source": acc.source, "user_id": user_id})
         ids = predictor.remember_batch(img, pairs, image_uri=str(path),
                                        user_id=user_id)
+        for eid, (mask, _label) in zip(ids, pairs):
+            store_anchor_preview(predictor.cache, eid, user_id, img, mask)
         return {
             "committed": len(ids),
             "entry_ids": [int(i) for i in ids],
@@ -459,7 +562,7 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
         用于演示"从零越标越准"。守卫:仅多租户 Demo 下、且只删 user_id 命中本访客的
         条目——本地单租户(user_id="")会被拒,绝不会误删 owner 的真实记忆库。全局共享的
         imgcache 不动(它只是缓存,且别的访客在用)。"""
-        user_id = _user_id(request)
+        user_id = require_user_id(request)
         if not user_id:
             raise HTTPException(
                 403, "『重新开始』仅在多租户公网 Demo 下可用(本地单租户不清库,以免误删真实记忆)")
@@ -467,6 +570,7 @@ def build_router(predictor: SnowPredictor) -> APIRouter:
         for e in list(predictor.memory.iter_entries()):
             if getattr(e, "user_id", "") == user_id:
                 if predictor.memory.forget(e.entry_id):
+                    delete_anchor_preview(predictor.cache, e.entry_id, user_id)
                     removed += 1
         deleted = 0
         for p in _list_images(user_id):

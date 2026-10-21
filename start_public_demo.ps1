@@ -19,7 +19,7 @@ param([switch]$Fresh)
 
 $ErrorActionPreference = "Stop"
 $root = $PSScriptRoot
-$py   = "$env:USERPROFILE\miniconda3\envs\snowlabel\python.exe"
+$py   = "D:\conda\envs\snowlabel\python.exe"
 $cf   = Join-Path $root "data\cache\cloudflared.exe"
 Set-Location $root
 
@@ -59,6 +59,7 @@ $serverCmd = @"
 Set-Location '$root'
 Remove-Item Env:SNOWLABEL_CONF_AUTO    -ErrorAction SilentlyContinue
 Remove-Item Env:SNOWLABEL_CONF_SUGGEST -ErrorAction SilentlyContinue
+Remove-Item Env:SNOWLABEL_ADMIN_TOKEN  -ErrorAction SilentlyContinue
 `$env:SNOWLABEL_DINO          = 'weights\facebookdinov3-vitl16-pretrain-lvd1689m'
 `$env:SNOWLABEL_SAM           = 'sam2.1_t.pt'
 `$env:SNOWLABEL_RES           = '512'
@@ -68,6 +69,8 @@ Remove-Item Env:SNOWLABEL_CONF_SUGGEST -ErrorAction SilentlyContinue
 `$env:SNOWLABEL_MEMORY_DIR    = 'data\memory_public'
 `$env:SNOWLABEL_DATASET_DIR   = 'data\uploads'
 `$env:SNOWLABEL_IMGCACHE      = '1'
+`$env:SNOWLABEL_IMGCACHE_PREFETCH = '0'
+`$env:SNOWLABEL_ALLOWED_ORIGINS = 'https://snowlabel.zhuwenmao.com,http://localhost:9090,http://127.0.0.1:9090'
 `$env:NO_PROXY                = '127.0.0.1,localhost'
 `$env:SNOWLABEL_PORT          = '9090'
 & '$py' -m snowlabel.server

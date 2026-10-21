@@ -23,22 +23,23 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
-# Core runtime deps. Heavier ones (torch, ultralytics, label-studio) are listed
-# in requirements.txt so users can install matching CUDA wheels first.
+# Core runtime deps. ML and evaluation packages live in requirements.txt so
+# PyTorch can be installed from the matching CUDA wheel index first.
 dependencies = [
-    "numpy>=1.24",
-    "Pillow>=10.0",
-    "fastapi>=0.110",
-    "uvicorn[standard]>=0.27",
-    "requests>=2.31",
-    "pydantic>=2.5",
-    "tqdm>=4.66",
+    "numpy~=2.4.4",
+    "Pillow~=12.2.0",
+    "fastapi~=0.136.3",
+    "uvicorn[standard]~=0.48.0",
+    "python-multipart~=0.0.29",
+    "requests~=2.32.5",
+    "pydantic~=2.13.4",
+    "tqdm~=4.67.3",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.4",
-    "ruff>=0.4",
+    "pytest~=8.4.2",
+    "ruff~=0.15.21",
 ]
 
 [project.scripts]
@@ -47,3 +48,6 @@ snowlabel = "snowlabel.server:run"
 [tool.setuptools.packages.find]
 include = ["snowlabel*"]
 exclude = ["data*", "results*", "notebooks*", "scripts*"]
+
+[tool.setuptools.package-data]
+snowlabel = ["static/*.html", "static/hero/*.webp", "static/guide/*.webp"]

@@ -158,6 +158,42 @@ class DinoFeatureExtractor:
         )
         return self._state
 
+    def _ensure_active(self) -> _DinoState:
+        """Ensure an already-loaded backbone is resident on its target device."""
+        state = self._ensure_loaded()
+        try:
+            current = next(state.model.parameters()).device
+        except StopIteration:
+            current = state.device
+        if current != state.device:
+            if state.device.type == "cuda":
+                torch.cuda.empty_cache()
+            log.info("Moving DINO backbone from %s to %s ...", current, state.device)
+            state.model.to(state.device)
+        return state
+
+    def offload_to_cpu(self) -> bool:
+        """Temporarily free DINO VRAM while SAM automatic generation runs.
+
+        On 8 GB GPUs, keeping DINOv3-L resident during SAM's automatic mask
+        generation triggers WDDM paging and can turn a one-minute request into
+        a four-minute request. The loaded model stays in CPU RAM and is moved
+        back by the next encode call, so weights are not re-read from disk.
+        """
+        state = self._state
+        if state is None or state.device.type != "cuda":
+            return False
+        try:
+            current = next(state.model.parameters()).device
+        except StopIteration:
+            return False
+        if current.type != "cuda":
+            return False
+        log.info("Temporarily moving DINO backbone to CPU for SAM generation ...")
+        state.model.to("cpu")
+        torch.cuda.empty_cache()
+        return True
+
     # ---------- public API ----------
     @property
     def embed_dim(self) -> int:
@@ -175,7 +211,7 @@ class DinoFeatureExtractor:
         DINOv3 output: last_hidden_state has [CLS, register_tokens..., patches...]
                        so we strip the first (1 + num_register_tokens) entries.
         """
-        s = self._ensure_loaded()
+        s = self._ensure_active()
         x = s.preprocess(img_pil).unsqueeze(0).to(s.device)
         if s.is_v3:
             out = s.model(pixel_values=x)
@@ -203,7 +239,7 @@ class DinoFeatureExtractor:
         instead of N sequential ones — the key to keeping "segment everything"
         fast on the GPU.
         """
-        s = self._ensure_loaded()
+        s = self._ensure_active()
         xs = torch.stack([s.preprocess(im) for im in pil_list]).to(s.device)
         if s.is_v3:
             out = s.model(pixel_values=xs)
@@ -267,6 +303,7 @@ class SamSegmenter:
 
     def __init__(self, variant: str | None = None, device: str = "auto") -> None:
         cfg = get_config()
+        self.cfg = cfg
         self.variant = variant or cfg.sam_variant
         self._device_pref = device if device != "auto" else cfg.device
         self._model = None
@@ -386,17 +423,59 @@ class SamSegmenter:
     def predict_all(
         self,
         img_pil: Image.Image,
-        max_masks: int = 32,
+        max_masks: int | None = None,
     ) -> list[SamMask]:
         """Automatic mode — let SAM propose all instance masks it sees."""
         model = self._ensure_loaded()
+        max_masks = int(max_masks or self.cfg.sam_auto_max_masks)
         img_np = np.asarray(img_pil.convert("RGB"))
-        result = model.predict(img_np, device=self.device, verbose=False)
+        auto_kwargs = dict(
+            points_stride=int(self.cfg.sam_auto_points_per_side),
+            crop_n_layers=int(self.cfg.sam_auto_crop_layers),
+            conf_thres=float(self.cfg.sam_auto_conf_thres),
+            stability_score_thresh=float(self.cfg.sam_auto_stability_thres),
+        )
+        predictor = model.predictor
+        if predictor is None or predictor.args.device != self.device:
+            # SAM's automatic-only options are generate() arguments, but
+            # ultralytics.Model.predict() first validates kwargs against the
+            # global YOLO config and rejects them. Initialise the model's own
+            # predictor exactly as Model.predict() does, then pass the options
+            # to Predictor.inference() -> generate().
+            overrides = {
+                **getattr(model, "overrides", {}),
+                "conf": 0.25,
+                "batch": 1,
+                "save": False,
+                "mode": "predict",
+                "rect": True,
+                "task": "segment",
+                "imgsz": 1024,
+                "device": self.device,
+                "verbose": False,
+            }
+            predictor = model._smart_load("predictor")(
+                overrides=overrides,
+                _callbacks=model.callbacks,
+            )
+            predictor.setup_model(model=model.model, verbose=False)
+            model.predictor = predictor
+        # A prior point/box call may have populated stored prompts. Automatic
+        # generation must begin with no prompt so inference chooses generate().
+        predictor.set_prompts({})
+        result = predictor(source=img_np, stream=False, **auto_kwargs)
         if not result or result[0].masks is None:
             return []
         masks = result[0].masks.data.cpu().numpy()
-        # rank by area (largest objects first) but trim to max_masks
-        order = np.argsort(-masks.reshape(masks.shape[0], -1).sum(axis=1))[:max_masks]
+        areas = masks.reshape(masks.shape[0], -1).sum(axis=1)
+        conf = (result[0].boxes.conf.cpu().numpy()
+                if result[0].boxes is not None and result[0].boxes.conf is not None
+                else np.ones(masks.shape[0], dtype=np.float32))
+        if len(conf) != masks.shape[0]:
+            conf = np.ones(masks.shape[0], dtype=np.float32)
+        # Prefer SAM's quality score, then smaller regions. Dense defect images
+        # otherwise lose tiny valid masks when only the largest areas survive.
+        order = np.lexsort((areas, -conf))[:max_masks]
         out: list[SamMask] = []
         for i in order:
             m = masks[i].astype(bool)
@@ -405,7 +484,7 @@ class SamSegmenter:
                 continue
             out.append(SamMask(
                 mask=m,
-                score=1.0,
+                score=float(conf[i]) if i < len(conf) else 1.0,
                 bbox=(int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())),
             ))
         return out

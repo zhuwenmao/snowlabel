@@ -1,129 +1,171 @@
 <h1 align="center">SnowLabel</h1>
 
 <p align="center">
-Progressive mask auto-labeling with SAM, DINO feature memory, and FastAPI.
+Progressive auto-annotation prototype with SAM, DINOv3 feature memory, and FastAPI.
 </p>
 
 <p align="center">
-  <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue">
-  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.110%2B-009688">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.11-blue">
+  <img alt="CUDA" src="https://img.shields.io/badge/CUDA-12.1-76B900">
+  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.136-009688">
   <img alt="License" src="https://img.shields.io/badge/License-MIT-green">
 </p>
 
 ## Description
 
-SnowLabel is an interactive auto-labeling tool for instance masks. It uses SAM
-to generate masks, DINO features to encode taught objects, and vector memory to
-pre-label similar objects in later images. The model is not retrained during
-labeling; every useful correction becomes searchable memory.
+SnowLabel is a progressive auto-annotation technical prototype for instance
+masks. SAM proposes a mask, DINOv3 encodes the verified region, and vector
+memory reuses previous corrections to classify similar regions in later images.
+The models are not retrained during annotation.
 
-The project is designed for visual annotation workflows where class definitions
-are discovered progressively, such as industrial inspection, fine-grained object
-labeling, and dataset bootstrapping.
+The v0.1 goal is reproducible evidence for the complete feedback loop: segment,
+suggest, accept or correct, store an anchor, and reuse it safely. It is not a
+mature commercial annotation platform and does not yet provide a general
+annotation export workflow.
+
+![SnowLabel architecture](evidence/v0.1/architecture.png)
 
 ## Features
 
-- Canvas-based labeling UI with point, box, and whole-image segmentation modes.
-- Progressive memory that reuses corrected masks to pre-fill future labels.
-- Two-stage retrieval with whole-object features, part features, and geometry.
-- FastAPI service exposing the web UI, labeling APIs, memory inspector, and
-  legacy Label Studio ML-compatible endpoints.
-- Pluggable memory backend with local numpy storage and optional Milvus
-  persistence.
-- Public demo startup script with MariaDB, MinIO, and Cloudflare tunnel support.
+- Canvas labeler with point, box, and whole-image segmentation modes.
+- Progressive vector memory with user-verified anchor previews and deletion.
+- Two-stage retrieval using whole-mask, 4x4 part, and geometry features.
+- Confidence gates for automatic labels, suggestions, and silent rejection.
+- Local numpy or Milvus memory backends and a multi-user public demo mode.
+- MinIO, MariaDB, and Milvus image-processing cache for repeated Everything runs.
+- FastAPI UI/API service with retained Label Studio-compatible endpoints.
+
+**Reproducible evidence (2026-08-05)**
+
+| Metric | COCO regression guard | VisA industrial protocol |
+|---|---:|---:|
+| Scope | 5 classes, 125 seen samples | 50 seen classes, 300 samples; 12 held-out classes, 48 probes |
+| Late valid-mask auto precision | 100% (39 auto) | 100% (24 auto) |
+| Late valid-mask auto coverage | 61.9% | 16.0% |
+| Auto pollution rate | 0% | 0.33% |
+| Open-set false auto | 0% | 14.58% overall; 0% among 23 valid-mask probes |
+| Mask success at IoU >= 0.5 | 84.8% | 49.33% |
+| Late effort saving | 66.67% | -0.33% |
+
+The VisA result does not establish industrial readiness. It shows that accepted
+auto labels remain precise when segmentation is usable, while micro-defect
+localization and unknown-class suggestions remain the primary limitations. On a
+1358x1104 VisA PCB image, the real `/api/segment_all` path took 69.843 seconds
+uncached and 1.039 seconds cached, a 67.24x repeat-run speedup.
+
+Machine-readable COCO and VisA results, the fixed VisA manifest, per-sample
+predictions, curves, and failure visualizations are stored in
+[`evidence/v0.1`](evidence/v0.1).
 
 ## Prerequisites & Installation
 
-Requirements:
+Verified environment:
 
-- Python 3.10 or newer.
-- NVIDIA GPU recommended for practical SAM and DINO inference.
-- Local DINOv3 weights are recommended for the production configuration.
-
-Clone and install:
+- Windows 10/11, Python 3.11, CUDA 12.1, and an NVIDIA GPU with 8 GB VRAM.
+- Python 3.10+ is supported by package metadata; the published lock is the
+  verified Windows/Python 3.11/CUDA 12.1 profile.
+- DINOv3-L and SAM2.1 tiny weights are required for the published results.
 
 ```powershell
 git clone https://github.com/zhuwenmao/snowlabel.git
 cd snowlabel
-pip install -r requirements.txt
-pip install -e .[dev]
-pip install ultralytics transformers pymilvus
+pip install -r requirements.txt -c constraints/windows-py311-cu121.txt
+pip install -e .[dev] -c constraints/windows-py311-cu121.txt
 ```
 
-For GPU execution, install the PyTorch and torchvision wheels that match your
-CUDA version before installing the remaining dependencies.
+The constraints file pins the complete tested dependency tree and the CUDA 12.1
+PyTorch index. A clean virtual environment can be built and verified with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/bootstrap_verified_env.ps1
+```
+
+Request access to `facebook/dinov3-vitl16-pretrain-lvd1689m` on Hugging Face,
+place its snapshot under
+`weights/facebookdinov3-vitl16-pretrain-lvd1689m`, and place `sam2.1_t.pt` in
+the repository root. Weights are intentionally excluded from Git.
+
+```powershell
+python scripts/verify_environment.py --require-weights
+```
 
 ## Quick Start / Usage
 
-Start the local FastAPI service:
+Start the local service:
 
 ```powershell
 $env:SNOWLABEL_DINO="weights\facebookdinov3-vitl16-pretrain-lvd1689m"
-$env:SNOWLABEL_MEMORY_BACKEND="milvus"
+$env:SNOWLABEL_MEMORY_BACKEND="numpy"
 $env:SNOWLABEL_RES="512"
 $env:SNOWLABEL_PARTS_GRID="4"
 python -m snowlabel.server
 ```
 
-Open the application:
-
-```text
-http://localhost:9090/
-http://localhost:9090/try
-http://localhost:9090/inspector
-```
-
-Start the public demo:
+Open `http://localhost:9090/` for the product, `/try` for the guided workflow,
+or `/inspector` for memory management. The full public stack is started with:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File start_public_demo.ps1
 ```
 
-The fixed public URL is:
+The fixed public demo is `https://snowlabel.zhuwenmao.com`.
 
-```text
-https://snowlabel.zhuwenmao.com
+Reproduce the industrial evidence:
+
+```powershell
+python scripts/download_visa.py
+tar -xf data/datasets/visa/VisA_20220922.tar -C data/datasets/visa
+python scripts/evaluate_visa.py --tag visa-v0.1 --publish-evidence
+python scripts/benchmark_everything_api.py
+python scripts/supervise.py --tag coco-v0.1 --compare
 ```
 
 ## Repository Structure
 
 ```text
-|-- snowlabel/                 # Core Python package and FastAPI service
-|-- snowlabel/static/          # Home page, Canvas labeler, and inspector UI
-|-- scripts/                   # Evaluation, smoke-test, and maintenance scripts
-|-- eval/                      # Supervision protocol and quality gates
-|-- demo_images/               # Small demo image set
-|-- docs/                      # Design notes and project decisions
-|-- start_public_demo.ps1      # Public demo launcher
-|-- requirements.txt           # Runtime dependency list
+|-- snowlabel/                 # FastAPI service, models, memory, and UI
+|-- eval/                      # COCO and VisA evaluation protocols
+|-- scripts/                   # Setup, evaluation, smoke, and maintenance tools
+|-- constraints/               # Verified Python 3.11/CUDA 12.1 dependency lock
+|-- evidence/v0.1/             # Public metrics, manifests, predictions, and figures
+|-- demo_images/               # Small local demonstration set
+|-- docs/                      # Architecture and product decisions
+|-- requirements.txt           # Supported runtime dependency ranges
 |-- pyproject.toml             # Package metadata and development extras
-`-- README.md                  # Project overview
+`-- start_public_demo.ps1      # Full public demo launcher
 ```
 
 ## FAQ
 
+**Is SnowLabel a production annotation platform?**
+
+No. v0.1 is a progressive auto-annotation technical prototype. It demonstrates
+and measures the memory feedback loop, but industrial micro-defect segmentation,
+open-set calibration, export, access control, and operational tooling require
+additional work.
+
 **Is Label Studio required?**
 
-No. The current primary UI is SnowLabel's own FastAPI and Canvas labeler. Label
-Studio-compatible endpoints are kept for legacy integration.
+No. The primary interface is SnowLabel's FastAPI and Canvas application. The
+Label Studio protocol remains only for legacy integration.
 
-**What happens if DINOv3 weights are unavailable?**
+**Why are weights not included?**
 
-SnowLabel can fall back to the default DINOv2 configuration. Do not use the
-DINOv3-specific `SNOWLABEL_RES=512` setting unless the selected backbone supports
-that resolution.
+DINOv3 access and upstream model licenses must be handled by each user, and the
+files are too large for Git. The environment verifier checks both expected
+locations before evaluation.
 
-**When should I use `start_public_demo.ps1`?**
+**Why can the VisA score be worse than the COCO score?**
 
-Use it when you need the full public demo stack, including the local service,
-MariaDB, MinIO, and Cloudflare tunnel.
+COCO tests five coarse object categories. VisA contains small, fine-grained
+industrial defects; a point-prompted general SAM often segments the host object
+instead of the defect. The published failure sheet makes this boundary explicit.
 
 ## Contributing
 
-Pull requests are welcome. Keep changes scoped, avoid committing local data or
-model weights, and run the checks that match the modified area.
-
-Common validation commands:
+Pull requests are welcome. Keep changes scoped and do not commit datasets,
+weights, caches, uploads, logs, or local database state. Run the checks matching
+the modified area:
 
 ```powershell
 python scripts/test_protocol.py
@@ -133,8 +175,8 @@ python scripts/check_durability.py
 python scripts/smoke_webtool.py
 ```
 
-For changes to feature extraction, retrieval, thresholds, memory backends, model
-selection, resolution, or part-grid settings, run:
+Changes to features, retrieval, thresholds, memory, models, resolution, or the
+part grid must also pass:
 
 ```powershell
 python scripts/supervise.py --quick --tag <name> --compare
@@ -147,6 +189,15 @@ SnowLabel is released under the MIT License. See `LICENSE` for details.
 
 ## Acknowledgments / Citations
 
-SnowLabel builds on SAM and DINO from Meta AI, FastAPI, Milvus, and the Label
-Studio ML backend protocol. Please follow the licenses and usage terms of all
-upstream models and libraries when distributing derivative work.
+SnowLabel builds on Meta's SAM/SAM2 and DINOv3, FastAPI, Milvus, MinIO, and the
+Label Studio ML protocol. The industrial benchmark uses Amazon's VisA dataset,
+released under CC BY 4.0:
+
+```bibtex
+@article{zou2022spot,
+  title={SPot-the-Difference Self-Supervised Pre-training for Anomaly Detection and Segmentation},
+  author={Zou, Yang and Jeong, Jongheon and Pemula, Latha and Zhang, Dongqing and Dabeer, Onkar},
+  journal={arXiv preprint arXiv:2207.14315},
+  year={2022}
+}
+```

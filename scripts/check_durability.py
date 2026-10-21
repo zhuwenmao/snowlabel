@@ -1,52 +1,122 @@
-"""Milvus durability check, phase 1: commit one entry via the live API.
+"""Verify live memory persistence across a SnowLabel server restart.
 
-Run with the server up; then restart the server and run with --verify to
-confirm the entry survived (RAM mirror reloads from Milvus at startup —
-if milvus-lite didn't persist the insert, it's gone). Cleanup with --cleanup.
+Use a dedicated multi-user tenant so the check never touches real user data:
+
+    python scripts/check_durability.py commit
+    # restart the server
+    python scripts/check_durability.py verify
+    python scripts/check_durability.py cleanup
 """
+
+from __future__ import annotations
+
+import argparse
 import io
-import sys
 
 import requests
-from PIL import Image
-
-B = "http://localhost:9090"
-LABEL = "持久化测试"
+from PIL import Image, ImageDraw
 
 
-def dist():
-    return requests.get(B + "/memory/distribution").json()
+LABEL = "__snowlabel_durability_check__"
 
 
-def main():
-    mode = sys.argv[1] if len(sys.argv) > 1 else "commit"
-    if mode == "commit":
-        ds = requests.get(B + "/api/dataset").json()
-        iid = ds["images"][0]["id"]
-        img = Image.open(io.BytesIO(requests.get(B + "/api/image/" + iid).content))
-        w, h = img.size
-        seg = requests.post(B + "/api/segment", json={
-            "image_id": iid, "type": "point", "points": [[w // 2, h // 2]],
-            "labels": [1]}).json()
-        assert seg["ok"], "segment failed"
-        cm = requests.post(B + "/api/commit", json={
-            "image_id": iid, "mask_png": seg["mask_png"], "label": LABEL}).json()
-        print(f"committed entry={cm['entry_id']} memory={cm['memory_size']}")
-        print("dist:", dist())
-    elif mode == "verify":
-        d = dist()
-        ok = d["classes"].get(LABEL, 0) >= 1
-        print("dist after restart:", d)
-        print("DURABILITY OK" if ok else "DURABILITY FAILED — insert lost on restart!")
-        sys.exit(0 if ok else 1)
-    elif mode == "cleanup":
-        rows = requests.get(B + "/memory/by-class/" + LABEL).json()
-        n = 0
-        for e in rows.get("entries", []):
-            requests.post(B + "/forget", json={"entry_id": e["entry_id"]})
-            n += 1
-        print(f"forgot {n}; dist:", dist())
+def request_json(
+    method: str,
+    base_url: str,
+    path: str,
+    headers: dict[str, str],
+    **kwargs,
+) -> dict:
+    response = requests.request(
+        method,
+        base_url.rstrip("/") + path,
+        headers=headers,
+        timeout=kwargs.pop("timeout", 120),
+        **kwargs,
+    )
+    response.raise_for_status()
+    data = response.json()
+    if isinstance(data, dict) and data.get("detail"):
+        raise RuntimeError(f"{path}: {data['detail']}")
+    return data
+
+
+def distribution(base_url: str, headers: dict[str, str]) -> dict:
+    return request_json("GET", base_url, "/memory/distribution", headers)
+
+
+def test_image() -> bytes:
+    image = Image.new("RGB", (320, 240), "#343943")
+    draw = ImageDraw.Draw(image)
+    draw.rounded_rectangle((70, 45, 250, 195), radius=24, fill="#d8e2ef")
+    draw.ellipse((125, 85, 195, 155), fill="#5c6f82")
+    encoded = io.BytesIO()
+    image.save(encoded, "PNG")
+    return encoded.getvalue()
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("mode", choices=("commit", "verify", "cleanup"))
+    parser.add_argument("--base-url", default="http://127.0.0.1:9090")
+    parser.add_argument("--user-id", default="snowlabel_durability_check")
+    args = parser.parse_args()
+    headers = {"X-Snow-User": args.user_id}
+
+    if args.mode == "commit":
+        request_json("POST", args.base_url, "/api/reset", headers)
+        uploaded = request_json(
+            "POST",
+            args.base_url,
+            "/api/upload",
+            headers,
+            files={"file": ("durability.png", test_image(), "image/png")},
+        )
+        segmented = request_json(
+            "POST",
+            args.base_url,
+            "/api/segment",
+            headers,
+            json={
+                "image_id": uploaded["id"],
+                "type": "point",
+                "points": [[160, 120]],
+                "labels": [1],
+            },
+            timeout=300,
+        )
+        if not segmented.get("ok") or not segmented.get("mask_png"):
+            raise RuntimeError("point segmentation returned no mask")
+        committed = request_json(
+            "POST",
+            args.base_url,
+            "/api/commit",
+            headers,
+            json={
+                "image_id": uploaded["id"],
+                "mask_png": segmented["mask_png"],
+                "label": LABEL,
+            },
+            timeout=300,
+        )
+        print(
+            f"committed entry={committed['entry_id']} "
+            f"memory={committed['memory_size']}"
+        )
+        print("distribution:", distribution(args.base_url, headers))
+        return 0
+
+    if args.mode == "verify":
+        data = distribution(args.base_url, headers)
+        ok = data.get("classes", {}).get(LABEL, 0) >= 1
+        print("distribution after restart:", data)
+        print("DURABILITY OK" if ok else "DURABILITY FAILED")
+        return 0 if ok else 1
+
+    reset = request_json("POST", args.base_url, "/api/reset", headers)
+    print("cleanup:", reset)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

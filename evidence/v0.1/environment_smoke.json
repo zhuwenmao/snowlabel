@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "generated_at": "2026-08-05T10:39:46.092062+00:00",
+  "startup_seconds": 23.819,
+  "python": "3.11.15",
+  "platform": "Windows-10-10.0.22631-SP0",
+  "packages": {
+    "snowlabel": "0.1.0",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121",
+    "ultralytics": "8.4.54",
+    "transformers": "5.9.0",
+    "fastapi": "0.136.3",
+    "numpy": "2.4.4",
+    "pymilvus": "3.0.0",
+    "milvus-lite": "3.0",
+    "label-studio-sdk": "2.0.18"
+  },
+  "checks": {
+    "home": {
+      "status": 200,
+      "content_type": "text/html"
+    },
+    "stats": {
+      "status": 200,
+      "memory_total": 0
+    },
+    "dataset": {
+      "status": 200,
+      "image_count": 36
+    }
+  }
+}

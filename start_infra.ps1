@@ -8,7 +8,7 @@
 param([switch]$Fresh)
 $ErrorActionPreference = "Stop"
 $root      = $PSScriptRoot
-$py        = "$env:USERPROFILE\miniconda3\envs\snowlabel\python.exe"
+$py        = "D:\conda\envs\snowlabel\python.exe"
 $mdb       = Join-Path $root "data\cache\mariadb-11.4.12-winx64"
 $datadir   = Join-Path $root "data\mariadb_data"
 $minio     = Join-Path $root "data\cache\minio.exe"

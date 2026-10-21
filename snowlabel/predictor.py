@@ -13,9 +13,11 @@ grows. Auto additionally requires a class margin and support:
 """
 from __future__ import annotations
 
+import hashlib
 import logging
 import threading
-from dataclasses import dataclass
+import time
+from dataclasses import dataclass, field
 from typing import Literal
 
 import numpy as np
@@ -49,6 +51,7 @@ class Prediction:
     tier: Tier                    # auto / suggest / silent
     top_k: list[tuple[str, float]]  # full breakdown for debugging / UI
     cw: float = 0.0               # best stage-1 v_whole cosine (raw NN sim, pre-rerank)
+    anchor_refs: list[dict] = field(default_factory=list)
 
 
 class SnowPredictor:
@@ -124,12 +127,14 @@ class SnowPredictor:
     def predict_all(
         self,
         img_pil: Image.Image,
-        max_masks: int = 16,
+        max_masks: int | None = None,
         *,
         user_id: str | None = None,
     ) -> list[Prediction]:
         """Auto mode: SAM proposes all masks, we tag each with a predicted label."""
+        max_masks = int(max_masks or self.cfg.sam_auto_max_masks)
         with self.gpu_lock:
+            self.dino.offload_to_cpu()
             sms = self.sam.predict_all(img_pil, max_masks=max_masks)
             if not sms:
                 return []
@@ -142,7 +147,7 @@ class SnowPredictor:
         self,
         img_bytes: bytes,
         img_pil: Image.Image,
-        max_masks: int = 16,
+        max_masks: int | None = None,
         *,
         user_id: str | None = None,
         ext: str = ".jpg",
@@ -154,39 +159,68 @@ class SnowPredictor:
         记忆库对缓存特征实时重判(便宜),保证不因记忆库增长而过时。未命中:正常算一遍
         再写库。缓存关闭/不可用(self.cache is None)时,行为等价于 predict_all。
         """
+        max_masks = int(max_masks or self.cfg.sam_auto_max_masks)
         if self.cache is None:
             return (self.predict_all(img_pil, max_masks=max_masks,
                                      user_id=user_id), False)
         from .imgcache.cache import image_sha256
-        h = image_sha256(img_bytes)
+        raw_h = image_sha256(img_bytes)
+        profile = (
+            # v2 is the first implementation where these options actually
+            # reach SAM generate(). Do not reuse older default-parameter masks.
+            f"auto_impl=v2|sam={self.cfg.sam_variant}|max={max_masks}|"
+            f"pps={self.cfg.sam_auto_points_per_side}|"
+            f"crop={self.cfg.sam_auto_crop_layers}|"
+            f"conf={self.cfg.sam_auto_conf_thres}|"
+            f"stab={self.cfg.sam_auto_stability_thres}"
+        )
+        h = hashlib.sha256(f"{raw_h}|{profile}".encode("utf-8")).hexdigest()
         cached = self.cache.lookup(h)
         if cached is not None:
             preds = []
             for cm in cached:   # CachedMask 自带 v_whole/v_parts/geom,可直接当特征用
-                label, conf, tier, top_k, cw = self._predict_from_features(
-                    cm, user_id=user_id)
+                label, conf, tier, top_k, cw, anchor_refs = self._predict_from_features(
+                    cm, user_id=user_id, explain=True)
                 preds.append(Prediction(
                     mask=cm.mask, bbox=cm.bbox, label=label, confidence=conf,
-                    tier=tier, top_k=top_k, cw=cw))
+                    tier=tier, top_k=top_k, cw=cw, anchor_refs=anchor_refs))
             log.info("everything cache HIT %s (%d masks)", h[:12], len(preds))
             return preds, True
         # miss → 算 SAM+DINO(持 GPU 锁),再在锁外持久化
+        total_started = time.perf_counter()
         with self.gpu_lock:
+            # DINOv3-L plus SAM automatic generation exceeds the practical VRAM
+            # budget of common 8 GB Windows GPUs. Offload DINO without unloading
+            # its weights; the feature pass below moves it back after SAM ends.
+            self.dino.offload_to_cpu()
+            sam_started = time.perf_counter()
             sms = self.sam.predict_all(img_pil, max_masks=max_masks)
+            sam_s = time.perf_counter() - sam_started
             if not sms:
                 return [], False
+            features_started = time.perf_counter()
             mfs = self.feat.features_batch(img_pil, [sm.mask for sm in sms])
+            features_s = time.perf_counter() - features_started
+            classify_started = time.perf_counter()
             preds = [self._prediction_from_features(sm, mf, user_id=user_id)
                      for sm, mf in zip(sms, mfs)]
+            classify_s = time.perf_counter() - classify_started
         items = [dict(mask=sm.mask, bbox=sm.bbox, v_whole=mf.v_whole,
                       v_parts=mf.v_parts, geom=mf.geom,
                       pred_label=p.label or "", tier=p.tier,
                       confidence=p.confidence)
                  for sm, mf, p in zip(sms, mfs, preds)]
         w, hgt = img_pil.size
+        store_started = time.perf_counter()
         self.cache.store(h, items, img_bytes=img_bytes, ext=ext,
                          orig_name=orig_name, width=w, height=hgt)
-        log.info("everything cache MISS %s → stored %d masks", h[:12], len(preds))
+        store_s = time.perf_counter() - store_started
+        log.info(
+            "everything cache MISS %s → stored %d masks "
+            "(sam=%.2fs dino=%.2fs classify=%.2fs store=%.2fs total=%.2fs)",
+            h[:12], len(preds), sam_s, features_s, classify_s, store_s,
+            time.perf_counter() - total_started,
+        )
         return preds, False
 
     # ---------- memory write ----------
@@ -238,7 +272,7 @@ class SnowPredictor:
         if not items:
             return []
         masks = [m for m, _ in items]
-        labels = [l for _, l in items]
+        labels = [label for _, label in items]
         mfs = self.feat.features_batch(img_pil, masks)   # one batched crop-encode
         v = np.stack([mf.v_whole for mf in mfs])
         parts = np.stack([mf.v_parts for mf in mfs])
@@ -256,13 +290,16 @@ class SnowPredictor:
 
     def _prediction_from_features(self, sm: SamMask, mf,
                                   user_id: str | None = None) -> Prediction:
-        label, conf, tier, top_k, cw = self._predict_from_features(mf, user_id=user_id)
+        label, conf, tier, top_k, cw, anchor_refs = self._predict_from_features(
+            mf, user_id=user_id, explain=True)
         return Prediction(
             mask=sm.mask, bbox=sm.bbox, label=label,
             confidence=conf, tier=tier, top_k=top_k, cw=cw,
+            anchor_refs=anchor_refs,
         )
 
-    def _predict_from_features(self, mf, user_id: str | None = None):
+    def _predict_from_features(self, mf, user_id: str | None = None,
+                               explain: bool = False):
         """Two-stage retrieval: Milvus ANN on v_whole (stage 1), then a Python
         rerank by part-level MaxSim + geometry (stage 2), with an open-set guard
         and margin-gated tiering. Returns (label|None, conf, tier, top_k, cw)
@@ -270,22 +307,33 @@ class SnowPredictor:
         entries, sims = self.memory.query(mf.v_whole, k=self.cfg.rerank_n,
                                           user_id=user_id)
         if len(entries) == 0:
-            return None, 0.0, "silent", [], 0.0
+            out = (None, 0.0, "silent", [], 0.0)
+            return (*out, []) if explain else out
         best_cw = float(np.max(sims))
         # Open-set guard: nothing in memory actually looks like this object.
         if best_cw < self.cfg.open_set_min_sim:
-            return None, round(best_cw, 4), "silent", [], round(best_cw, 4)
-        scored: list[tuple[str, float]] = []
+            out = (None, round(best_cw, 4), "silent", [], round(best_cw, 4))
+            return (*out, []) if explain else out
+        scored: list[dict] = []
         for e, s in zip(entries, sims):
             cw = float(s)
             pm = parts_maxsim(mf.v_parts, e.parts) if e.parts is not None else cw
             gs = geom_sim(mf.geom, e.geom) if e.geom is not None else 0.5
-            scored.append((e.label,
-                           RERANK_W_WHOLE * cw + RERANK_W_PARTS * pm + RERANK_W_GEOM * gs))
+            score = RERANK_W_WHOLE * cw + RERANK_W_PARTS * pm + RERANK_W_GEOM * gs
+            scored.append({
+                "entry_id": int(e.entry_id),
+                "label": e.label,
+                "score": float(score),
+                "similarity": float(cw),
+            })
         class_score: dict[str, float] = {}
-        for lbl, sc in scored:
+        class_best: dict[str, dict] = {}
+        for ref in scored:
+            lbl = ref["label"]
+            sc = float(ref["score"])
             if sc > class_score.get(lbl, -1.0):
                 class_score[lbl] = sc
+                class_best[lbl] = ref
         ranked = sorted(class_score.items(), key=lambda kv: -kv[1])
         winner, wscore = ranked[0]
         runner = ranked[1][1] if len(ranked) > 1 else 0.0
@@ -298,9 +346,30 @@ class SnowPredictor:
         conf = float(min(max(wscore, 0.0), 1.0))
         support = self._class_support(winner, user_id=user_id)
         tier = self._tier_group(conf, margin, support)
-        top_k = [(l, round(float(v), 4)) for l, v in ranked[:5]]
-        return ((winner if tier != "silent" else None), round(float(conf), 4),
-                tier, top_k, round(best_cw, 4))
+        top_k = [(label, round(float(score), 4)) for label, score in ranked[:5]]
+        anchor_refs: list[dict] = []
+        if explain:
+            decisive = dict(class_best.get(winner) or {})
+            if decisive:
+                decisive["role"] = "decisive"
+                anchor_refs.append(decisive)
+            supports = sorted(
+                (
+                    r for r in scored
+                    if r["label"] == winner and r["entry_id"] != decisive.get("entry_id")
+                ),
+                key=lambda r: -float(r["score"]),
+            )[:4]
+            for ref in supports:
+                r = dict(ref)
+                r["role"] = "support"
+                anchor_refs.append(r)
+            for ref in anchor_refs:
+                ref["score"] = round(float(ref["score"]), 4)
+                ref["similarity"] = round(float(ref["similarity"]), 4)
+        out = ((winner if tier != "silent" else None), round(float(conf), 4),
+               tier, top_k, round(best_cw, 4))
+        return (*out, anchor_refs) if explain else out
 
     def _class_support(self, label: str | None, user_id: str | None = None) -> int:
         """How many stored examples back this class (cold-start gate). Cached and
@@ -344,6 +413,13 @@ class SnowPredictor:
             "thresholds": {
                 "auto_apply": self.cfg.conf_auto_apply,
                 "suggest": self.cfg.conf_suggest,
+            },
+            "sam_auto": {
+                "max_masks": self.cfg.sam_auto_max_masks,
+                "points_per_side": self.cfg.sam_auto_points_per_side,
+                "crop_layers": self.cfg.sam_auto_crop_layers,
+                "conf_thres": self.cfg.sam_auto_conf_thres,
+                "stability_thres": self.cfg.sam_auto_stability_thres,
             },
             # 三库缓存积累量(体现"越用越多的数据集"):图片/mask/向量数。
             "imgcache": (self.cache.stats() if self.cache is not None

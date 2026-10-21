@@ -33,6 +33,12 @@
   .pill{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:12px;
         color:var(--fg);font-weight:600;font-variant-numeric:tabular-nums}
   main{flex:1;display:grid;grid-template-columns:210px 1fr 330px;min-height:0}
+  main.empty-mode{grid-template-columns:210px 1fr}
+  main.empty-mode .right,
+  main.empty-mode .toolbar,
+  main.empty-mode .actionbar,
+  main.empty-mode .left .top label,
+  main.empty-mode .resetbtn{display:none}
   /* ---- left filmstrip ---- */
   .left{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
   .left .top{padding:10px 12px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
@@ -60,7 +66,7 @@
   #cImg{max-width:100%;max-height:74vh;display:block;cursor:crosshair;background:#000;border-radius:6px}
   /* ---- 底部指令操作栏(SAM 2 风:指令 + 正点/排除点 + 主推进按钮) ---- */
   .actionbar{flex:0 0 auto;border-top:1px solid var(--line);background:var(--bg2);
-             padding:9px 14px;display:flex;align-items:center;gap:12px;min-height:54px;flex-wrap:wrap}
+             padding:9px 14px;display:flex;align-items:center;gap:12px;min-height:54px;flex-wrap:nowrap}
   .polwrap{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;flex:0 0 auto}
   .polwrap.hidden{display:none}
   .pol{background:var(--card2);color:var(--muted);border:0;border-radius:0;padding:7px 14px;font-size:13px;
@@ -68,7 +74,23 @@
   .pol:hover{filter:none;background:#262b35;color:var(--fg)}
   #modeAdd.sel{background:rgba(56,128,243,.92);color:#fff}
   #modeRemove.sel{background:rgba(230,25,59,.9);color:#fff}
-  .instruction{flex:1 1 220px;min-width:150px;color:var(--muted);font-size:12.5px;line-height:1.45}
+  .instruction{flex:1 1 320px;min-width:220px;min-height:38px;padding:8px 12px;border:1px solid var(--line);
+               border-radius:999px;background:rgba(255,255,255,.035);color:var(--fg);font-size:13px;
+               line-height:1.35;font-weight:700;display:flex;align-items:center;gap:8px;
+               box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+  .instruction.is-empty{visibility:hidden}
+  .hinticon{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+            flex:0 0 auto;font-size:11px;background:#303744;color:#fff}
+  .hinttext{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hint-tip{border-color:#303846;background:rgba(255,255,255,.04);color:#d8dde8}
+  .hint-busy{border-color:rgba(56,128,243,.55);background:rgba(56,128,243,.12);color:#dbe8ff}
+  .hint-busy .hinticon{background:var(--accent)}
+  .hint-warn{border-color:rgba(240,170,25,.65);background:rgba(240,170,25,.14);color:#ffe0a3}
+  .hint-warn .hinticon{background:var(--suggest);color:#111}
+  .hint-error{border-color:rgba(230,25,59,.7);background:rgba(230,25,59,.14);color:#ffc7d0}
+  .hint-error .hinticon{background:var(--err)}
+  .hint-success{border-color:rgba(40,210,50,.6);background:rgba(40,210,50,.12);color:#bdf5c2}
+  .hint-success .hinticon{background:var(--auto)}
   .abright{display:flex;align-items:center;gap:8px;flex:0 0 auto;margin-left:auto}
   .ablink{background:transparent;border:1px solid var(--line);color:var(--muted);padding:7px 12px;
           border-radius:var(--r-sm);font-weight:600}
@@ -118,6 +140,28 @@
   .memhead{display:flex;justify-content:space-between;align-items:baseline}
   .memhead .big{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;
                 background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .anchortools{display:flex;gap:7px;margin-top:10px}
+  .anchortools select{flex:1;background:var(--card2);color:var(--fg);border:1px solid var(--line);
+                      border-radius:var(--r-sm);padding:7px 9px;font-size:12px;min-width:0}
+  .anchorlist{display:flex;flex-direction:column;gap:7px;margin-top:10px;max-height:360px;overflow:auto;padding-right:2px}
+  .anchorrow{display:grid;grid-template-columns:42px 1fr auto;gap:9px;align-items:center;
+             background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:7px}
+  .anchorrow.decisive{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;background:rgba(56,128,243,.12)}
+  .anchorrow.support{border-color:rgba(56,128,243,.48);background:rgba(56,128,243,.07)}
+  .athumb{width:42px;height:42px;border-radius:8px;background:#101218;border:1px solid var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .athumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .athumb.source img{opacity:.82;filter:saturate(.85) contrast(.95)}
+  .athumbph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;font-weight:800}
+  .ameta{min-width:0}
+  .alabel{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;margin-bottom:3px}
+  .asub{color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .arole{display:inline-flex;border-radius:999px;padding:2px 7px;font-size:10px;font-weight:800;
+         background:var(--line);color:var(--muted);margin-top:4px}
+  .anchorrow.decisive .arole{background:var(--accent);color:#fff}
+  .anchorrow.support .arole{background:rgba(56,128,243,.22);color:#cfe0ff}
+  .adel{width:28px;height:28px;border-radius:8px;background:transparent;border:1px solid var(--line);
+        color:var(--muted);display:flex;align-items:center;justify-content:center;padding:0}
+  .adel:hover{filter:none;color:#fff;border-color:var(--err);background:rgba(230,25,59,.16)}
   #queue{margin-top:8px;line-height:1.9}
   /* ---- 上传(图片/文件夹):左栏顶部醒目入口 ---- */
   .uploadwrap{position:relative;margin-top:10px}
@@ -126,11 +170,15 @@
   #uploadMenu.hidden{display:none}
   #uploadMenu button{width:100%;background:transparent;color:var(--fg);text-align:left;padding:9px 10px;border-radius:7px;font-size:13px;line-height:1.25}
   #uploadMenu button:hover{background:var(--line)}
-  #uploadMenu .sub{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+  #uploadMenu .sub{display:none}
+  .samplemain{width:100%;margin-top:8px;background:var(--card2);color:var(--fg);border:1px solid var(--line);
+              padding:10px;font-size:13px;font-weight:700}
+  .samplemain:hover{filter:none;background:#262b35;border-color:var(--accent)}
   /* ---- header tagline + help ---- */
   header .tagline{color:var(--accent);font-size:12px;opacity:.92;white-space:nowrap}
   #statusline{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .helpbtn{background:var(--line);color:var(--fg);font-size:12px;padding:5px 12px;border-radius:20px;font-weight:600}
+  .helpbtn{background:var(--line);color:var(--fg);font-size:12px;padding:0;border-radius:50%;font-weight:800;
+           width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center}
   .helpbtn:hover{background:#2f3540}
   /* ---- 重新开始(清空我这次的数据,演示从零用) ---- */
   .resetbtn{margin-top:11px;width:100%;background:transparent;color:var(--muted);border:1px solid var(--line);
@@ -139,10 +187,10 @@
   /* ---- empty welcome state (canvas 区无图时) ---- */
   .empty{display:flex;align-items:center;justify-content:center;width:100%;height:100%}
   .empty.hidden{display:none}
-  .ecard{width:min(720px,94%);text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 34px 28px}
+  .ecard{width:min(640px,94%);text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 34px 28px}
   .ekicker{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0;font-weight:800;margin-bottom:10px}
   .ecard h3{margin:0 0 10px;font-size:26px;line-height:1.18;letter-spacing:0}
-  .ecard p{color:var(--muted);font-size:13px;line-height:1.75;margin:8px 0}
+  .ecard p{color:var(--muted);font-size:13px;line-height:1.6;margin:8px 0}
   .ecard b{color:var(--fg)}
   .emptyactions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px}
   .ebig{padding:13px 22px;font-size:15px;font-weight:700}
@@ -155,8 +203,8 @@
   .flowstep .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
                background:var(--accent-soft);color:var(--fg);font-size:12px;font-weight:800;margin-bottom:7px}
   .flowstep b{display:block;font-size:13px;margin-bottom:4px}
-  .flowstep span{display:block;color:var(--muted);font-size:12px;line-height:1.55}
-  .privacyline{border-top:1px solid var(--line);padding-top:12px;margin-top:16px!important;font-size:12px!important}
+  .flowstep span{display:none}
+  .privacyline{display:none}
   /* ---- onboarding modal ---- */
   .modal{position:fixed;inset:0;background:rgba(0,0,0,.66);display:flex;align-items:center;justify-content:center;z-index:100;padding:18px}
   .modal.hidden{display:none}
@@ -176,6 +224,24 @@
   /* ---- 空状态里的示例按钮(次级) ---- */
   .esample{margin-top:9px;background:var(--line);color:var(--fg);padding:10px 18px;font-size:13px;font-weight:600}
   .esample:hover{background:#2f3540}
+  .samplecard{width:min(900px,94vw)}
+  .samplelead{color:var(--muted);font-size:13px;line-height:1.55;margin:8px 0 18px}
+  .samplegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .sampleitem{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:left;color:var(--fg)}
+  .sampleitem:hover{filter:none;border-color:var(--accent);background:#252a34}
+  .sampleitem.disabled{opacity:.45;cursor:not-allowed}
+  .sampleitem.disabled:hover{border-color:var(--line);background:var(--card2)}
+  .samplepreview{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:5px;margin:-4px -4px 12px}
+  .samplepreview img{width:100%;height:94px;object-fit:cover;border-radius:8px;background:#0b0c10;border:1px solid var(--line)}
+  .samplepreview img:first-child{height:94px}
+  .sampletop{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .sampletag{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:2px 7px;color:var(--muted);font-weight:700}
+  .sampletag.synthetic{color:#f3c84b;border-color:rgba(243,200,75,.4)}
+  .sampletitle{font-size:15px;font-weight:800}
+  .samplesummary{color:var(--muted);font-size:12px;line-height:1.45;margin:0 0 9px}
+  .sampleclasses{display:flex;gap:5px;flex-wrap:wrap}
+  .sampleclasses span{font-size:11px;color:var(--fg);background:#303642;border-radius:999px;padding:3px 7px}
+  .samplesource{display:block;color:var(--muted);font-size:11px;margin-top:9px;line-height:1.35}
   /* ---- 啊哈时刻 toast ---- */
   #toast{position:fixed;left:50%;top:18px;z-index:120;
          background:linear-gradient(135deg,#1f9d55,#52c41a);color:#fff;font-weight:600;font-size:14px;
@@ -211,17 +277,73 @@
   .gdot{width:7px;height:7px;border-radius:50%;background:var(--line);display:inline-block;cursor:pointer;
         transition:width .2s,background .2s}
   .gdot.on{background:var(--grad);width:18px;border-radius:4px}
-  .guidegrid{display:grid;grid-template-columns:minmax(260px,1.12fr) minmax(240px,.88fr);gap:24px;align-items:stretch}
-  .gmedia{min-height:270px;border:1px dashed #485063;border-radius:12px;background:
-          linear-gradient(135deg,rgba(56,128,243,.12),rgba(251,115,165,.1));
-          display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px;color:var(--muted)}
-  .gmedia .ph{font-size:13px;font-weight:800;color:var(--fg);margin-bottom:8px}
-  .gmedia .sub{font-size:12px;line-height:1.6;max-width:280px}
+  .gcard{width:min(980px,94vw)}
+  .guidegrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:30px;align-items:center}
+  /* 示意图:真实照片 + 真实 SAM 轮廓 + 矢量 UI,任何分辨率都清晰 */
+  .gviz{position:relative;aspect-ratio:3/2;border:1px solid #2b3340;border-radius:12px;background:#0b0e14;overflow:hidden;
+        box-shadow:0 18px 46px rgba(0,0,0,.28);font-size:12px}
+  .gviz>img,.gviz .gpic>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .gviz svg.gol{position:absolute;inset:0;width:100%;height:100%}
+  .gol polygon{fill:none;stroke:#c9ced8;stroke-opacity:.75;stroke-width:1.4px;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+  .gol polygon.lab{stroke:#8773FF;stroke-opacity:1;stroke-width:2px;fill:#8773FF;fill-opacity:.10}
+  .gol polygon.sel{stroke:#3880F3;stroke-opacity:1;stroke-width:3px;fill:#3880F3;fill-opacity:.16}
+  .gpin{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:5px;white-space:nowrap;
+        background:rgba(5,6,9,.8);border:1px solid currentColor;border-radius:999px;padding:3px 9px;font-weight:700;font-size:12px}
+  .gpin i{width:7px;height:7px;border-radius:50%;background:currentColor}
+  .gtip{position:absolute;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;background:#fff;color:#0b0e14;
+        border-radius:8px;padding:5px 9px;font-weight:700;font-size:12px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  .gtip kbd{background:#0b0e14;color:#fff}
+  .gclick{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:2px solid #fff;
+          background:rgba(56,128,243,.55);box-shadow:0 0 0 4px rgba(56,128,243,.25)}
+  .gclick.add{background:rgba(40,210,50,.6);box-shadow:0 0 0 4px rgba(40,210,50,.25);display:flex;align-items:center;
+              justify-content:center;color:#fff;font-weight:800;font-size:15px;line-height:1}
+  kbd{display:inline-block;min-width:20px;text-align:center;background:var(--card2);border:1px solid #3a414e;border-bottom-width:2px;
+      border-radius:6px;padding:1px 7px;font:700 12px/1.5 "Inter","Segoe UI",system-ui,sans-serif;color:var(--fg)}
+  /* ① 选图 */
+  .v1{display:grid;grid-template-columns:.8fr 1.2fr;gap:12px;padding:14px;background:linear-gradient(160deg,#121620,#0b0e14)}
+  .v1 .up{border:1.5px dashed #3a4352;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+          gap:8px;text-align:center;color:var(--muted);padding:10px}
+  .v1 .up svg{width:34px;height:34px;color:#8F8CFF}
+  .v1 .up b{color:var(--fg);font-size:13px}
+  .v1 .dsets{display:flex;flex-direction:column;gap:10px;justify-content:center}
+  .v1 .ds{position:relative;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px}
+  .v1 .ds.on{border-color:#3880F3;box-shadow:0 0 0 1px #3880F3 inset}
+  .v1 .th{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:7px}
+  .v1 .th img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:5px;display:block}
+  .v1 .ds b{display:block;font-size:12.5px}.v1 .ds span{color:var(--muted);font-size:11px}
+  .v1 .rec{position:absolute;top:-8px;right:8px;background:#3880F3;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:700}
+  /* ③ 入库 */
+  .v3{display:grid;grid-template-columns:1.05fr 1fr}
+  .v3 .gpic{position:relative;overflow:hidden}
+  .v3 .gside{border-left:1px solid var(--line);background:#11141b;padding:12px;display:flex;flex-direction:column;gap:9px;justify-content:center}
+  .v3 .gl{color:var(--muted);font-size:11px;font-weight:700}
+  .v3 .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .v3 .chip2{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--card2);border-radius:999px;padding:3px 9px;font-weight:600}
+  .v3 .chip2 i{width:7px;height:7px;border-radius:50%}
+  .v3 .chip2.sel{border-color:#3880F3;background:rgba(56,128,243,.16);box-shadow:0 0 0 1px #3880F3 inset}
+  .v3 .obj2{display:flex;align-items:center;gap:7px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:5px 7px;font-weight:600}
+  .v3 .obj2 img{width:24px;height:24px;border-radius:5px;object-fit:cover}
+  .v3 .obj2 i{width:7px;height:7px;border-radius:50%}
+  .v3 .obj2,.v3 .obj2 em{white-space:nowrap}
+  .v3 .obj2 em{margin-left:auto;font-style:normal;font-size:10.5px;color:var(--suggest);border:1px solid rgba(240,170,25,.55);border-radius:999px;padding:0 6px}
+  .v3 .krow{display:flex;align-items:center;gap:8px;color:var(--fg);font-weight:600}
+  .v3 .mem{margin-top:2px;display:inline-flex;align-items:center;gap:6px;align-self:flex-start;border-radius:999px;padding:4px 10px;
+           font-weight:800;color:#fff;background:var(--grad);box-shadow:0 4px 16px rgba(89,95,239,.35)}
+  /* 文案 */
   .gcopy{display:flex;flex-direction:column;justify-content:center}
-  .gslide .gh{font-size:24px;font-weight:800;margin-bottom:12px;letter-spacing:0}
-  .gslide p{color:var(--muted);font-size:14px;line-height:1.8;margin:0}
-  .gslide p b{color:var(--fg)}
-  .gcue{margin-top:16px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--fg);font-size:13px;line-height:1.6}
+  .gslide .gh{font-size:24px;font-weight:800;margin-bottom:10px;letter-spacing:0}
+  .gslide p{color:var(--muted);font-size:14px;line-height:1.6;margin:0}
+  .gacts{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+  .gacts li{display:flex;align-items:baseline;gap:10px;font-size:14px;line-height:1.5;color:var(--fg)}
+  .gacts li>span:first-child{flex:0 0 76px;color:var(--muted);font-size:13px;font-weight:700}
+  .gcue{margin-top:16px;background:var(--card2);border:1px solid var(--line);border-left:3px solid #8F8CFF;border-radius:8px;
+        padding:10px 12px;color:var(--fg);font-size:13px;line-height:1.5}
+  @media (prefers-reduced-motion:no-preference){
+    .gslide:not([hidden]) .gol polygon.lab,.gslide:not([hidden]) .gol polygon.sel{stroke-dasharray:1;stroke-dashoffset:1;animation:gdraw .9s ease-out .1s forwards}
+    .gslide:not([hidden]) .gclick{animation:gpulse 1.6s ease-out infinite}
+    @keyframes gdraw{to{stroke-dashoffset:0}}
+    @keyframes gpulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.45)}100%{box-shadow:0 0 0 12px rgba(255,255,255,0)}}
+  }
   .gfoot{display:flex;justify-content:space-between;align-items:center;margin-top:26px;gap:10px}
   /* ---- 响应式:公网链接常被手机打开,别让三栏挤崩 ---- */
   @media (max-width:860px){
@@ -240,8 +362,17 @@
     .emptyactions{align-items:stretch}
     .emptyactions button{width:100%}
     .mcard{padding:26px 20px}
-    .guidegrid{grid-template-columns:1fr}
-    .gmedia{min-height:190px}
+    .samplegrid{grid-template-columns:1fr}
+    .guidegrid{grid-template-columns:1fr;gap:18px}
+    .gviz{font-size:11px}
+    .gslide .gh{font-size:20px}
+    .v1 .ds:not(.on){display:none}
+    .v3 .gside{padding:9px;gap:6px}
+    .v3 .gl,.v3 .obj2 img{display:none}
+    .gtip.r{left:auto!important;right:3%}
+    .actionbar{flex-wrap:wrap}
+    .instruction{order:3;flex-basis:100%;min-width:0;border-radius:12px}
+    .hinttext{white-space:normal}
   }
 </style>
 </head>
@@ -249,11 +380,11 @@
 <header>
   <span class="snow">&#10052;&#65039;</span>
   <h1>SnowLabel</h1>
-  <span class="tagline">点一下 → 确认类别 → 下一张自动复用</span>
+  <span class="tagline">全分割 · 记忆复用</span>
   <span class="pill" id="progress">未载入图片</span>
   <span class="grow"></span>
   <span class="sub" id="statusline">连接中&hellip;</span>
-  <button id="helpBtn" class="helpbtn" title="打开三步使用指南">? 使用指南</button>
+  <button id="helpBtn" class="helpbtn" title="使用指南">?</button>
   <a href="/">首页 ↗</a>
   <a href="/inspector" target="_blank">记忆面板 ↗</a>
 </header>
@@ -266,13 +397,14 @@
       <div class="uploadwrap">
         <button id="uploadMain" class="grad" title="上传你自己的图片或整个文件夹来标注">⬆ 上传图片 / 文件夹</button>
         <div id="uploadMenu" class="hidden">
-          <button id="pickFiles">🖼 选择图片<span class="sub">一张或多张</span></button>
-          <button id="pickDir">📁 选择整个文件夹<span class="sub">含子文件夹里所有图片</span></button>
-          <button id="pickSamples">载入示例图<span class="sub">3 组示例,零门槛试玩</span></button>
+          <button id="pickFiles">选择图片</button>
+          <button id="pickDir">选择文件夹</button>
+          <button id="pickSamples">选择示例数据集</button>
         </div>
         <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
         <input type="file" id="dirInput" webkitdirectory directory multiple style="display:none">
       </div>
+      <button id="sampleMain" class="samplemain" title="打开示例数据集选择器">选择示例数据集</button>
       <label><input type="checkbox" id="onlyUnlabeled"> 只看未标注</label>
       <button id="resetBtn" class="resetbtn" title="清空你自己这次的所有标注和上传的图片，从零开始（只影响你，不影响别人）">🔄 重新开始</button>
     </div>
@@ -293,20 +425,20 @@
       <div id="emptyState" class="empty hidden">
         <div class="ecard">
           <div class="ekicker">首次试用</div>
-          <h3>先跑通一个“它学会了”的闭环</h3>
-          <p>上传你的图片，或直接载入示例图。SnowLabel 用 SAM 抠出物体，用向量记忆保存你确认过的类别；同类样本多几个后，下次就会自动认出。</p>
+          <h3>选择图片开始</h3>
+          <p>上传图片，或直接使用示例数据集。</p>
           <div class="emptyactions">
             <button id="emptyUpload" class="ebig grad">上传图片开始</button>
-            <button id="emptySample" class="esample">载入示例图</button>
-            <button id="emptyHelp" class="elink">看三步指南 →</button>
+            <button id="emptySample" class="esample">选择示例数据集</button>
+            <button id="emptyHelp" class="elink">指南</button>
           </div>
-          <p class="emini">支持单张、多张，或整个文件夹（jpg / png / webp …）</p>
+          <p class="emini">支持图片和文件夹 <span class="hq" title="支持 jpg、png、bmp、webp、gif；公网试用按浏览器隔离数据。">?</span></p>
           <div class="quickflow">
-            <div class="flowstep"><span class="n">1</span><b>点中物体</b><span>SAM 自动给出 mask，用正点/排除点精修。</span></div>
-            <div class="flowstep"><span class="n">2</span><b>确认类别</b><span>选择或新建类别，只保存新增/纠错样本。</span></div>
-            <div class="flowstep"><span class="n">3</span><b>自动复用</b><span>记忆变大后，全分割会直接标出学过的类别。</span></div>
+            <div class="flowstep"><span class="n">1</span><b>全分割</b></div>
+            <div class="flowstep"><span class="n">2</span><b>确认类别</b></div>
+            <div class="flowstep"><span class="n">3</span><b>自动复用</b></div>
           </div>
-          <p class="privacyline">公网 demo 按浏览器隔离数据；“重新开始”只清空你这次上传的图和记忆。</p>
+          <p class="privacyline"></p>
         </div>
       </div>
     </div>
@@ -316,7 +448,9 @@
         <button class="pol sel" id="modeAdd" title="正点:点中要保留的物体（左键默认就是它）">⊕ 正点</button>
         <button class="pol" id="modeRemove" title="排除点:抠掉框进来的多余部分（也可直接右键）">⊖ 排除点</button>
       </div>
-      <div class="instruction" id="hint"></div>
+      <div class="instruction hint-tip is-empty" id="hint" role="status" aria-live="polite">
+        <span class="hinticon">i</span><span class="hinttext"></span>
+      </div>
       <div class="abright">
         <button id="clearBtn" class="ablink" title="清除当前未入库的选择 (C)">↺ 清除</button>
         <button id="addDraftBtn" class="ghost" style="display:none">＋ 加入本图 (Space)</button>
@@ -327,22 +461,27 @@
 
   <!-- RIGHT: prediction + classes + memory -->
   <div class="right">
-    <h2>当前物体<span class="hq" title="模型对当前物体的预测。auto=可直接用 · suggest=建议你确认 · silent=没学过先不猜；conf=匹配置信分">?</span></h2>
-    <div id="pred"><span class="muted">点击/框选物体,或按 E 全分割</span></div>
+    <h2>当前物体<span class="hq" title="auto 可用；suggest 需确认；conf 是记忆匹配分。">?</span></h2>
+    <div id="pred"><span class="muted">等待选择物体</span></div>
 
-    <h2>类别（点选 = 确认/修改）</h2>
+    <h2>类别<span class="hq" title="点选类别即可确认或修改当前物体；也可以输入新类别。">?</span></h2>
     <div class="classes" id="classes"></div>
     <div class="addrow">
       <input id="newcls" placeholder="+ 新类别，回车添加">
       <button class="ghost" id="addBtn">添加</button>
     </div>
     <h2>本图物体 <span id="objcount" class="muted" style="text-transform:none;letter-spacing:0;font-size:12px"></span>
-        <span class="hq" title="本图你抠出/认出的所有物体。点一行=选中改类;✎=待入库(改过或新增),✓=识别正确不必存;✕=删掉。入库本图在底部操作栏。">?</span></h2>
+        <span class="hq" title="新增或改过的物体会待入库；识别正确的结果不重复保存。">?</span></h2>
     <div id="objlist"></div>
 
     <h2>雪球记忆<span class="hq" title="你每次入库的物体都被编码成向量存进这里。它越大，模型认得越多、越准——而且模型从不重训，全靠检索记忆。">?</span></h2>
     <div class="memhead"><span class="muted">已记忆实例</span><span class="big" id="memTotal">0</span></div>
     <div id="memBars" style="margin-top:8px"></div>
+    <div class="anchortools">
+      <select id="anchorFilter" title="按类别筛选 anchor"><option value="">全部 anchor</option></select>
+      <button id="anchorRefresh" class="ghost" title="刷新 anchor 列表">刷新</button>
+    </div>
+    <div id="anchorList" class="anchorlist"></div>
   </div>
 </main>
 
@@ -354,40 +493,93 @@
     <div class="gslides">
       <div class="gslide">
         <div class="guidegrid">
-          <div class="gmedia">
-            <div class="ph">上传 / 载入示例 占位</div>
-            <div class="sub">这里后续放第一步短视频或截图：用户如何进入试用并准备图片。</div>
+          <div class="gviz v1" aria-hidden="true">
+            <div class="up">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+              <b>上传图片</b><span>支持整个文件夹</span>
+            </div>
+            <div class="dsets">
+              <div class="ds on"><span class="rec">推荐</span>
+                <div class="th"><img src="/static/guide/t-car.webp" alt=""><img src="/static/guide/t-truck.webp" alt=""><img src="/static/guide/t-bus.webp" alt=""></div>
+                <b>常识物体：车辆</b><span>汽车 · 卡车 · 公交车</span>
+              </div>
+              <div class="ds">
+                <div class="th"><img src="/static/guide/t-ind1.webp" alt=""><img src="/static/guide/t-ind2.webp" alt=""><img src="/static/guide/t-ind3.webp" alt=""></div>
+                <b>合成挑战：微小与透明缺陷</b><span>工业质检 · 参考 MVTec AD 2</span>
+              </div>
+            </div>
           </div>
           <div class="gcopy">
-            <div class="gh">① 先准备一张图</div>
-            <p>可以上传自己的图片，也可以先点 <b>载入示例图</b>。示例图用于快速跑通闭环：选物体、确认类别、看记忆增长。</p>
-            <div class="gcue">下一步会教你在画布上点中物体，让 SAM 自动抠出 mask。</div>
+            <div class="gh">① 选一组图片</div>
+            <p>上传自己的图片或整个文件夹；手边没图，就点<b>「选择示例数据集」</b>。</p>
+            <div class="gcue">第一次试用推荐「常识物体：车辆」——类别少、差异明显，最容易看出越标越准。</div>
           </div>
         </div>
       </div>
       <div class="gslide" hidden>
         <div class="guidegrid">
-          <div class="gmedia">
-            <div class="ph">点击 / 精修 mask 占位</div>
-            <div class="sub">这里后续放第二步短视频或截图：点中物体、用正点和排除点修轮廓。</div>
+          <div class="gviz" aria-hidden="true">
+            <img src="/static/hero/bus-3.webp" alt="">
+            <svg class="gol" viewBox="0 0 640 427" preserveAspectRatio="xMidYMid slice">
+              <polygon points="33,0 67,319 58,374 51,379 53,425 140,426 135,368 111,328 76,3"/>
+              <polygon points="579,77 572,76 555,77 547,78 544,82 545,96 547,101 548,122 550,124 566,124 579,122 582,119 582,113 581,98 581,93 580,86"/>
+              <polygon points="495,92 487,103 483,108 482,111 486,116 490,119 495,123 501,126 507,120 510,116 515,106 510,103 504,97"/>
+              <polygon points="583,101 583,118 580,127 581,140 578,140 578,165 583,167 609,167 618,160 621,144 616,102 612,100 595,98 587,102"/>
+              <polygon points="49,193 25,195 17,204 13,208 12,220 10,223 15,233 19,244 23,251 29,252 36,249 45,248 46,233 42,225 42,215 39,208 44,201 49,197"/>
+              <polygon points="639,141 635,147 629,155 630,160 618,165 610,178 608,187 608,211 610,219 613,221 634,221 639,212"/>
+              <polygon class="lab" pathLength="1" points="352,52 190,53 195,63 110,85 108,117 92,137 93,163 102,171 110,211 115,291 125,327 143,351 152,337 250,316 343,308 353,318 350,323 374,326 384,302 396,296"/>
+              <polygon class="sel" pathLength="1" points="383,185 385,224 391,240 404,239 417,233 462,229 473,237 494,234 498,227 522,232 534,228 541,221 558,219 561,208 556,180 538,177 524,170 496,163 431,165 401,173 405,184 399,190 393,189 390,185"/>
+            </svg>
+            <span class="gpin" style="left:37%;top:42%;color:#8773FF"><i></i>公交车</span>
+            <span class="gclick" style="left:72%;top:47%"></span>
+            <span class="gtip r" style="left:63%;top:63%">点物体 → 选类别 / 改类</span>
+            <span class="gclick add" style="left:57.5%;top:12%">+</span>
+            <span class="gtip" style="left:61.5%;top:5%">点空白 → 补漏检</span>
           </div>
           <div class="gcopy">
-            <div class="gh">② 点中物体并抠准</div>
-            <p>左键点中目标，SAM 会自动给出轮廓。用底部的 <b>⊕ 正点 / ⊖ 排除点</b> 增减选区；也可以切到 <b>▭ 框选</b> 或 <b>✦ 全分割</b>。</p>
-            <div class="gcue">下一步会教你选类别并入库，让它成为“下次能自动认出”的记忆。</div>
+            <div class="gh">② 检查全分割结果</div>
+            <p>打开图片会自动全分割，每个物体一条细轮廓；学过的类别直接带标签。</p>
+            <ul class="gacts">
+              <li><span>点物体</span><span>选中它，再选类别或改类</span></li>
+              <li><span>点空白</span><span>补上 SAM 漏掉的物体</span></li>
+              <li><span>精修</span><span>左键加正点，右键加排除点</span></li>
+            </ul>
           </div>
         </div>
       </div>
       <div class="gslide" hidden>
         <div class="guidegrid">
-          <div class="gmedia">
-            <div class="ph">确认 / 入库 / 自动复用 占位</div>
-            <div class="sub">这里后续放第三步短视频或截图：选类别、入库、下一张自动识别。</div>
+          <div class="gviz v3" aria-hidden="true">
+            <div class="gpic">
+              <img src="/static/hero/bus-1.webp" alt="">
+              <svg class="gol" viewBox="0 0 612 612" preserveAspectRatio="xMidYMid slice">
+                <polygon class="lab" pathLength="1" style="stroke-width:3px" points="153,119 142,149 132,303 136,457 155,526 179,529 192,518 221,516 225,506 329,492 344,500 351,525 369,531 400,514 403,495 481,476 493,489 511,458 503,325 517,299 496,183 319,91 218,96"/>
+              </svg>
+              <span class="gpin" style="left:53%;top:54%;color:#8773FF"><i></i>公交车</span>
+            </div>
+            <div class="gside">
+              <div class="gl">类别</div>
+              <div class="chips">
+                <span class="chip2"><i style="background:#8773FF"></i>汽车</span>
+                <span class="chip2"><i style="background:#00C8F0"></i>卡车</span>
+                <span class="chip2 sel"><i style="background:#8773FF"></i>公交车</span>
+              </div>
+              <div class="gl">本图物体 · 1 个待入库</div>
+              <div class="obj2"><img src="/static/guide/t-bus.webp" alt=""><i style="background:#8773FF"></i>公交车<em>新增</em></div>
+              <div class="gl">快捷键</div>
+              <div class="krow"><kbd>Space</kbd> 加入本图</div>
+              <div class="krow"><kbd>Enter</kbd> 入库本图</div>
+              <span class="mem">✓ 记忆 +1</span>
+            </div>
           </div>
           <div class="gcopy">
-            <div class="gh">③ 选类别，入库本图</div>
-            <p>在右侧选择或新建类别，按 <b>Space</b> 加入本图，再按 <b>Enter</b> 入库。新增或改过的物体会成为记忆；识别正确的不用重复存。</p>
-            <div class="gcue">同类样本多几个后，右侧会出现 auto / suggest，表示它开始复用你教过的记忆。</div>
+            <div class="gh">③ 确认类别，入库本图</div>
+            <ul class="gacts">
+              <li><span>选类别</span><span>点类别标签，或按数字键 <kbd>1</kbd>–<kbd>9</kbd></span></li>
+              <li><span>加入本图</span><span>按 <kbd>Space</kbd>，可以继续标下一个物体</span></li>
+              <li><span>入库</span><span>按 <kbd>Enter</kbd>，把本图写进记忆</span></li>
+            </ul>
+            <div class="gcue">只有新增或改过类别的物体才写入记忆；下一张相似图会自动复用它。</div>
           </div>
         </div>
       </div>
@@ -396,6 +588,16 @@
       <button id="gPrev" class="ablink" style="visibility:hidden">← 上一步</button>
       <button id="gNext" class="gpill">下一步 →</button>
     </div>
+  </div>
+</div>
+
+<!-- 示例数据集选择器:工业任务 + 常识物体 -->
+<div id="sampleModal" class="modal hidden">
+  <div class="mcard samplecard">
+    <button id="sampleClose" class="mclose" title="关闭">&#10005;</button>
+    <div class="mhead">选择示例数据集</div>
+    <div class="samplelead">选择后会载入一组图片到当前试用空间。<span class="hq" title="公网 demo 按浏览器隔离数据；每组用于演示全分割、确认类别和自动复用。">?</span></div>
+    <div id="sampleGrid" class="samplegrid"></div>
   </div>
 </div>
 
@@ -409,17 +611,22 @@ const TIER_COLOR = {auto:"var(--auto)", suggest:"var(--suggest)", silent:"var(--
 const THEME_COLORS = ["#3880F3","#F0AA19","#00D2BE","#28D232","#8773FF","#00C8F0","#FA8719","#E6193B","#FA7DC8"];
 // 默认不预置任何类别 —— "你从零教它"才是产品叙事;类别从你新增的 + 记忆分布里长出来。
 const DEFAULT_CLASSES = [];
-// 一键载入示例图后,顺手把这 3 个类名塞进来,让示例标注是"点选"而非"打字"。
-const SAMPLE_CLASSES = ["赫氏鸥","裏海燕鸥","仙人掌鹪鹩"];
 
 let DS=[], curIdx=-1, onlyUnlabeled=false;
 let img=new Image();
 let classes=[...DEFAULT_CLASSES];
-let tool="point";
-let masks=[];        // per-image finalized set: {mask_png,bbox,off,bA,pred_label,tier,confidence,top_k,label,source}
+let sampleDatasets=[];
+let anchorEntries=[];
+let currentAnchorRefs=[];
+let memoryTotal=0;
+const IS_TRY_DEMO = location.pathname.replace(/\/+$/,"")==="/try";
+const DEFAULT_TOOL = IS_TRY_DEMO ? "all" : "point";
+const AUTO_MAX_MASKS = 80;
+let tool=DEFAULT_TOOL;
+let masks=[];        // per-image finalized set: {mask_png,bbox,off,bA,pred_label,tier,confidence,top_k,anchor_refs,label,source}
 let setOverlay=null; // composited tinted overlay of masks[]
 let _owner=null;     // Int32Array: per-pixel owning-mask index (exclusive, no overlap)
-let draft=null;      // in-progress point/box mask: {mask_png,bbox,tier,confidence,top_k,pred_label,off,label}
+let draft=null;      // in-progress point/box mask: {mask_png,bbox,tier,confidence,top_k,anchor_refs,pred_label,off,label}
 let pts=[];          // points building the current draft: {x,y,label}  (1=pos,0=neg)
 let drag=null;       // box drag {x0,y0,x1,y1}
 let picked=-1;       // index into masks[] selected for relabel
@@ -429,17 +636,53 @@ let pointMode="add"; // 点极性:"add"=正点(保留) / "remove"=排除点(抠�
 
 const cImg = document.getElementById("cImg");
 const base = s => (s||"").split(/[\\/]/).pop();
-// Stable anonymous visitor id — scopes this browser's images + memory anchors
-// on the multi-tenant public demo (ignored by the single-tenant local server).
-const UID = (()=>{let u=localStorage.getItem('snow_uid');if(!u||!/^[A-Za-z0-9_-]{1,64}$/.test(u)){u=((self.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(36).slice(2))).replace(/[^A-Za-z0-9_-]/g,'').slice(0,64);localStorage.setItem('snow_uid',u);}return u;})();
+// 首页用 fresh=1 开一个全新试用；普通刷新恢复当前 UID，避免图片和 anchor
+// 立刻变成无法清理的孤儿数据。解析后移除 fresh，硬刷新也不会重复重置。
+const UID = (()=>{
+  const params=new URLSearchParams(location.search);
+  const fresh=params.has("fresh");
+  let uid="";
+  try{uid=localStorage.getItem("snow_uid")||"";}catch(e){}
+  if(fresh || !/^[A-Za-z0-9_-]{1,64}$/.test(uid)){
+    uid=((self.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(36).slice(2)))
+      .replace(/[^A-Za-z0-9_-]/g,"").slice(0,64);
+    try{localStorage.setItem("snow_uid",uid);}catch(e){}
+  }
+  if(fresh){
+    params.delete("fresh");
+    const q=params.toString();
+    history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash);
+  }
+  return uid;
+})();
 // 把 UID 同步进 cookie:浏览器原生请求(<img src=/api/image/..>)带不了自定义头,但会自动带 cookie,
 // 后端 _user_id 用它兜底解析租户,缩略图/画布才能按本用户目录取到图(否则上传成功却显示不出来)。
-try{ document.cookie="snow_user="+UID+";path=/;max-age=31536000;SameSite=Lax"; }catch(e){}
+try{ document.cookie="snow_user="+UID+";path=/;SameSite=Lax"; }catch(e){}
 async function j(path,opts){opts=opts||{};const headers=Object.assign({'X-Snow-User':UID},opts.headers||{});const r=await fetch(API+path,Object.assign({},opts,{headers}));if(!r.ok){let t="";try{t=(await r.json()).detail||"";}catch(e){}throw new Error((t||r.status));}return r.json();}
 function hexToRgb(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
 function colorFor(c){if(!c)return"#8a8f98";let h=0;for(const ch of c)h=(h*31+ch.charCodeAt(0))>>>0;return THEME_COLORS[h%THEME_COLORS.length];}
 function loadImg(src){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src;});}
-function flash(msg){document.getElementById("hint").textContent=msg||"";}
+const HINT_KINDS = ["tip","busy","warn","error","success"];
+function inferHintKind(msg){
+  const s=String(msg||"");
+  if(!s) return "tip";
+  if(/失败|错误|无法|后端|500/.test(s)) return "error";
+  if(/没有|没选|未找到|先|需要|不能|0 个/.test(s)) return "warn";
+  if(/中…|处理中|上传中|载入|分割中|连接服务/.test(s)) return "busy";
+  if(/^已|完成|入库 \d+ 个/.test(s)) return "success";
+  return "tip";
+}
+function flash(msg,kind){
+  const box=document.getElementById("hint"); if(!box)return;
+  const text=box.querySelector(".hinttext")||box;
+  const icon=box.querySelector(".hinticon");
+  const k=kind||inferHintKind(msg);
+  text.textContent=msg||"";
+  box.classList.remove(...HINT_KINDS.map(x=>"hint-"+x));
+  box.classList.add("hint-"+k);
+  box.classList.toggle("is-empty",!msg);
+  if(icon) icon.textContent = k==="success"?"✓":k==="error"?"!":k==="warn"?"!":k==="busy"?"…":"i";
+}
 function esc(s){
   return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 }
@@ -462,9 +705,12 @@ function setBusy(on,msg,buttonIds){
   }
 }
 function toolHint(){
-  return tool==="point" ? "点中物体 → 自动抠图。用「⊕ 正点 / ⊖ 排除点」增减选区，几下抠准 · Space 加入本图 · Enter 入库"
-       : tool==="box"   ? "拖一个框圈住物体 · Space 加入本图 · Enter 入库"
-       :                  "✦ 全分割:点物体=改类 · 点空白=补漏检(用 ⊕/⊖ 精修) · Space 收下一个 · Enter 入库";
+  return tool==="point" ? "点物体 · Space 加入 · Enter 入库"
+       : tool==="box"   ? "框选物体 · Space 加入 · Enter 入库"
+       :                  "点物体改类 · 点空白补漏 · Enter 入库";
+}
+function emptyPredictionText(){
+  return "等待选择物体";
 }
 
 /* ---------------- dirty logic ----------------
@@ -575,9 +821,9 @@ function drawTag(ctx,cx,cy,text,col,highlight){
 function drawSetTags(ctx){
   // label sits at the centroid of each mask's OWNED region (no overlap, in the middle)
   masks.forEach((m,i)=>{
-    if(!(m.ownedCount>0)) return;
+    if(!(m.ownedCount>0) || !m.label) return;
     const col=m.label?colorFor(m.label):"#9aa0a8", d=isDirty(m);
-    drawTag(ctx, m.cx, m.cy, `${d?'✎ ':''}${m.label||'?'}`, col, i===picked);
+    drawTag(ctx, m.cx, m.cy, `${d?'✎ ':''}${m.label}`, col, i===picked);
   });
 }
 /* thin class-colored OUTLINE, expanded ~10% outward from the mask centroid —
@@ -633,7 +879,7 @@ function setPointMode(m){
 function placePoint(p){
   const lbl = pointMode==="add" ? 1 : 0;
   if(lbl===0 && !pts.some(pt=>pt.label===1)){
-    flash("『排除点』要先有正点 — 先用「⊕ 正点」点中物体，再抠掉多余部分"); return;
+    flash("先添加正点，再使用排除点"); return;
   }
   pts.push({x:p.x,y:p.y,label:lbl}); render(); segmentDraft();
 }
@@ -647,10 +893,11 @@ async function doDraft(body){
   try{
     const res=await j("/api/segment",{method:"POST",headers:{'Content-Type':'application/json'},
       body:JSON.stringify(Object.assign({image_id:DS[curIdx].id},body))});
-    if(!res.ok){ draft=null; render(); flash("没分出 mask（增减点 / 换位置）"); }
+    if(!res.ok){ draft=null; render(); flash("没分出 mask，换点或框选", "warn"); }
     else{
       draft={mask_png:res.mask_png,bbox:res.bbox,tier:res.tier,confidence:res.confidence,
-             top_k:res.top_k,pred_label:res.label,contour:res.contour};
+             top_k:res.top_k,anchor_refs:res.anchor_refs||[],
+             pred_label:res.label,contour:res.contour};
       draft.off=await maskOffscreen(res.mask_png);
       {const c=centroidOf(draft.off,img.naturalWidth,img.naturalHeight); draft.cx=c.cx; draft.cy=c.cy;}
       selectedLabel=res.label||(res.top_k&&res.top_k[0]&&res.top_k[0][0])||selectedLabel||null;
@@ -663,15 +910,15 @@ async function doDraft(body){
   setBusy(false); cImg.style.cursor=cursorForTool();
 }
 function addDraft(){
-  if(!(draft&&draft.label)){ if(draft)flash("先给这个 mask 选个类别"); return; }
+  if(!(draft&&draft.label)){ if(draft)flash("先给这个 mask 选一个类别", "warn"); return; }
   const bb=draft.bbox;
   masks.push({mask_png:draft.mask_png,bbox:bb,off:draft.off,contour:draft.contour,
     bA:bb?(bb[2]-bb[0])*(bb[3]-bb[1]):1e12,
     pred_label:draft.pred_label,tier:draft.tier,confidence:draft.confidence,top_k:draft.top_k,
-    label:draft.label,source:"added"});
+    anchor_refs:draft.anchor_refs||[],label:draft.label,source:"added"});
   draft=null; pts=[];
   recomputeOwnership(); render(); clearPrediction(); updateCommitBtn();
-  flash("已加入本图 ✎ — 继续画下一个,或 Enter 入库本图");
+  flash("已加入本图");
 }
 function clearDraft(){ draft=null; pts=[]; picked=-1; if(img.naturalWidth)render(); clearPrediction(); updateCommitBtn(); flash(toolHint()); }
 
@@ -708,29 +955,36 @@ function dedupOverlaps(cands){
 async function runSegmentAll(){
   if(curIdx<0||busy) return;
   setBusy(true,"SAM 全图分割中…",["toolAll"]);
-  cImg.style.cursor="progress"; flash("SAM 全图分割中…(稍慢)");
+  cImg.style.cursor="progress"; flash("全分割中…");
   try{
     const res=await j("/api/segment_all",{method:"POST",headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({image_id:DS[curIdx].id,max_masks:20})});
+      body:JSON.stringify({image_id:DS[curIdx].id,max_masks:AUTO_MAX_MASKS})});
     masks=masks.filter(m=>m.source==="added");   // keep manual adds, refresh autos
     let hidden=0;
     const cands=[];
+    const coldStart=memoryTotal===0;
     for(const m of (res.masks||[])){
-      if(!m.label){ hidden++; continue; }   // drop silent/unrecognized SAM bits — no "?" clutter
+      // With empty memory every SAM proposal is unlabeled. Keep neutral
+      // contours so the user can select one and teach the first category.
+      if(!m.label && !coldStart){ hidden++; continue; }
       const bb=m.bbox;
       cands.push({mask_png:m.mask_png,bbox:bb,off:await maskOffscreen(m.mask_png),
         contour:m.contour,
         bA:bb?(bb[2]-bb[0])*(bb[3]-bb[1]):1e12,
-        pred_label:m.label,tier:m.tier,confidence:m.confidence,top_k:m.top_k,
-        label:m.label,source:"auto"});
+        pred_label:m.label||null,tier:m.tier,confidence:m.confidence,top_k:m.top_k,
+        anchor_refs:m.anchor_refs||[],label:m.label||null,source:"auto"});
     }
     const kept=dedupOverlaps(cands), merged=cands.length-kept.length;
     kept.forEach(c=>masks.push(c));
     const shown=kept.length;
     picked=-1; draft=null; pts=[]; recomputeOwnership(); render(); clearPrediction(); updateCommitBtn();
     if(kept.some(m=>m.tier==="auto")) maybeAha();
-    flash(`全分割:认出 ${shown} 个物体${merged?`,合并 ${merged} 个重叠部件`:''}${hidden?`(隐藏 ${hidden} 个没认出的碎块)`:''} — 对的直接下一张;点物体改类 / 点空白补漏检`);
-  }catch(err){ flash("全分割失败: "+err.message); }
+    const capped=res.limit_reached?` · 已到 ${res.max_masks||AUTO_MAX_MASKS} 上限`:``;
+    if(coldStart && shown) flash(`已分割 ${shown} 个候选；点一个并选择类别${capped}`, "success");
+    else if(shown) flash(`全分割完成: ${shown} 个物体${capped}`, "success");
+    else if((res.masks||[]).length) flash(`SAM 找到 ${res.masks.length} 个候选，但未匹配已有记忆；点目标补一个`, "warn");
+    else flash("SAM 未分割出候选；点目标补一个", "warn");
+  }catch(err){ flash(err.message==="500" ? "全分割失败：后端内部错误" : "全分割失败: "+err.message); }
   setBusy(false); cImg.style.cursor=cursorForTool();
 }
 // 命中点所在的最小 mask 的下标(没有则 -1)。pickSetMaskAt 的纯查找版,供右键抠图用。
@@ -744,7 +998,12 @@ function pickSetMaskAt(x,y){
   for(const o of cand){ if(maskHit(o.m,x,y)){
     picked=o.i; draft=null; pts=[]; selectedLabel=masks[o.i].label;
     showPrediction(masks[o.i]); renderClasses(); render(); updateCommitBtn();
-    flash(`选中「${masks[o.i].label||'?'}」— 按数字/点类别改类(改了才会入库)`); return true;
+    ensureAnchorRefs(masks[o.i]);
+    flash(
+      masks[o.i].label ? `已选中「${masks[o.i].label}」` : "已选中候选；请选择类别",
+      masks[o.i].label ? "success" : "warn"
+    );
+    return true;
   }}
   return false;
 }
@@ -760,9 +1019,9 @@ async function commitImage(){
   // accepted = predictions the user did NOT touch — not stored (redundant),
   // but reported so the real acceptance rate is measurable.
   const accepted=masks.filter(m=>!isDirty(m)&&m.pred_label).map(m=>({label:m.label??null,...meta(m)}));
-  if(!items.length&&!accepted.length){ flash("本图没有改过/加过的 mask — 无需入库(识别对的不必存)"); return; }
-  setBusy(true,items.length?`入库本图 ${items.length} 个…`:"记录全对确认…",["commitImgBtn"]);
-  flash(items.length?`入库本图 ${items.length} 个…`:"本图全部识别正确,记录确认…");
+  if(!items.length&&!accepted.length){ flash("没有待入库物体"); return; }
+  setBusy(true,items.length?`入库 ${items.length} 个…`:"记录确认…",["commitImgBtn"]);
+  flash(items.length?`入库 ${items.length} 个…`:"记录确认…");
   try{
     const res=await j("/api/commit_batch",{method:"POST",headers:{'Content-Type':'application/json'},
       body:JSON.stringify({image_id:DS[curIdx].id,items,accepted})});
@@ -770,8 +1029,8 @@ async function commitImage(){
     masks=[]; draft=null; pts=[]; picked=-1; setOverlay=null; _owner=null;
     renderFilmstrip(); updateProgress(); clearPrediction(); updateCommitBtn();
     await refreshMemory();
-    flash(res.committed?`入库本图 ${res.committed} 个 → 记忆 ${res.memory_size} 条`
-                       :"已记录全对确认 ✓(识别对的不重复入库)");
+    flash(res.committed?`已入库 ${res.committed} 个 · 记忆 ${res.memory_size} 条`
+                       :"已记录确认");
     setBusy(false);
     nextImage();
     return;
@@ -802,15 +1061,16 @@ function renderObjList(){
   const host=document.getElementById("objlist"); if(!host) return;
   host.innerHTML = masks.length ? masks.map((m,i)=>{
     const col=colorFor(m.label), d=isDirty(m), th=objThumb(m);
-    const stateText=d?(m.source==="added"?"新增":"改过"):"已确认";
+    const stateText=!m.label?"选类别":d?(m.source==="added"?"新增":"改过"):"已确认";
+    const stateTitle=!m.label?"选择类别后可入库":d?"待入库:新增或改过":"识别正确，不必重复入库";
     return `<div class="objrow ${i===picked?'sel':''}" data-i="${i}" title="点选改类 / ✕ 删除">
       ${th?`<img class="othumb" src="${th}">`:`<span class="othumb"></span>`}
       <span class="odot" style="background:${col}"></span>
       <span class="olabel" style="color:${m.label?col:'var(--muted)'}">${esc(m.label||'未命名')}</span>
-      <span class="ostate ${d?'dirty':'clean'}" title="${d?'待入库:新增或改过':'识别正确，不必重复入库'}">${stateText}</span>
+      <span class="ostate ${d||!m.label?'dirty':'clean'}" title="${stateTitle}">${stateText}</span>
       <button class="odel" data-i="${i}" title="从本图删除这个物体">✕</button>
     </div>`;
-  }).join("") : '<span class="muted">本图还没有物体 — 点画布里的物体开始抠图</span>';
+  }).join("") : '<span class="muted">本图暂无物体</span>';
   host.querySelectorAll(".objrow").forEach(r=>r.onclick=e=>{ if(e.target.classList.contains("odel"))return; selectObj(+r.dataset.i); });
   host.querySelectorAll(".odel").forEach(btn=>btn.onclick=e=>{ e.stopPropagation(); delObj(+btn.dataset.i); });
   const dirty=dirtyMasks().length+((draft&&draft.label)?1:0);
@@ -820,7 +1080,11 @@ function selectObj(i){
   if(i<0||i>=masks.length) return;
   picked=i; draft=null; pts=[]; selectedLabel=masks[i].label;
   showPrediction(masks[i]); renderClasses(); render(); updateCommitBtn();
-  flash(`选中「${masks[i].label||'未命名'}」— 点右侧类别改类(改了才会入库)，或 ✕ 删除`);
+  ensureAnchorRefs(masks[i]);
+  flash(
+    masks[i].label ? `已选中「${masks[i].label}」` : "已选中候选；请选择类别",
+    masks[i].label ? "success" : "warn"
+  );
 }
 function delObj(i){
   if(i<0||i>=masks.length) return;
@@ -833,26 +1097,44 @@ function delObj(i){
 /* ---------------- right panel ---------------- */
 function showPrediction(o){
   const box=document.getElementById("pred");
-  if(!o){ box.innerHTML='<span class="muted">点击/框选物体,或按 E 全分割</span>'; return; }
+  currentAnchorRefs = o ? (o.anchor_refs||[]) : [];
+  renderAnchorList();
+  if(!o){ box.innerHTML=`<span class="muted">${emptyPredictionText()}</span>`; return; }
+  if(!o.label){
+    box.innerHTML='<span class="muted">未命名候选；选择类别后可入库</span>';
+    return;
+  }
   const tier=o.tier||"manual", tc=TIER_COLOR[tier]||"#888", lbl=o.label||"—";
   const changed = o.pred_label!==undefined && o.label!==o.pred_label;
-  const state = o.source==="auto"&&!changed ? "识别正确:可直接下一张,不重复入库"
-              : changed ? "待入库:你改过类别,这是有价值的纠错样本"
-              : o.source==="added" ? "待入库:你手动新增的漏检样本"
-              : "当前草稿:选好类别后 Space 加入本图";
+  const state = o.source==="auto"&&!changed ? "已确认"
+              : changed ? "待入库"
+              : o.source==="added" ? "待入库"
+              : "草稿";
   const tk=(o.top_k||[]).slice(0,5).map(([k,s])=>
     `<div class="bar"><div class="lbl">${esc(k)}</div><div class="track"><div class="fill" style="width:${Math.max(2,Math.round(100*Number(s)||0))}%;background:${colorFor(k)}"></div></div><div class="cnt">${fmtScore(s)}</div></div>`).join("");
   box.innerHTML=`
     <div class="predhead">
       <span class="chip" style="background:${colorFor(o.label)}">${esc(lbl)}</span>
-      <span class="tierbadge" style="background:${tc}" title="auto=高置信可直接用 · suggest=建议你确认 · silent=没学过先不猜">${esc(tier)}</span>
-      <span class="muted">conf ${fmtScore(o.confidence)}</span>
+      <span class="tierbadge" style="background:${tc}" title="auto=可用 · suggest=需确认 · conf ${fmtScore(o.confidence)}">${esc(tier)}</span>
       ${changed?`<span class="muted">· 原预测 ${esc(o.pred_label||'—')}</span>`:''}
     </div>
     <div class="muted" style="margin-bottom:8px">${state}</div>
-    <div>${tk||'<span class="muted">记忆为空,先手动选类入库</span>'}</div>`;
+    <div>${tk||'<span class="muted">暂无可用记忆</span>'}</div>`;
 }
 function clearPrediction(){ showPrediction(null); }
+async function ensureAnchorRefs(m){
+  if(!m || (m.anchor_refs&&m.anchor_refs.length) || !m.mask_png || curIdx<0) return;
+  try{
+    const res=await j("/api/explain_mask",{method:"POST",headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({image_id:DS[curIdx].id,mask_png:m.mask_png})});
+    m.anchor_refs=res.anchor_refs||[];
+    if(!m.top_k?.length) m.top_k=res.top_k||m.top_k;
+    if(!m.pred_label && res.label) m.pred_label=res.label;
+    if(picked>=0 && masks[picked]===m){ showPrediction(m); }
+  }catch(err){
+    console.warn("[SnowLabel] explain_mask failed", err);
+  }
+}
 function chooseLabel(c){
   c=(c||"").trim(); if(!c)return;
   selectedLabel=c;
@@ -880,7 +1162,7 @@ function renderFilmstrip(){
     const i=DS.indexOf(d);
     return `<div class="thumb ${i===curIdx?'cur':''}" data-i="${i}" title="${esc(d.name)}">
       <img src="${esc(API+d.url)}" loading="lazy">${d.labeled?'<span class="badge">&#10003;</span>':''}</div>`;
-  }).join("")||'<div class="muted" style="padding:10px">无图片</div>';
+  }).join("")||'';
   host.querySelectorAll(".thumb").forEach(t=>t.onclick=()=>selectImage(+t.dataset.i));
 }
 function selectImage(i){
@@ -902,19 +1184,91 @@ function nextImage(){
 }
 
 /* ---------------- memory panel ---------------- */
+function anchorRoleMap(){
+  const out={};
+  for(const r of (currentAnchorRefs||[])){
+    const id=String(r.entry_id);
+    if(!id) continue;
+    if(r.role==="decisive" || !out[id]) out[id]=r.role||"support";
+  }
+  return out;
+}
+function renderAnchorFilter(dist){
+  const sel=document.getElementById("anchorFilter"); if(!sel) return;
+  const cur=sel.value;
+  const opts=['<option value="">全部 anchor</option>'].concat(
+    Object.keys((dist&&dist.classes)||{}).sort().map(c=>`<option value="${esc(c)}">${esc(c)}</option>`)
+  );
+  sel.innerHTML=opts.join("");
+  if([...sel.options].some(o=>o.value===cur)) sel.value=cur;
+}
+function renderAnchorList(){
+  const host=document.getElementById("anchorList"); if(!host) return;
+  const filt=(document.getElementById("anchorFilter")?.value||"").trim();
+  const roles=anchorRoleMap();
+  const rows=(anchorEntries||[]).filter(e=>!filt || e.label===filt);
+  host.innerHTML = rows.length ? rows.map(e=>{
+    const id=String(e.entry_id), role=roles[id]||"", col=colorFor(e.label);
+    const roleText=role==="decisive"?"决定":role==="support"?"支持":"";
+    const previewNote=e.preview_kind==="source"?"来源图":(e.preview_kind==="mask"?"mask":"无预览");
+    const img=e.preview_url?`<img src="${esc(API+e.preview_url)}" loading="lazy" alt="" data-fallback="${esc(previewNote)}">`:`<span class="athumbph">#${esc(id)}</span>`;
+    const thumbClass=e.preview_kind==="source"?"athumb source":"athumb";
+    return `<div class="anchorrow ${role}" data-id="${esc(id)}" title="${esc(e.image_name||e.image_uri||previewNote)}">
+      <div class="${thumbClass}">${img}</div>
+      <div class="ameta">
+        <div class="alabel"><span class="odot" style="background:${col}"></span><span>${esc(e.label||'未命名')}</span></div>
+        <div class="asub">#${esc(id)} · ${esc(e.image_name||previewNote)}</div>
+        ${roleText?`<span class="arole">${roleText}</span>`:`<span class="arole">${previewNote}</span>`}
+      </div>
+      <button class="adel" data-id="${esc(id)}" data-label="${esc(e.label||'')}" title="删除这个 anchor">×</button>
+    </div>`;
+  }).join("") : '<span class="muted">暂无 anchor</span>';
+  host.querySelectorAll(".athumb img").forEach(img=>{
+    img.onerror=()=>{
+      const txt=img.dataset.fallback || "无预览";
+      img.parentElement.innerHTML=`<span class="athumbph">${esc(txt)}</span>`;
+    };
+  });
+  host.querySelectorAll(".adel").forEach(btn=>btn.onclick=e=>{
+    e.stopPropagation();
+    deleteAnchor(+btn.dataset.id, btn.dataset.label||"");
+  });
+  const active=host.querySelector(".anchorrow.decisive")||host.querySelector(".anchorrow.support");
+  if(active) active.scrollIntoView({block:"nearest"});
+}
+async function deleteAnchor(entryId,label){
+  if(!entryId) return;
+  if(!confirm(`删除 anchor #${entryId}${label?`（${label}）`:""}？\n\n删除后会影响后续自动识别。`)) return;
+  try{
+    const res=await j("/forget",{method:"POST",headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({entry_id:entryId})});
+    if(res.status!=="ok"){ flash("anchor 已不存在", "warn"); await refreshMemory(); return; }
+    currentAnchorRefs=(currentAnchorRefs||[]).filter(r=>Number(r.entry_id)!==Number(entryId));
+    await refreshMemory();
+    flash(masks.some(m=>m.source==="auto")?"已删除 anchor；重新全分割后生效":"已删除 anchor", masks.some(m=>m.source==="auto")?"warn":"success");
+  }catch(err){ flash("删除 anchor 失败: "+err.message, "error"); }
+}
 async function refreshMemory(){
   try{
-    const [dist,stats]=await Promise.all([j("/memory/distribution"),j("/stats")]);
+    const [dist,stats,mem]=await Promise.all([
+      j("/memory/distribution"),
+      j("/stats"),
+      j("/memory?limit=500&include_preview=1")
+    ]);
+    anchorEntries=mem.entries||[];
+    memoryTotal=Number(dist.total||0);
     Object.keys(dist.classes||{}).forEach(c=>{if(!classes.includes(c))classes.push(c);});
-    document.getElementById("memTotal").textContent=dist.total||0;
+    document.getElementById("memTotal").textContent=memoryTotal;
     const max=Math.max(1,...Object.values(dist.classes||{}));
     document.getElementById("memBars").innerHTML=
       Object.entries(dist.classes||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
         `<div class="bar"><div class="lbl">${esc(k)}</div><div class="track"><div class="fill" style="width:${100*v/max}%;background:${colorFor(k)}"></div></div><div class="cnt">${v}</div></div>`
-      ).join("")||'<span class="muted">空 — 标几张就长出来了</span>';
+      ).join("")||'<span class="muted">暂无记忆</span>';
     const status=document.getElementById("statusline");
-    status.textContent=`服务已连接 · 记忆 ${dist.total||0} 条`;
+    status.textContent=`已连接 · 记忆 ${dist.total||0}`;
     status.title=`${base(stats.dino_variant)} · SAM ${stats.sam_variant} · ${stats.memory_backend} · auto≥${stats.thresholds.auto_apply} suggest≥${stats.thresholds.suggest}`;
+    renderAnchorFilter(dist);
+    renderAnchorList();
     renderClasses();
   }catch(err){ /* model may still be loading */ }
 }
@@ -948,7 +1302,7 @@ cImg.addEventListener("contextmenu",e=>{ e.preventDefault(); if(busy||curIdx<0)r
   if(tool==="point" || (tool==="all" && (pts.length||draft))){
     if(tool==="point" && !pts.some(pt=>pt.label===1)){
       // SAM 的负点需要先有正点才有东西可扣减;否则给提示而非沉默失败。
-      flash("右键是『排除点』:先左键点中物体,再用右键抠掉多余部分"); return;
+      flash("先点中物体，再使用排除点"); return;
     }
     pts.push({x:p.x,y:p.y,label:0}); render(); segmentDraft();
   } else if(tool==="all"){
@@ -960,7 +1314,7 @@ cImg.addEventListener("contextmenu",e=>{ e.preventDefault(); if(busy||curIdx<0)r
       pts=[{x:Math.round(m.cx),y:Math.round(m.cy),label:1},{x:p.x,y:p.y,label:0}];
       masks.splice(i,1); picked=-1; recomputeOwnership(); render(); segmentDraft();
     } else {
-      flash("右键是『排除点』:先左键点中要补的物体,再右键抠掉多余部分");
+      flash("先点中物体，再使用排除点");
     }
   }});
 cImg.addEventListener("mousedown",e=>{ if(tool!=="box")return; const p=toPix(e); drag={x0:p.x,y0:p.y,x1:p.x,y1:p.y}; });
@@ -1004,15 +1358,16 @@ document.getElementById("resetBtn").onclick=resetAll;
 async function reloadDataset(selectName){
   const d=await j("/api/dataset");
   DS=d.images||[];
-  document.getElementById("dsdir").textContent=DS.length ? `已载入 ${DS.length} 张图片` : "还没有图片";
+  document.getElementById("dsdir").textContent=DS.length ? `${DS.length} 张图片` : "暂无图片";
   updateProgress(); renderFilmstrip();
   let idx = selectName ? DS.findIndex(x=>x.id===selectName) : -1;
   if(idx<0){ idx=DS.findIndex(x=>!x.labeled); if(idx<0)idx=0; }
   const empty=!DS.length;
+  document.querySelector("main").classList.toggle("empty-mode", empty);
   document.getElementById("emptyState").classList.toggle("hidden",!empty);
   cImg.style.display=empty?"none":"block";
   if(!empty) selectImage(idx);
-  else flash("还没有图片 — 点画布中间的大按钮，上传你自己的图片开始标注");
+  else flash("");
 }
 
 async function uploadFiles(files){
@@ -1022,7 +1377,7 @@ async function uploadFiles(files){
   const IMG=/\.(jpe?g|png|bmp|webp|gif)$/i;
   files=raw.filter(f=>f && ((f.type&&f.type.startsWith("image/"))||IMG.test(f.name||f.webkitRelativePath||"")));
   console.log("[SnowLabel] uploadFiles 收到", raw.length, "个文件 → 过滤出", files.length, "张图");
-  if(!files.length){ flash(raw.length? `选中的 ${raw.length} 个文件里没有图片(支持 jpg/png/bmp/webp/gif)` : "没选到文件"); return; }
+  if(!files.length){ flash(raw.length? "未找到图片文件" : "没选到文件"); return; }
   const total=files.length; let done=0, ok=0, last=null;
   setBusy(true,`上传中 0/${total}`,["uploadMain","emptyUpload"]);
   flash(`上传中… 0/${total}`);
@@ -1040,24 +1395,65 @@ async function uploadFiles(files){
   }
   try{
     await Promise.all(Array.from({length:Math.min(5,total)}, worker));
-    if(ok){ await reloadDataset(last); flash(`上传了 ${ok}/${total} 张图 — 点物体开始标注`); }
-    else flash("上传失败:一张都没成功(可能太大>12MB 或格式不支持)");
+    if(ok){ await reloadDataset(last); flash(`已上传 ${ok}/${total}`); }
+    else flash("上传失败");
   }catch(err){ flash("上传失败: "+err.message); }
   setBusy(false);
 }
 
-/* ---------------- 一键示例图 ---------------- */
-async function loadSamples(btn){
+/* ---------------- 示例数据集选择 ---------------- */
+async function ensureSampleDatasets(){
+  if(sampleDatasets.length) return sampleDatasets;
+  const r=await j("/api/sample_datasets");
+  sampleDatasets=r.datasets||[];
+  return sampleDatasets;
+}
+function closeSamplePicker(){ document.getElementById("sampleModal").classList.add("hidden"); }
+function renderSampleDatasets(items){
+  const host=document.getElementById("sampleGrid");
+  if(!items.length){ host.innerHTML='<div class="muted">暂无可用示例数据集</div>'; return; }
+  const order={industrial:0,common:1};
+  host.innerHTML=items.map((ds,i)=>({...ds,_order:i})).sort((a,b)=>(order[a.group]??9)-(order[b.group]??9)||a._order-b._order).map(ds=>{
+    const tag=ds.synthetic?"合成工业":(ds.group==="industrial"?"工业":"常识");
+    const disabled=ds.available?"":" disabled";
+    const classes=(ds.classes||[]).slice(0,5).map(c=>`<span>${esc(c)}</span>`).join("");
+    const count=Number(ds.image_count||0);
+    const previews=ds.available ? [0,1,2].map(i=>`<img src="${API}/api/sample_datasets/${encodeURIComponent(ds.slug)}/preview/${i}" alt="${esc(ds.title)} 示例 ${i+1}" loading="lazy">`).join("") : "";
+    const detail=esc(`${ds.source_name||""}${ds.license_note?" · "+ds.license_note:""}`);
+    return `<button class="sampleitem${disabled}" data-slug="${esc(ds.slug)}" ${ds.available?"":"disabled"} title="${esc(ds.title)}">
+      ${previews?`<div class="samplepreview">${previews}</div>`:""}
+      <div class="sampletop"><span class="sampletag${ds.synthetic?' synthetic':''}">${tag}</span><span class="sampletitle">${esc(ds.title)}</span><span class="hq" title="${detail}">?</span></div>
+      <p class="samplesummary">${esc(ds.summary||"")}</p>
+      <div class="sampleclasses">${classes}</div>
+      <span class="samplesource">${ds.synthetic?"程序生成 · ":""}${count||0} 张${ds.available?"":" · 本机未安装"}</span>
+    </button>`;
+  }).join("");
+  host.querySelectorAll(".sampleitem").forEach(btn=>btn.onclick=()=>loadSamples(btn,btn.dataset.slug));
+}
+async function openSamplePicker(btn){
   if(busy) return;
-  setBusy(true,"载入示例图中…",["emptySample","pickSamples"]);
+  const modal=document.getElementById("sampleModal"), host=document.getElementById("sampleGrid");
+  modal.classList.remove("hidden");
+  host.innerHTML='<div class="muted">正在读取示例数据集…</div>';
+  try{ renderSampleDatasets(await ensureSampleDatasets()); }
+  catch(err){ host.innerHTML='<div class="muted">示例数据集读取失败</div>'; flash("示例数据集读取失败: "+err.message); }
+}
+async function loadSamples(btn,datasetSlug){
+  if(!datasetSlug){ openSamplePicker(btn); return; }
+  if(busy) return;
+  const ds=sampleDatasets.find(x=>x.slug===datasetSlug);
+  const title=ds?ds.title:"示例数据集";
+  closeSamplePicker();
+  setBusy(true,`载入 ${title} 中…`,["emptySample","pickSamples","sampleMain"]);
   if(btn) btn.disabled=true;
-  flash("载入示例图中…");
+  flash(`载入 ${title} 中…`);
   try{
-    const r=await j("/api/load_samples",{method:"POST"});
-    SAMPLE_CLASSES.forEach(c=>{ if(!classes.includes(c))classes.push(c); });
+    const r=await j("/api/load_samples",{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify({dataset:datasetSlug})});
+    (r.classes||[]).forEach(c=>{ if(!classes.includes(c))classes.push(c); });
     renderClasses();
     await reloadDataset();
-    flash(`已载入 ${r.copied} 张示例图 — 点物体选类入库,同类标到第 3~4 个就会自动认出`);
+    const loadedTitle=r.dataset_title||title;
+    flash(`已载入「${loadedTitle}」${r.copied} 张`);
   }catch(err){ flash("载入示例失败: "+err.message); }
   if(btn) btn.disabled=false;
   setBusy(false);
@@ -1072,9 +1468,11 @@ async function resetAll(){
   try{
     const r=await j("/api/reset",{method:"POST"});
     classes=[...DEFAULT_CLASSES]; selectedLabel=null; ahaShown=false;
+    memoryTotal=0;
     masks=[]; draft=null; pts=[]; picked=-1; curIdx=-1;
-    await reloadDataset(); await refreshMemory(); renderClasses(); updateCommitBtn();
-    flash(`已重新开始:清掉 ${r.deleted_images} 张图 + ${r.removed_memory} 条记忆 — 现在是全新的你`);
+    setTool(DEFAULT_TOOL);
+    await refreshMemory(); await reloadDataset(); renderClasses(); updateCommitBtn();
+    flash("已重新开始");
   }catch(err){ flash("重置失败: "+err.message); }
   setBusy(false);
 }
@@ -1088,11 +1486,11 @@ function toast(msg,ms){
 }
 function maybeAha(){
   if(ahaShown) return; ahaShown=true;
-  toast("🎉 它学会了！这个标签是模型靠雪球记忆自动认出来的 —— 越标越准");
+  toast("它学会了：这个标签来自雪球记忆");
 }
 
 async function init(){
-  setTool("point"); renderClasses(); updateCommitBtn();
+  setTool(DEFAULT_TOOL); renderClasses(); updateCommitBtn();
   const main=document.getElementById("uploadMain"), menu=document.getElementById("uploadMenu");
   const fi=document.getElementById("fileInput"), di=document.getElementById("dirInput");
   if(main&&menu){
@@ -1100,19 +1498,22 @@ async function init(){
     menu.onclick=e=>e.stopPropagation();
     document.getElementById("pickFiles").onclick=()=>{ menu.classList.add("hidden"); console.log("[SnowLabel] 点了:选择图片"); fi.click(); };
     document.getElementById("pickDir").onclick=()=>{ menu.classList.add("hidden"); console.log("[SnowLabel] 点了:选择文件夹"); di.click(); };
-    const ps=document.getElementById("pickSamples"); if(ps)ps.onclick=()=>{ menu.classList.add("hidden"); loadSamples(ps); };
+    const ps=document.getElementById("pickSamples"); if(ps)ps.onclick=()=>{ menu.classList.add("hidden"); openSamplePicker(ps); };
     document.addEventListener("click",()=>menu.classList.add("hidden"));
   }
+  const sampleMain=document.getElementById("sampleMain"); if(sampleMain)sampleMain.onclick=()=>openSamplePicker(sampleMain);
   // 关键修复:先把 FileList 快照成数组,再清空 input。否则 e.target.value="" 会把
   // 同一个 FileList 引用一并清空,uploadFiles 收到的就是空 → 表现为"点了没反应"。
   const onPick=e=>{ const fs=[...e.target.files]; e.target.value=""; console.log("[SnowLabel] onchange 选中", fs.length, "个文件"); uploadFiles(fs); };
   if(fi) fi.onchange=onPick;
   if(di) di.onchange=onPick;
-  flash("正在连接服务并加载模型(首次可能需要十几秒)…");
+  const af=document.getElementById("anchorFilter"); if(af)af.onchange=renderAnchorList;
+  const ar=document.getElementById("anchorRefresh"); if(ar)ar.onclick=()=>refreshMemory();
+  flash("连接服务中…");
   try{
+    await refreshMemory();
     await reloadDataset();
-  }catch(err){ flash("无法连接后端: "+err.message+" — 是否已 python -m snowlabel.server ?"); }
-  await refreshMemory();
+  }catch(err){ flash("无法连接后端: "+err.message); }
 }
 
 /* ---------------- onboarding guide ---------------- */
@@ -1139,12 +1540,18 @@ function setupGuide(){
   document.getElementById("helpBtn").onclick=openAt0;
   const eh=document.getElementById("emptyHelp"); if(eh)eh.onclick=openAt0;
   const eu=document.getElementById("emptyUpload"); if(eu)eu.onclick=()=>document.getElementById("fileInput").click();
-  const esm=document.getElementById("emptySample"); if(esm)esm.onclick=()=>loadSamples(esm);
+  const esm=document.getElementById("emptySample"); if(esm)esm.onclick=()=>openSamplePicker(esm);
   show(0);
   let seen=false; try{seen=!!localStorage.getItem("snow_onboarded");}catch(e){}
   const forceGuide = new URLSearchParams(location.search).has("guide");
   if(!seen || forceGuide) openGuide();   // 首页“立即尝试”会强制打开一次分步引导
 }
+function setupSamplePicker(){
+  const modal=document.getElementById("sampleModal");
+  document.getElementById("sampleClose").onclick=closeSamplePicker;
+  modal.addEventListener("click",e=>{ if(e.target===modal)closeSamplePicker(); });
+}
+setupSamplePicker();
 setupGuide();
 init();
 </script>

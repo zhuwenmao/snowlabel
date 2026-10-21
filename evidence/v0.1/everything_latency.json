@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "generated_at": "2026-08-05T09:06:48.457404+00:00",
+  "endpoint": "/api/segment_all",
+  "source_image": "data/datasets/visa/pcb4/Data/Images/Anomaly/099.JPG",
+  "image_size": [
+    1358,
+    1104
+  ],
+  "max_masks": 80,
+  "mask_count": 31,
+  "limit_reached": false,
+  "timings_seconds": {
+    "upload": 0.362,
+    "uncached": 69.843,
+    "cached": 1.039
+  },
+  "cache_speedup": 67.24,
+  "assertions": {
+    "first_from_cache": false,
+    "second_from_cache": true,
+    "same_mask_count": true
+  }
+}

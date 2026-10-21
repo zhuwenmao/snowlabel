@@ -1,0 +1,349 @@
+phase,step,object,file,gt,pred,conf,margin,cw,tier,correct,iou,fail,cand,cand_correct,taught,latency_ms,commit_latency_ms,mem,area
+snowball,0,candle,candle/Data/Images/Anomaly/000.JPG,candle/Chunk Of Wax Missing,-,0.0,0.0,0.0,silent,0,0.495,,-,0,gt_fix,470.8,337.4,1,1425
+snowball,1,candle,candle/Data/Images/Anomaly/040.JPG,candle/Different Colour Spot,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,208.8,310.4,2,163
+snowball,2,candle,candle/Data/Images/Anomaly/060.JPG,candle/Extra Wax in Candle,-,0.3853,0.0,0.3853,silent,0,0.034,,-,0,gt_fix,570.2,343.7,3,4459
+snowball,3,candle,candle/Data/Images/Anomaly/070.JPG,candle/Foreign Particles on Candle,candle/Extra Wax in Candle,0.6066,0.1858,0.5987,suggest,0,0.004,mask,candle/Extra Wax in Candle,0,gt_fix,1049.0,313.4,4,467
+snowball,4,candle,candle/Data/Images/Anomaly/085.JPG,candle/Wax Melted Out of the Candle,candle/Extra Wax in Candle,0.6279,0.206,0.6266,suggest,0,0.06,mask,candle/Extra Wax in Candle,0,gt_fix,509.0,285.2,5,7973
+snowball,5,candle,candle/Data/Images/Anomaly/030.JPG,candle/Weird Candle Wick,-,0.476,0.0503,0.4995,silent,0,0.919,,candle/Wax Melted Out of the Candle,0,sam,514.2,266.1,6,6755
+snowball,6,capsules,capsules/Data/Images/Anomaly/030.JPG,capsules/Discolor,candle/Extra Wax in Candle,0.6042,0.0519,0.5749,suggest,0,0.74,retrieval,candle/Extra Wax in Candle,0,sam,572.8,895.1,7,154
+snowball,7,capsules,capsules/Data/Images/Anomaly/056.JPG,capsules/Misshape,-,0.5386,0.0658,0.5258,silent,0,0.854,,candle/Extra Wax in Candle,0,sam,485.9,260.7,8,20610
+snowball,8,capsules,capsules/Data/Images/Anomaly/085.JPG,capsules/Scratch,capsules/Misshape,0.8538,0.3194,0.8653,suggest,0,0.284,mask,capsules/Misshape,0,gt_fix,428.5,270.8,9,6431
+snowball,9,cashew,cashew/Data/Images/Anomaly/000.JPG,cashew/Burnt,candle/Different Colour Spot,0.7622,0.0833,0.7586,suggest,0,0.718,retrieval,candle/Different Colour Spot,0,sam,425.3,255.2,10,1688
+snowball,10,cashew,cashew/Data/Images/Anomaly/002.JPG,cashew/Corner or Edge Breakage,-,0.5104,0.0338,0.4961,silent,0,0.005,,capsules/Misshape,0,gt_fix,457.6,259.1,11,1358
+snowball,11,cashew,cashew/Data/Images/Anomaly/025.JPG,cashew/Different Colour Spot,cashew/Burnt,0.7518,0.1387,0.7618,suggest,0,0.573,retrieval,cashew/Burnt,0,sam,536.4,830.4,12,2073
+snowball,12,cashew,cashew/Data/Images/Anomaly/032.JPG,cashew/Middle Breakage,-,0.5225,0.0331,0.5721,silent,0,0.06,,cashew/Corner or Edge Breakage,0,gt_fix,468.6,253.3,13,13537
+snowball,13,cashew,cashew/Data/Images/Anomaly/042.JPG,cashew/Same Colour Spot,candle/Extra Wax in Candle,0.6047,0.0297,0.5899,suggest,0,0.856,retrieval,candle/Extra Wax in Candle,0,sam,410.5,286.4,14,320
+snowball,14,cashew,cashew/Data/Images/Anomaly/078.JPG,cashew/Small Scratches,-,0.5318,0.018,0.5466,silent,0,0.002,,capsules/Misshape,0,gt_fix,434.0,232.7,15,362
+snowball,15,cashew,cashew/Data/Images/Anomaly/094.JPG,cashew/Stuck Together,-,0.5062,0.0079,0.5333,silent,0,0.59,,cashew/Middle Breakage,0,sam,455.5,313.7,16,478781
+snowball,16,chewinggum,chewinggum/Data/Images/Anomaly/001.JPG,chewinggum/Corner Missing,-,0.5142,0.0447,0.488,silent,0,0.815,,cashew/Burnt,0,sam,527.6,275.4,17,14516
+snowball,17,chewinggum,chewinggum/Data/Images/Anomaly/032.JPG,chewinggum/Scratches,capsules/Misshape,0.5558,0.0569,0.5699,suggest,0,0.002,mask,capsules/Misshape,0,gt_fix,475.5,270.9,18,755
+snowball,18,chewinggum,chewinggum/Data/Images/Anomaly/075.JPG,chewinggum/Similar Colour Spot,candle/Extra Wax in Candle,0.7702,0.0567,0.7827,suggest,0,0.891,retrieval,candle/Extra Wax in Candle,0,sam,439.2,264.0,19,1949
+snowball,19,fryum,fryum/Data/Images/Anomaly/000.JPG,fryum/Burnt,capsules/Discolor,0.6735,0.0243,0.7105,suggest,0,0.785,retrieval,capsules/Discolor,0,sam,420.9,273.1,20,3663
+snowball,20,fryum,fryum/Data/Images/Anomaly/010.JPG,fryum/Corner or Edge Breakage,-,0.2348,0.0,0.2348,silent,0,0.002,,-,0,gt_fix,499.5,259.4,21,3146
+snowball,21,fryum,fryum/Data/Images/Anomaly/020.JPG,fryum/Different Colour Spot,cashew/Burnt,0.7025,0.0197,0.7234,suggest,0,0.842,retrieval,cashew/Burnt,0,sam,422.9,268.2,22,345
+snowball,22,fryum,fryum/Data/Images/Anomaly/040.JPG,fryum/Fryum Stuck Together,fryum/Corner or Edge Breakage,0.5845,0.2137,0.5996,suggest,0,0.001,mask,fryum/Corner or Edge Breakage,0,gt_fix,443.5,282.8,23,220642
+snowball,23,fryum,fryum/Data/Images/Anomaly/007.JPG,fryum/Similar Colour Spot,fryum/Fryum Stuck Together,0.9475,0.3464,0.9758,suggest,0,0.036,mask,fryum/Fryum Stuck Together,0,gt_fix,437.3,282.5,24,8793
+snowball,24,fryum,fryum/Data/Images/Anomaly/017.JPG,fryum/Small Scratches,fryum/Fryum Stuck Together,0.9354,0.257,0.9693,suggest,0,0.005,mask,fryum/Fryum Stuck Together,0,gt_fix,512.6,330.4,25,1137
+snowball,25,macaroni1,macaroni1/Data/Images/Anomaly/000.JPG,macaroni1/Chip Around Edge and Corner,fryum/Fryum Stuck Together,0.5679,0.0327,0.5715,suggest,0,0.018,mask,fryum/Fryum Stuck Together,0,gt_fix,473.4,268.3,26,1020
+snowball,26,macaroni1,macaroni1/Data/Images/Anomaly/023.JPG,macaroni1/Different Colour Spot,capsules/Discolor,0.7176,0.0115,0.7484,suggest,0,0.85,retrieval,capsules/Discolor,0,sam,656.5,270.4,27,305
+snowball,27,macaroni1,macaroni1/Data/Images/Anomaly/048.JPG,macaroni1/Similar Colour Spot,candle/Extra Wax in Candle,0.7482,0.0389,0.7539,suggest,0,0.873,retrieval,candle/Extra Wax in Candle,0,sam,441.0,319.9,28,496
+snowball,28,macaroni1,macaroni1/Data/Images/Anomaly/022.JPG,macaroni1/Small Cracks,fryum/Fryum Stuck Together,0.5649,0.0434,0.568,suggest,0,0.003,mask,fryum/Fryum Stuck Together,0,gt_fix,408.5,252.2,29,155
+snowball,29,macaroni2,macaroni2/Data/Images/Anomaly/010.JPG,macaroni2/Colour Spot Similar to Object,macaroni1/Similar Colour Spot,0.7368,0.0411,0.7156,suggest,0,0.9,retrieval,macaroni1/Similar Colour Spot,0,sam,435.0,243.0,30,599
+snowball,30,macaroni2,macaroni2/Data/Images/Anomaly/030.JPG,macaroni2/Different Colour Spot,capsules/Discolor,0.6673,0.0329,0.6626,suggest,0,0.713,retrieval,capsules/Discolor,0,sam,417.4,268.3,31,257
+snowball,31,macaroni2,macaroni2/Data/Images/Anomaly/045.JPG,macaroni2/Small Chip Around Edge,fryum/Fryum Stuck Together,0.5699,0.0807,0.5579,suggest,0,0.005,mask,fryum/Fryum Stuck Together,0,gt_fix,438.3,271.0,32,254
+snowball,32,macaroni2,macaroni2/Data/Images/Anomaly/073.JPG,macaroni2/Small Cracks,fryum/Fryum Stuck Together,0.5917,0.0795,0.5811,suggest,0,0.007,mask,fryum/Fryum Stuck Together,0,gt_fix,415.5,266.2,33,409
+snowball,33,pcb1,pcb1/Data/Images/Anomaly/000.JPG,pcb1/Bent,candle/Wax Melted Out of the Candle,0.5708,0.0022,0.6022,suggest,0,0.738,retrieval,candle/Wax Melted Out of the Candle,0,sam,420.7,293.0,34,1524
+snowball,34,pcb1,pcb1/Data/Images/Anomaly/040.JPG,pcb1/Missing,candle/Chunk Of Wax Missing,0.7809,0.0255,0.83,suggest,0,0.018,mask,candle/Chunk Of Wax Missing,0,gt_fix,407.3,277.8,35,57992
+snowball,35,pcb1,pcb1/Data/Images/Anomaly/085.JPG,pcb1/Scratch,-,0.477,0.0332,0.5189,silent,0,0.546,,capsules/Scratch,0,sam,433.9,261.5,36,2281
+snowball,36,pcb2,pcb2/Data/Images/Anomaly/000.JPG,pcb2/Bent,pcb1/Bent,0.55,0.0407,0.5386,suggest,0,0.772,retrieval,pcb1/Bent,0,sam,435.0,271.8,37,1853
+snowball,37,pcb2,pcb2/Data/Images/Anomaly/040.JPG,pcb2/Missing,pcb1/Scratch,0.5839,0.0623,0.6238,suggest,0,0.361,mask,pcb1/Scratch,0,gt_fix,444.1,279.0,38,17049
+snowball,38,pcb2,pcb2/Data/Images/Anomaly/043.JPG,pcb2/Scratch,macaroni2/Small Chip Around Edge,0.575,0.0488,0.5694,suggest,0,0.65,retrieval,macaroni2/Small Chip Around Edge,0,sam,435.5,271.7,39,700
+snowball,39,pcb3,pcb3/Data/Images/Anomaly/000.JPG,pcb3/Bent,pcb2/Bent,0.6749,0.1697,0.7554,suggest,0,0.526,retrieval,pcb2/Bent,0,sam,422.1,291.0,40,3187
+snowball,40,pcb3,pcb3/Data/Images/Anomaly/040.JPG,pcb3/Missing,-,0.3778,0.0,0.3778,silent,0,0.002,,-,0,gt_fix,534.3,282.3,41,3129
+snowball,41,pcb3,pcb3/Data/Images/Anomaly/046.JPG,pcb3/Scratch,pcb2/Missing,0.6719,0.101,0.7574,suggest,0,0.001,mask,pcb2/Missing,0,gt_fix,521.0,288.1,42,194
+snowball,42,pcb4,pcb4/Data/Images/Anomaly/005.JPG,pcb4/Damage,pcb2/Missing,0.6767,0.0649,0.6946,suggest,0,0.534,retrieval,pcb2/Missing,0,sam,451.9,241.9,43,3188
+snowball,43,pcb4,pcb4/Data/Images/Anomaly/007.JPG,pcb4/Extra,macaroni2/Different Colour Spot,0.613,0.0237,0.6632,suggest,0,0.468,mask,macaroni2/Different Colour Spot,0,gt_fix,461.2,277.0,44,137
+snowball,44,pcb4,pcb4/Data/Images/Anomaly/017.JPG,pcb4/Missing,pcb2/Missing,0.7125,0.1031,0.8001,suggest,0,0.01,mask,pcb2/Missing,0,gt_fix,470.5,278.0,45,4386
+snowball,45,pipe_fryum,pipe_fryum/Data/Images/Anomaly/000.JPG,pipe_fryum/Burnt,pcb4/Extra,0.6744,0.0247,0.6883,suggest,0,0.929,retrieval,pcb4/Extra,0,sam,438.7,277.8,46,2781
+snowball,46,pipe_fryum,pipe_fryum/Data/Images/Anomaly/015.JPG,pipe_fryum/Corner and Edge Breakage,capsules/Misshape,0.5691,0.0015,0.5913,suggest,0,0.027,mask,capsules/Misshape,0,gt_fix,462.7,275.7,47,4228
+snowball,47,pipe_fryum,pipe_fryum/Data/Images/Anomaly/030.JPG,pipe_fryum/Different Colour Spot,capsules/Discolor,0.7508,0.0062,0.7702,suggest,0,0.835,retrieval,capsules/Discolor,0,sam,452.3,275.9,48,325
+snowball,48,pipe_fryum,pipe_fryum/Data/Images/Anomaly/050.JPG,pipe_fryum/Similar Colour Spot,candle/Extra Wax in Candle,0.743,0.004,0.7536,suggest,0,0.885,retrieval,candle/Extra Wax in Candle,0,sam,547.3,280.4,49,724
+snowball,49,pipe_fryum,pipe_fryum/Data/Images/Anomaly/090.JPG,pipe_fryum/Stuck Together,fryum/Fryum Stuck Together,0.5962,0.0101,0.6409,suggest,0,0.516,retrieval,fryum/Fryum Stuck Together,0,sam,665.7,288.1,50,358090
+snowball,50,candle,candle/Data/Images/Anomaly/001.JPG,candle/Chunk Of Wax Missing,chewinggum/Similar Colour Spot,0.7334,0.031,0.7544,suggest,0,0.779,retrieval,chewinggum/Similar Colour Spot,0,sam,454.8,250.6,51,3232
+snowball,51,candle,candle/Data/Images/Anomaly/041.JPG,candle/Different Colour Spot,candle/Different Colour Spot,0.7967,0.0816,0.84,suggest,1,0.765,,candle/Different Colour Spot,1,sam,436.0,261.3,52,391
+snowball,52,candle,candle/Data/Images/Anomaly/061.JPG,candle/Extra Wax in Candle,candle/Extra Wax in Candle,0.6329,0.049,0.6318,suggest,1,0.06,,candle/Extra Wax in Candle,1,gt_fix,651.5,279.1,53,7928
+snowball,53,candle,candle/Data/Images/Anomaly/071.JPG,candle/Foreign Particles on Candle,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,152.7,286.2,54,352
+snowball,54,candle,candle/Data/Images/Anomaly/086.JPG,candle/Wax Melted Out of the Candle,candle/Wax Melted Out of the Candle,0.6233,0.0015,0.6593,suggest,1,0.079,,candle/Wax Melted Out of the Candle,1,gt_fix,485.7,263.5,55,10835
+snowball,55,candle,candle/Data/Images/Anomaly/031.JPG,candle/Weird Candle Wick,candle/Extra Wax in Candle,0.6432,0.0054,0.6515,suggest,0,0.018,mask,candle/Extra Wax in Candle,0,gt_fix,451.3,286.3,56,2366
+snowball,56,capsules,capsules/Data/Images/Anomaly/031.JPG,capsules/Discolor,capsules/Misshape,0.825,0.1892,0.8777,suggest,0,0.006,mask,capsules/Misshape,0,gt_fix,430.5,266.8,57,123
+snowball,57,capsules,capsules/Data/Images/Anomaly/057.JPG,capsules/Misshape,capsules/Misshape,0.8487,0.1978,0.9282,suggest,1,0.936,,capsules/Misshape,1,sam,441.8,283.6,58,22835
+snowball,58,capsules,capsules/Data/Images/Anomaly/086.JPG,capsules/Scratch,capsules/Misshape,0.7601,0.1961,0.8135,suggest,0,0.029,mask,capsules/Misshape,0,gt_fix,465.0,282.6,59,595
+snowball,59,cashew,cashew/Data/Images/Anomaly/001.JPG,cashew/Burnt,cashew/Stuck Together,0.816,0.2029,0.8485,suggest,0,0.008,mask,cashew/Stuck Together,0,gt_fix,463.6,277.3,60,1690
+snowball,60,cashew,cashew/Data/Images/Anomaly/012.JPG,cashew/Corner or Edge Breakage,cashew/Middle Breakage,0.7847,0.1339,0.8529,suggest,0,0.615,retrieval,cashew/Middle Breakage,0,sam,439.1,265.3,61,5157
+snowball,61,cashew,cashew/Data/Images/Anomaly/026.JPG,cashew/Different Colour Spot,macaroni1/Different Colour Spot,0.7128,0.0059,0.7437,suggest,0,0.853,retrieval,macaroni1/Different Colour Spot,0,sam,528.9,789.1,62,950
+snowball,62,cashew,cashew/Data/Images/Anomaly/033.JPG,cashew/Middle Breakage,cashew/Stuck Together,0.828,0.2131,0.8684,suggest,0,0.055,mask,cashew/Stuck Together,0,gt_fix,1466.0,758.2,63,12478
+snowball,63,cashew,cashew/Data/Images/Anomaly/044.JPG,cashew/Same Colour Spot,cashew/Stuck Together,0.8055,0.198,0.822,suggest,0,0.004,mask,cashew/Stuck Together,0,gt_fix,528.2,268.5,64,1041
+snowball,64,cashew,cashew/Data/Images/Anomaly/079.JPG,cashew/Small Scratches,cashew/Stuck Together,0.836,0.2196,0.8799,suggest,0,0.01,mask,cashew/Stuck Together,0,gt_fix,433.7,262.1,65,2236
+snowball,65,cashew,cashew/Data/Images/Anomaly/095.JPG,cashew/Stuck Together,cashew/Stuck Together,0.8806,0.2587,0.9328,suggest,1,0.979,,cashew/Stuck Together,1,sam,488.7,355.4,66,342751
+snowball,66,chewinggum,chewinggum/Data/Images/Anomaly/003.JPG,chewinggum/Corner Missing,candle/Chunk Of Wax Missing,0.715,0.0239,0.751,suggest,0,0.737,retrieval,candle/Chunk Of Wax Missing,0,sam,480.0,286.3,67,7089
+snowball,67,chewinggum,chewinggum/Data/Images/Anomaly/065.JPG,chewinggum/Scratches,-,0.5413,0.0011,0.5474,silent,0,0.497,,pcb3/Scratch,0,gt_fix,442.2,282.4,68,2248
+snowball,68,chewinggum,chewinggum/Data/Images/Anomaly/076.JPG,chewinggum/Similar Colour Spot,chewinggum/Similar Colour Spot,0.7267,0.0031,0.7533,suggest,1,0.796,,chewinggum/Similar Colour Spot,1,sam,645.3,289.8,69,4491
+snowball,69,fryum,fryum/Data/Images/Anomaly/001.JPG,fryum/Burnt,fryum/Fryum Stuck Together,0.9548,0.2737,0.9616,suggest,0,0.161,mask,fryum/Fryum Stuck Together,0,gt_fix,480.8,272.4,70,36873
+snowball,70,fryum,fryum/Data/Images/Anomaly/011.JPG,fryum/Corner or Edge Breakage,-,0.4455,0.0099,0.5173,silent,0,0.003,,fryum/Corner or Edge Breakage,1,gt_fix,548.6,269.8,71,3963
+snowball,71,fryum,fryum/Data/Images/Anomaly/021.JPG,fryum/Different Colour Spot,pipe_fryum/Burnt,0.7307,0.0236,0.7549,suggest,0,0.84,retrieval,pipe_fryum/Burnt,0,sam,415.2,282.2,72,635
+snowball,72,fryum,fryum/Data/Images/Anomaly/041.JPG,fryum/Fryum Stuck Together,fryum/Fryum Stuck Together,0.9007,0.1965,0.9468,suggest,1,0.967,,fryum/Fryum Stuck Together,1,sam,457.4,304.7,73,302786
+snowball,73,fryum,fryum/Data/Images/Anomaly/022.JPG,fryum/Similar Colour Spot,fryum/Different Colour Spot,0.7153,0.0296,0.719,suggest,0,0.595,retrieval,fryum/Different Colour Spot,0,sam,563.1,950.9,74,152
+snowball,74,fryum,fryum/Data/Images/Anomaly/081.JPG,fryum/Small Scratches,fryum/Fryum Stuck Together,0.9304,0.1827,0.9794,suggest,0,0.0,mask,fryum/Fryum Stuck Together,0,gt_fix,731.0,263.6,75,113
+snowball,75,macaroni1,macaroni1/Data/Images/Anomaly/001.JPG,macaroni1/Chip Around Edge and Corner,macaroni2/Small Cracks,0.7582,0.1983,0.8435,suggest,0,0.013,mask,macaroni2/Small Cracks,0,gt_fix,474.2,311.0,76,765
+snowball,76,macaroni1,macaroni1/Data/Images/Anomaly/024.JPG,macaroni1/Different Colour Spot,macaroni1/Similar Colour Spot,0.7796,0.0102,0.8214,suggest,0,0.85,retrieval,macaroni1/Similar Colour Spot,0,sam,461.3,269.0,77,471
+snowball,77,macaroni1,macaroni1/Data/Images/Anomaly/049.JPG,macaroni1/Similar Colour Spot,macaroni1/Similar Colour Spot,0.816,0.0326,0.8588,suggest,1,0.759,,macaroni1/Similar Colour Spot,1,sam,490.2,287.5,78,472
+snowball,78,macaroni1,macaroni1/Data/Images/Anomaly/071.JPG,macaroni1/Small Cracks,macaroni2/Small Cracks,0.7677,0.2072,0.8542,suggest,0,0.004,mask,macaroni2/Small Cracks,0,gt_fix,436.5,273.0,79,191
+snowball,79,macaroni2,macaroni2/Data/Images/Anomaly/011.JPG,macaroni2/Colour Spot Similar to Object,chewinggum/Similar Colour Spot,0.6774,0.0059,0.7087,suggest,0,0.917,retrieval,chewinggum/Similar Colour Spot,0,sam,469.4,304.8,80,823
+snowball,80,macaroni2,macaroni2/Data/Images/Anomaly/031.JPG,macaroni2/Different Colour Spot,macaroni2/Colour Spot Similar to Object,0.6005,0.0021,0.6049,suggest,0,0.876,retrieval,macaroni2/Colour Spot Similar to Object,0,sam,401.8,377.8,81,301
+snowball,81,macaroni2,macaroni2/Data/Images/Anomaly/047.JPG,macaroni2/Small Chip Around Edge,macaroni2/Small Cracks,0.7804,0.2135,0.8203,suggest,0,0.016,mask,macaroni2/Small Cracks,0,gt_fix,468.5,286.5,82,788
+snowball,82,macaroni2,macaroni2/Data/Images/Anomaly/074.JPG,macaroni2/Small Cracks,macaroni2/Small Cracks,0.7248,0.162,0.8594,suggest,1,0.004,,macaroni2/Small Cracks,1,gt_fix,1217.4,706.2,83,216
+snowball,83,pcb1,pcb1/Data/Images/Anomaly/001.JPG,pcb1/Bent,pcb2/Bent,0.6463,0.019,0.6912,suggest,0,0.382,mask,pcb2/Bent,0,gt_fix,564.6,261.3,84,1687
+snowball,84,pcb1,pcb1/Data/Images/Anomaly/041.JPG,pcb1/Missing,pcb1/Missing,0.7013,0.1072,0.6943,suggest,1,0.99,,pcb1/Missing,1,sam,402.5,492.4,85,95837
+snowball,85,pcb1,pcb1/Data/Images/Anomaly/086.JPG,pcb1/Scratch,pcb1/Scratch,0.6609,0.0242,0.7367,suggest,1,0.613,,pcb1/Scratch,1,sam,441.8,275.1,86,4149
+snowball,86,pcb2,pcb2/Data/Images/Anomaly/002.JPG,pcb2/Bent,pcb3/Bent,0.7674,0.0984,0.8292,suggest,0,0.856,retrieval,pcb3/Bent,0,sam,432.1,274.3,87,2760
+snowball,87,pcb2,pcb2/Data/Images/Anomaly/041.JPG,pcb2/Missing,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,166.9,295.8,88,26320
+snowball,88,pcb2,pcb2/Data/Images/Anomaly/048.JPG,pcb2/Scratch,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,158.9,280.1,89,372
+snowball,89,pcb3,pcb3/Data/Images/Anomaly/001.JPG,pcb3/Bent,pcb2/Missing,0.5845,0.0322,0.6,suggest,0,0.943,retrieval,pcb2/Missing,0,sam,448.1,289.5,90,24949
+snowball,90,pcb3,pcb3/Data/Images/Anomaly/041.JPG,pcb3/Missing,pcb4/Missing,0.7691,0.0291,0.8058,suggest,0,0.303,mask,pcb4/Missing,0,gt_fix,450.1,298.0,91,1197
+snowball,91,pcb3,pcb3/Data/Images/Anomaly/048.JPG,pcb3/Scratch,pcb2/Missing,0.6697,0.1079,0.7568,suggest,0,0.001,mask,pcb2/Missing,0,gt_fix,472.2,260.6,92,125
+snowball,92,pcb4,pcb4/Data/Images/Anomaly/011.JPG,pcb4/Damage,pcb4/Damage,0.6977,0.0401,0.7717,suggest,1,0.505,,pcb4/Damage,1,sam,427.7,288.8,93,10161
+snowball,93,pcb4,pcb4/Data/Images/Anomaly/024.JPG,pcb4/Extra,pcb4/Damage,0.7338,0.0873,0.7789,suggest,0,0.629,retrieval,pcb4/Damage,0,sam,444.8,293.2,94,2132
+snowball,94,pcb4,pcb4/Data/Images/Anomaly/045.JPG,pcb4/Missing,pcb4/Missing,0.742,0.0966,0.7483,suggest,1,0.24,,pcb4/Missing,1,gt_fix,482.1,278.6,95,41341
+snowball,95,pipe_fryum,pipe_fryum/Data/Images/Anomaly/001.JPG,pipe_fryum/Burnt,cashew/Burnt,0.7948,0.0465,0.8201,suggest,0,0.844,retrieval,cashew/Burnt,0,sam,413.9,270.3,96,1315
+snowball,96,pipe_fryum,pipe_fryum/Data/Images/Anomaly/016.JPG,pipe_fryum/Corner and Edge Breakage,pipe_fryum/Corner and Edge Breakage,0.8342,0.1677,0.8572,suggest,1,0.714,,pipe_fryum/Corner and Edge Breakage,1,sam,437.5,298.8,97,1539
+snowball,97,pipe_fryum,pipe_fryum/Data/Images/Anomaly/031.JPG,pipe_fryum/Different Colour Spot,pipe_fryum/Different Colour Spot,0.764,0.0157,0.7769,suggest,1,0.797,,pipe_fryum/Different Colour Spot,1,sam,479.6,293.8,98,324
+snowball,98,pipe_fryum,pipe_fryum/Data/Images/Anomaly/051.JPG,pipe_fryum/Similar Colour Spot,chewinggum/Similar Colour Spot,0.7888,0.0175,0.8253,suggest,0,0.842,retrieval,chewinggum/Similar Colour Spot,0,sam,453.9,309.8,99,552
+snowball,99,pipe_fryum,pipe_fryum/Data/Images/Anomaly/091.JPG,pipe_fryum/Stuck Together,pipe_fryum/Stuck Together,0.7798,0.2051,0.8076,suggest,1,0.575,,pipe_fryum/Stuck Together,1,sam,458.2,280.8,100,388747
+snowball,100,candle,candle/Data/Images/Anomaly/002.JPG,candle/Chunk Of Wax Missing,candle/Chunk Of Wax Missing,0.7861,0.046,0.8179,suggest,1,0.797,,candle/Chunk Of Wax Missing,1,sam,542.5,941.5,101,3225
+snowball,101,candle,candle/Data/Images/Anomaly/042.JPG,candle/Different Colour Spot,candle/Different Colour Spot,0.8593,0.1535,0.9018,suggest,1,0.556,,candle/Different Colour Spot,1,sam,1438.5,856.3,102,187
+snowball,102,candle,candle/Data/Images/Anomaly/062.JPG,candle/Extra Wax in Candle,candle/Extra Wax in Candle,0.7374,0.0172,0.7667,suggest,1,0.739,,candle/Extra Wax in Candle,1,sam,1425.9,265.3,103,5799
+snowball,103,candle,candle/Data/Images/Anomaly/072.JPG,candle/Foreign Particles on Candle,candle/Wax Melted Out of the Candle,0.6265,0.0032,0.6429,suggest,0,0.002,mask,candle/Wax Melted Out of the Candle,0,gt_fix,429.7,259.8,104,231
+snowball,104,candle,candle/Data/Images/Anomaly/088.JPG,candle/Wax Melted Out of the Candle,candle/Wax Melted Out of the Candle,0.6447,0.0241,0.6703,suggest,1,0.093,,candle/Wax Melted Out of the Candle,1,gt_fix,428.0,274.2,105,12626
+snowball,105,candle,candle/Data/Images/Anomaly/032.JPG,candle/Weird Candle Wick,candle/Extra Wax in Candle,0.7764,0.0079,0.7757,suggest,0,0.632,retrieval,candle/Extra Wax in Candle,0,sam,427.7,283.3,106,930
+snowball,106,capsules,capsules/Data/Images/Anomaly/032.JPG,capsules/Discolor,capsules/Scratch,0.5735,0.0145,0.6146,suggest,0,0.491,mask,capsules/Scratch,0,gt_fix,444.9,290.6,107,229
+snowball,107,capsules,capsules/Data/Images/Anomaly/059.JPG,capsules/Misshape,capsules/Misshape,0.8681,0.222,0.9044,suggest,1,0.909,,capsules/Misshape,1,sam,445.3,285.4,108,21828
+snowball,108,capsules,capsules/Data/Images/Anomaly/087.JPG,capsules/Scratch,capsules/Misshape,0.8006,0.2004,0.8351,auto,0,0.005,mask,capsules/Misshape,0,gt_fix,429.5,286.9,109,107
+snowball,109,cashew,cashew/Data/Images/Anomaly/003.JPG,cashew/Burnt,cashew/Stuck Together,0.7922,0.1765,0.8193,suggest,0,0.01,mask,cashew/Stuck Together,0,gt_fix,468.7,286.3,110,2203
+snowball,110,cashew,cashew/Data/Images/Anomaly/013.JPG,cashew/Corner or Edge Breakage,-,0.4518,0.0061,0.4511,silent,0,0.058,,cashew/Stuck Together,0,gt_fix,558.0,270.5,111,3474
+snowball,111,cashew,cashew/Data/Images/Anomaly/027.JPG,cashew/Different Colour Spot,cashew/Different Colour Spot,0.6827,0.0085,0.7008,suggest,1,0.72,,cashew/Different Colour Spot,1,sam,416.6,339.4,112,1528
+snowball,112,cashew,cashew/Data/Images/Anomaly/034.JPG,cashew/Middle Breakage,cashew/Corner or Edge Breakage,0.778,0.0504,0.837,suggest,0,0.371,mask,cashew/Corner or Edge Breakage,0,gt_fix,432.0,305.4,113,9805
+snowball,113,cashew,cashew/Data/Images/Anomaly/045.JPG,cashew/Same Colour Spot,cashew/Stuck Together,0.8352,0.2084,0.866,suggest,0,0.004,mask,cashew/Stuck Together,0,gt_fix,463.4,259.9,114,955
+snowball,114,cashew,cashew/Data/Images/Anomaly/080.JPG,cashew/Small Scratches,cashew/Stuck Together,0.8078,0.1932,0.831,suggest,0,0.009,mask,cashew/Stuck Together,0,gt_fix,478.1,279.3,115,1993
+snowball,115,cashew,cashew/Data/Images/Anomaly/096.JPG,cashew/Stuck Together,cashew/Stuck Together,0.8524,0.2319,0.9064,suggest,1,0.992,,cashew/Stuck Together,1,sam,456.7,292.8,116,333751
+snowball,116,chewinggum,chewinggum/Data/Images/Anomaly/005.JPG,chewinggum/Corner Missing,cashew/Corner or Edge Breakage,0.7868,0.0333,0.8467,suggest,0,0.509,retrieval,cashew/Corner or Edge Breakage,0,sam,439.2,272.5,117,19964
+snowball,117,chewinggum,chewinggum/Data/Images/Anomaly/066.JPG,chewinggum/Scratches,pipe_fryum/Stuck Together,0.6124,0.0601,0.6248,suggest,0,0.007,mask,pipe_fryum/Stuck Together,0,gt_fix,459.7,286.8,118,2370
+snowball,118,chewinggum,chewinggum/Data/Images/Anomaly/077.JPG,chewinggum/Similar Colour Spot,chewinggum/Similar Colour Spot,0.8638,0.0862,0.8888,suggest,1,0.852,,chewinggum/Similar Colour Spot,1,sam,466.8,310.8,119,3724
+snowball,119,fryum,fryum/Data/Images/Anomaly/002.JPG,fryum/Burnt,fryum/Fryum Stuck Together,0.9189,0.1944,0.9481,suggest,0,0.055,mask,fryum/Fryum Stuck Together,0,gt_fix,475.2,313.9,120,14699
+snowball,120,fryum,fryum/Data/Images/Anomaly/012.JPG,fryum/Corner or Edge Breakage,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,149.2,273.8,121,2120
+snowball,121,fryum,fryum/Data/Images/Anomaly/023.JPG,fryum/Different Colour Spot,fryum/Different Colour Spot,0.787,0.0186,0.8698,suggest,1,0.881,,fryum/Different Colour Spot,1,sam,429.9,289.8,122,404
+snowball,122,fryum,fryum/Data/Images/Anomaly/042.JPG,fryum/Fryum Stuck Together,fryum/Fryum Stuck Together,0.9482,0.2376,0.9685,suggest,1,0.947,,fryum/Fryum Stuck Together,1,sam,465.4,342.5,123,237362
+snowball,123,fryum,fryum/Data/Images/Anomaly/028.JPG,fryum/Similar Colour Spot,fryum/Fryum Stuck Together,0.9613,0.2252,0.9781,auto,0,0.0,mask,fryum/Fryum Stuck Together,0,gt_fix,462.1,257.5,124,95
+snowball,124,fryum,fryum/Data/Images/Anomaly/090.JPG,fryum/Small Scratches,fryum/Fryum Stuck Together,0.958,0.2161,0.9843,auto,0,0.002,mask,fryum/Fryum Stuck Together,0,gt_fix,467.0,276.9,125,435
+snowball,125,macaroni1,macaroni1/Data/Images/Anomaly/002.JPG,macaroni1/Chip Around Edge and Corner,macaroni2/Small Cracks,0.7168,0.1503,0.846,suggest,0,0.024,mask,macaroni2/Small Cracks,0,gt_fix,592.4,285.4,126,1473
+snowball,126,macaroni1,macaroni1/Data/Images/Anomaly/025.JPG,macaroni1/Different Colour Spot,macaroni1/Different Colour Spot,0.7938,0.0316,0.8416,suggest,1,0.888,,macaroni1/Different Colour Spot,1,sam,457.8,276.6,127,500
+snowball,127,macaroni1,macaroni1/Data/Images/Anomaly/050.JPG,macaroni1/Similar Colour Spot,macaroni1/Similar Colour Spot,0.8451,0.047,0.8761,suggest,1,0.829,,macaroni1/Similar Colour Spot,1,sam,486.7,277.0,128,812
+snowball,128,macaroni1,macaroni1/Data/Images/Anomaly/072.JPG,macaroni1/Small Cracks,macaroni2/Small Cracks,0.7088,0.1101,0.8489,suggest,0,0.009,mask,macaroni2/Small Cracks,0,gt_fix,457.4,300.8,129,512
+snowball,129,macaroni2,macaroni2/Data/Images/Anomaly/012.JPG,macaroni2/Colour Spot Similar to Object,macaroni1/Similar Colour Spot,0.8109,0.0295,0.8184,suggest,0,0.819,retrieval,macaroni1/Similar Colour Spot,0,sam,445.8,275.9,130,429
+snowball,130,macaroni2,macaroni2/Data/Images/Anomaly/032.JPG,macaroni2/Different Colour Spot,capsules/Discolor,0.7431,0.0537,0.7249,suggest,0,0.811,retrieval,capsules/Discolor,0,sam,442.6,283.3,131,209
+snowball,131,macaroni2,macaroni2/Data/Images/Anomaly/048.JPG,macaroni2/Small Chip Around Edge,macaroni2/Small Cracks,0.7448,0.0038,0.8284,suggest,0,0.055,mask,macaroni2/Small Cracks,0,gt_fix,426.5,287.7,132,2810
+snowball,132,macaroni2,macaroni2/Data/Images/Anomaly/075.JPG,macaroni2/Small Cracks,macaroni2/Small Cracks,0.7459,0.0146,0.8259,suggest,1,0.012,,macaroni2/Small Cracks,1,gt_fix,451.5,268.9,133,574
+snowball,133,pcb1,pcb1/Data/Images/Anomaly/002.JPG,pcb1/Bent,pcb2/Bent,0.7756,0.0286,0.8396,suggest,0,0.425,mask,pcb2/Bent,0,gt_fix,474.6,287.5,134,1702
+snowball,134,pcb1,pcb1/Data/Images/Anomaly/042.JPG,pcb1/Missing,pcb2/Missing,0.6801,0.0583,0.7093,suggest,0,0.94,retrieval,pcb2/Missing,0,sam,604.6,336.0,135,15523
+snowball,135,pcb1,pcb1/Data/Images/Anomaly/087.JPG,pcb1/Scratch,pcb1/Scratch,0.7763,0.0834,0.8148,suggest,1,0.384,,pcb1/Scratch,1,gt_fix,427.6,272.3,136,1768
+snowball,136,pcb2,pcb2/Data/Images/Anomaly/003.JPG,pcb2/Bent,pcb2/Bent,0.7368,0.0283,0.7971,suggest,1,0.713,,pcb2/Bent,1,sam,461.8,283.4,137,1837
+snowball,137,pcb2,pcb2/Data/Images/Anomaly/042.JPG,pcb2/Missing,pcb2/Missing,0.8563,0.0861,0.9268,suggest,1,0.721,,pcb2/Missing,1,sam,469.9,278.9,138,27607
+snowball,138,pcb2,pcb2/Data/Images/Anomaly/085.JPG,pcb2/Scratch,pcb1/Scratch,0.8046,0.1516,0.8071,auto,0,0.524,retrieval,pcb1/Scratch,0,sam,610.6,291.8,139,3598
+snowball,139,pcb3,pcb3/Data/Images/Anomaly/002.JPG,pcb3/Bent,pcb3/Bent,0.731,0.0563,0.7897,suggest,1,0.685,,pcb3/Bent,1,sam,434.6,281.1,140,3017
+snowball,140,pcb3,pcb3/Data/Images/Anomaly/042.JPG,pcb3/Missing,pcb4/Damage,0.7954,0.0202,0.8108,suggest,0,0.351,mask,pcb4/Damage,0,gt_fix,439.2,296.0,141,1539
+snowball,141,pcb3,pcb3/Data/Images/Anomaly/051.JPG,pcb3/Scratch,pcb4/Damage,0.7379,0.0496,0.7747,suggest,0,0.071,mask,pcb4/Damage,0,gt_fix,427.2,277.1,142,244
+snowball,142,pcb4,pcb4/Data/Images/Anomaly/012.JPG,pcb4/Damage,pcb4/Missing,0.6714,0.0276,0.665,suggest,0,0.113,mask,pcb4/Missing,0,gt_fix,478.5,284.5,143,5298
+snowball,143,pcb4,pcb4/Data/Images/Anomaly/025.JPG,pcb4/Extra,pcb4/Extra,0.7181,0.0268,0.772,suggest,1,0.903,,pcb4/Extra,1,sam,460.1,286.3,144,8560
+snowball,144,pcb4,pcb4/Data/Images/Anomaly/046.JPG,pcb4/Missing,pcb2/Missing,0.7881,0.0096,0.8334,suggest,0,0.151,mask,pcb2/Missing,0,gt_fix,459.4,296.6,145,1247
+snowball,145,pipe_fryum,pipe_fryum/Data/Images/Anomaly/002.JPG,pipe_fryum/Burnt,pipe_fryum/Burnt,0.8487,0.0813,0.9062,suggest,1,0.864,,pipe_fryum/Burnt,1,sam,459.1,286.9,146,2641
+snowball,146,pipe_fryum,pipe_fryum/Data/Images/Anomaly/017.JPG,pipe_fryum/Corner and Edge Breakage,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,187.0,280.6,147,771
+snowball,147,pipe_fryum,pipe_fryum/Data/Images/Anomaly/032.JPG,pipe_fryum/Different Colour Spot,pipe_fryum/Different Colour Spot,0.885,0.1287,0.9182,suggest,1,0.843,,pipe_fryum/Different Colour Spot,1,sam,440.7,265.5,148,332
+snowball,148,pipe_fryum,pipe_fryum/Data/Images/Anomaly/052.JPG,pipe_fryum/Similar Colour Spot,pipe_fryum/Similar Colour Spot,0.8338,0.0277,0.8534,suggest,1,0.854,,pipe_fryum/Similar Colour Spot,1,sam,470.5,301.4,149,775
+snowball,149,pipe_fryum,pipe_fryum/Data/Images/Anomaly/092.JPG,pipe_fryum/Stuck Together,pipe_fryum/Stuck Together,0.8178,0.2259,0.8703,suggest,1,0.98,,pipe_fryum/Stuck Together,1,sam,453.8,288.1,150,231035
+snowball,150,candle,candle/Data/Images/Anomaly/003.JPG,candle/Chunk Of Wax Missing,candle/Different Colour Spot,0.8145,0.0487,0.8118,suggest,0,0.805,retrieval,candle/Different Colour Spot,0,sam,538.4,290.4,151,1839
+snowball,151,candle,candle/Data/Images/Anomaly/043.JPG,candle/Different Colour Spot,candle/Different Colour Spot,0.8676,0.0722,0.8726,suggest,1,0.815,,candle/Different Colour Spot,1,sam,439.9,284.8,152,111
+snowball,152,candle,candle/Data/Images/Anomaly/063.JPG,candle/Extra Wax in Candle,pipe_fryum/Similar Colour Spot,0.7586,0.0366,0.8074,suggest,0,0.768,retrieval,pipe_fryum/Similar Colour Spot,0,sam,438.7,291.8,153,10834
+snowball,153,candle,candle/Data/Images/Anomaly/073.JPG,candle/Foreign Particles on Candle,candle/Extra Wax in Candle,0.6233,0.004,0.6466,suggest,0,0.001,mask,candle/Extra Wax in Candle,0,gt_fix,462.7,328.4,154,130
+snowball,154,candle,candle/Data/Images/Anomaly/089.JPG,candle/Wax Melted Out of the Candle,candle/Wax Melted Out of the Candle,0.6803,0.0405,0.7096,suggest,1,0.062,,candle/Wax Melted Out of the Candle,1,gt_fix,473.1,281.8,155,8359
+snowball,155,candle,candle/Data/Images/Anomaly/033.JPG,candle/Weird Candle Wick,pcb1/Missing,0.628,0.0244,0.6309,suggest,0,0.018,mask,pcb1/Missing,0,gt_fix,462.6,286.5,156,2400
+snowball,156,capsules,capsules/Data/Images/Anomaly/033.JPG,capsules/Discolor,capsules/Misshape,0.8201,0.1863,0.8729,auto,0,0.01,mask,capsules/Misshape,0,gt_fix,606.5,290.0,157,173
+snowball,157,capsules,capsules/Data/Images/Anomaly/065.JPG,capsules/Misshape,capsules/Misshape,0.8214,0.2167,0.8838,auto,1,0.94,,capsules/Misshape,1,sam,449.0,274.0,158,20857
+snowball,158,capsules,capsules/Data/Images/Anomaly/088.JPG,capsules/Scratch,capsules/Misshape,0.8249,0.1939,0.8396,auto,0,0.036,mask,capsules/Misshape,0,gt_fix,450.2,311.1,159,718
+snowball,159,cashew,cashew/Data/Images/Anomaly/004.JPG,cashew/Burnt,cashew/Burnt,0.8674,0.1287,0.9052,auto,1,0.656,,cashew/Burnt,1,sam,448.3,294.5,160,2330
+snowball,160,cashew,cashew/Data/Images/Anomaly/014.JPG,cashew/Corner or Edge Breakage,cashew/Corner or Edge Breakage,0.8102,0.0072,0.8717,suggest,1,0.66,,cashew/Corner or Edge Breakage,1,sam,443.5,271.8,161,3375
+snowball,161,cashew,cashew/Data/Images/Anomaly/028.JPG,cashew/Different Colour Spot,cashew/Different Colour Spot,0.7976,0.0617,0.8305,suggest,1,0.798,,cashew/Different Colour Spot,1,sam,438.3,292.3,162,1054
+snowball,162,cashew,cashew/Data/Images/Anomaly/035.JPG,cashew/Middle Breakage,cashew/Middle Breakage,0.8304,0.0602,0.857,suggest,1,0.855,,cashew/Middle Breakage,1,sam,430.6,278.5,163,10039
+snowball,163,cashew,cashew/Data/Images/Anomaly/046.JPG,cashew/Same Colour Spot,cashew/Stuck Together,0.8495,0.2282,0.8897,auto,0,0.012,mask,cashew/Stuck Together,0,gt_fix,713.9,281.2,164,2798
+snowball,164,cashew,cashew/Data/Images/Anomaly/081.JPG,cashew/Small Scratches,cashew/Stuck Together,0.853,0.2424,0.8791,auto,0,0.011,mask,cashew/Stuck Together,0,gt_fix,498.4,305.7,165,2321
+snowball,165,cashew,cashew/Data/Images/Anomaly/097.JPG,cashew/Stuck Together,cashew/Stuck Together,0.852,0.222,0.9171,auto,1,0.993,,cashew/Stuck Together,1,sam,509.8,370.1,166,406113
+snowball,166,chewinggum,chewinggum/Data/Images/Anomaly/008.JPG,chewinggum/Corner Missing,pipe_fryum/Stuck Together,0.7202,0.1077,0.7319,auto,0,0.054,mask,pipe_fryum/Stuck Together,0,gt_fix,464.8,281.1,167,19494
+snowball,167,chewinggum,chewinggum/Data/Images/Anomaly/067.JPG,chewinggum/Scratches,candle/Weird Candle Wick,0.5909,0.0115,0.5981,suggest,0,0.357,mask,candle/Weird Candle Wick,0,gt_fix,535.2,284.1,168,693
+snowball,168,chewinggum,chewinggum/Data/Images/Anomaly/078.JPG,chewinggum/Similar Colour Spot,chewinggum/Similar Colour Spot,0.8427,0.0368,0.8599,suggest,1,0.789,,chewinggum/Similar Colour Spot,1,sam,498.1,279.2,169,3550
+snowball,169,fryum,fryum/Data/Images/Anomaly/003.JPG,fryum/Burnt,pipe_fryum/Burnt,0.7604,0.0577,0.8141,suggest,0,0.773,retrieval,pipe_fryum/Burnt,0,sam,450.5,306.9,170,5438
+snowball,170,fryum,fryum/Data/Images/Anomaly/013.JPG,fryum/Corner or Edge Breakage,fryum/Fryum Stuck Together,0.9271,0.2089,0.9653,auto,0,0.001,mask,fryum/Fryum Stuck Together,0,gt_fix,490.8,285.1,171,729
+snowball,171,fryum,fryum/Data/Images/Anomaly/024.JPG,fryum/Different Colour Spot,fryum/Different Colour Spot,0.7181,0.0142,0.7391,suggest,1,0.794,,fryum/Different Colour Spot,1,sam,450.7,342.9,172,258
+snowball,172,fryum,fryum/Data/Images/Anomaly/043.JPG,fryum/Fryum Stuck Together,fryum/Burnt,0.5644,0.043,0.5283,suggest,0,0.0,mask,fryum/Burnt,0,gt_fix,449.5,291.1,173,212429
+snowball,173,fryum,fryum/Data/Images/Anomaly/035.JPG,fryum/Similar Colour Spot,candle/Different Colour Spot,0.8173,0.0141,0.8366,suggest,0,0.811,retrieval,candle/Different Colour Spot,0,sam,487.6,290.5,174,373
+snowball,174,fryum,fryum/Data/Images/Anomaly/091.JPG,fryum/Small Scratches,fryum/Fryum Stuck Together,0.9648,0.2188,0.9854,auto,0,0.003,mask,fryum/Fryum Stuck Together,0,gt_fix,475.7,269.7,175,584
+snowball,175,macaroni1,macaroni1/Data/Images/Anomaly/003.JPG,macaroni1/Chip Around Edge and Corner,macaroni1/Small Cracks,0.7376,0.0162,0.855,suggest,0,0.009,mask,macaroni1/Small Cracks,0,gt_fix,485.6,301.9,176,518
+snowball,176,macaroni1,macaroni1/Data/Images/Anomaly/026.JPG,macaroni1/Different Colour Spot,pipe_fryum/Different Colour Spot,0.6419,0.0168,0.6181,suggest,0,0.808,retrieval,pipe_fryum/Different Colour Spot,0,sam,724.3,288.8,177,309
+snowball,177,macaroni1,macaroni1/Data/Images/Anomaly/051.JPG,macaroni1/Similar Colour Spot,macaroni1/Similar Colour Spot,0.7243,0.0193,0.7552,suggest,1,0.887,,macaroni1/Similar Colour Spot,1,sam,421.8,275.4,178,1024
+snowball,178,macaroni1,macaroni1/Data/Images/Anomaly/074.JPG,macaroni1/Small Cracks,macaroni1/Small Cracks,0.741,0.0118,0.8644,suggest,1,0.007,,macaroni1/Small Cracks,1,gt_fix,456.5,291.4,179,428
+snowball,179,macaroni2,macaroni2/Data/Images/Anomaly/013.JPG,macaroni2/Colour Spot Similar to Object,macaroni2/Colour Spot Similar to Object,0.7303,0.02,0.7302,suggest,1,0.881,,macaroni2/Colour Spot Similar to Object,1,sam,516.3,300.6,180,533
+snowball,180,macaroni2,macaroni2/Data/Images/Anomaly/033.JPG,macaroni2/Different Colour Spot,capsules/Discolor,0.7146,0.0304,0.6894,suggest,0,0.777,retrieval,capsules/Discolor,0,sam,453.0,309.5,181,263
+snowball,181,macaroni2,macaroni2/Data/Images/Anomaly/049.JPG,macaroni2/Small Chip Around Edge,macaroni2/Small Cracks,0.7984,0.0421,0.8742,suggest,0,0.054,mask,macaroni2/Small Cracks,0,gt_fix,723.1,297.2,182,2614
+snowball,182,macaroni2,macaroni2/Data/Images/Anomaly/076.JPG,macaroni2/Small Cracks,macaroni2/Small Cracks,0.7988,0.0469,0.8724,suggest,1,0.002,,macaroni2/Small Cracks,1,gt_fix,461.4,355.5,183,127
+snowball,183,pcb1,pcb1/Data/Images/Anomaly/003.JPG,pcb1/Bent,pcb1/Bent,0.8452,0.0817,0.877,auto,1,0.784,,pcb1/Bent,1,sam,464.9,307.6,184,1618
+snowball,184,pcb1,pcb1/Data/Images/Anomaly/043.JPG,pcb1/Missing,pcb1/Missing,0.9265,0.317,0.9418,auto,1,0.991,,pcb1/Missing,1,sam,615.9,918.9,185,95789
+snowball,185,pcb1,pcb1/Data/Images/Anomaly/088.JPG,pcb1/Scratch,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,505.5,799.0,186,1567
+snowball,186,pcb2,pcb2/Data/Images/Anomaly/004.JPG,pcb2/Bent,pcb2/Bent,0.7947,0.0226,0.8671,suggest,1,0.622,,pcb2/Bent,1,sam,1084.1,769.8,187,4398
+snowball,187,pcb2,pcb2/Data/Images/Anomaly/044.JPG,pcb2/Missing,pcb2/Missing,0.8399,0.1394,0.8984,auto,1,0.37,,pcb2/Missing,1,gt_fix,1313.5,1018.1,188,29046
+snowball,188,pcb2,pcb2/Data/Images/Anomaly/086.JPG,pcb2/Scratch,pcb2/Missing,0.7713,0.0658,0.8132,suggest,0,0.01,mask,pcb2/Missing,0,gt_fix,1953.8,1186.5,189,4333
+snowball,189,pcb3,pcb3/Data/Images/Anomaly/003.JPG,pcb3/Bent,pcb2/Bent,0.8102,0.0227,0.8764,suggest,0,0.787,retrieval,pcb2/Bent,0,sam,694.3,495.6,190,3674
+snowball,190,pcb3,pcb3/Data/Images/Anomaly/043.JPG,pcb3/Missing,-,0.4763,0.016,0.5438,silent,0,0.013,,fryum/Corner or Edge Breakage,0,gt_fix,1544.4,261.8,191,19638
+snowball,191,pcb3,pcb3/Data/Images/Anomaly/080.JPG,pcb3/Scratch,pcb2/Missing,0.6963,0.0478,0.7803,suggest,0,0.02,mask,pcb2/Missing,0,gt_fix,440.3,273.4,192,5308
+snowball,192,pcb4,pcb4/Data/Images/Anomaly/015.JPG,pcb4/Damage,pcb4/Damage,0.7028,0.0331,0.7523,suggest,1,0.125,,pcb4/Damage,1,gt_fix,431.5,278.7,193,5640
+snowball,193,pcb4,pcb4/Data/Images/Anomaly/026.JPG,pcb4/Extra,pcb4/Extra,0.7281,0.0208,0.7769,suggest,1,0.928,,pcb4/Extra,1,sam,407.9,304.0,194,6743
+snowball,194,pcb4,pcb4/Data/Images/Anomaly/048.JPG,pcb4/Missing,pcb4/Missing,0.7576,0.0034,0.8357,suggest,1,0.012,,pcb4/Missing,1,gt_fix,556.2,305.3,195,4999
+snowball,195,pipe_fryum,pipe_fryum/Data/Images/Anomaly/003.JPG,pipe_fryum/Burnt,pipe_fryum/Burnt,0.7775,0.0129,0.8548,suggest,1,0.627,,pipe_fryum/Burnt,1,sam,418.8,289.7,196,3392
+snowball,196,pipe_fryum,pipe_fryum/Data/Images/Anomaly/018.JPG,pipe_fryum/Corner and Edge Breakage,pipe_fryum/Stuck Together,0.8458,0.2556,0.9015,auto,0,0.004,mask,pipe_fryum/Stuck Together,0,gt_fix,451.3,260.3,197,1333
+snowball,197,pipe_fryum,pipe_fryum/Data/Images/Anomaly/033.JPG,pipe_fryum/Different Colour Spot,capsules/Discolor,0.6402,0.0341,0.6354,suggest,0,0.823,retrieval,capsules/Discolor,0,sam,447.2,274.1,198,367
+snowball,198,pipe_fryum,pipe_fryum/Data/Images/Anomaly/053.JPG,pipe_fryum/Similar Colour Spot,candle/Extra Wax in Candle,0.7943,0.006,0.8085,suggest,0,0.877,retrieval,candle/Extra Wax in Candle,0,sam,505.2,276.1,199,712
+snowball,199,pipe_fryum,pipe_fryum/Data/Images/Anomaly/093.JPG,pipe_fryum/Stuck Together,pipe_fryum/Stuck Together,0.787,0.1577,0.8262,auto,1,0.985,,pipe_fryum/Stuck Together,1,sam,510.6,328.4,200,189936
+snowball,200,candle,candle/Data/Images/Anomaly/004.JPG,candle/Chunk Of Wax Missing,candle/Chunk Of Wax Missing,0.8334,0.1052,0.8881,auto,1,0.501,,candle/Chunk Of Wax Missing,1,sam,439.8,259.0,201,4993
+snowball,201,candle,candle/Data/Images/Anomaly/045.JPG,candle/Different Colour Spot,candle/Different Colour Spot,0.8889,0.0709,0.8936,suggest,1,0.556,,candle/Different Colour Spot,1,sam,450.4,263.6,202,70
+snowball,202,candle,candle/Data/Images/Anomaly/064.JPG,candle/Extra Wax in Candle,candle/Extra Wax in Candle,0.8379,0.1299,0.8986,auto,1,0.809,,candle/Extra Wax in Candle,1,sam,463.3,272.3,203,6866
+snowball,203,candle,candle/Data/Images/Anomaly/074.JPG,candle/Foreign Particles on Candle,candle/Extra Wax in Candle,0.6209,0.0197,0.6308,suggest,0,0.006,mask,candle/Extra Wax in Candle,0,gt_fix,496.9,332.1,204,863
+snowball,204,candle,candle/Data/Images/Anomaly/091.JPG,candle/Wax Melted Out of the Candle,candle/Wax Melted Out of the Candle,0.666,0.0109,0.7131,suggest,1,0.162,,candle/Wax Melted Out of the Candle,1,gt_fix,451.5,358.5,205,21517
+snowball,205,candle,candle/Data/Images/Anomaly/035.JPG,candle/Weird Candle Wick,candle/Weird Candle Wick,0.6832,0.0204,0.7293,suggest,1,0.685,,candle/Weird Candle Wick,1,sam,430.8,324.1,206,2230
+snowball,206,capsules,capsules/Data/Images/Anomaly/034.JPG,capsules/Discolor,capsules/Misshape,0.8811,0.2435,0.8779,auto,0,0.007,mask,capsules/Misshape,0,gt_fix,488.7,299.2,207,130
+snowball,207,capsules,capsules/Data/Images/Anomaly/066.JPG,capsules/Misshape,capsules/Misshape,0.8579,0.2134,0.8906,auto,1,0.97,,capsules/Misshape,1,sam,445.1,347.8,208,19848
+snowball,208,capsules,capsules/Data/Images/Anomaly/089.JPG,capsules/Scratch,capsules/Misshape,0.8155,0.2364,0.8351,auto,0,0.016,mask,capsules/Misshape,0,gt_fix,485.1,325.8,209,417
+snowball,209,cashew,cashew/Data/Images/Anomaly/005.JPG,cashew/Burnt,cashew/Stuck Together,0.813,0.2151,0.8778,auto,0,0.012,mask,cashew/Stuck Together,0,gt_fix,476.0,299.1,210,2823
+snowball,210,cashew,cashew/Data/Images/Anomaly/015.JPG,cashew/Corner or Edge Breakage,cashew/Stuck Together,0.8318,0.2288,0.905,auto,0,0.006,mask,cashew/Stuck Together,0,gt_fix,459.5,294.0,211,2461
+snowball,211,cashew,cashew/Data/Images/Anomaly/029.JPG,cashew/Different Colour Spot,cashew/Different Colour Spot,0.8275,0.0746,0.8419,suggest,1,0.737,,cashew/Different Colour Spot,1,sam,476.6,336.4,212,1524
+snowball,212,cashew,cashew/Data/Images/Anomaly/036.JPG,cashew/Middle Breakage,cashew/Stuck Together,0.8279,0.2245,0.903,auto,0,0.066,mask,cashew/Stuck Together,0,gt_fix,447.6,318.1,213,14623
+snowball,213,cashew,cashew/Data/Images/Anomaly/047.JPG,cashew/Same Colour Spot,cashew/Stuck Together,0.8393,0.2192,0.8868,auto,0,0.013,mask,cashew/Stuck Together,0,gt_fix,461.4,286.4,214,2996
+snowball,214,cashew,cashew/Data/Images/Anomaly/082.JPG,cashew/Small Scratches,cashew/Stuck Together,0.8596,0.241,0.9328,auto,0,0.013,mask,cashew/Stuck Together,0,gt_fix,577.9,273.0,215,3006
+snowball,215,cashew,cashew/Data/Images/Anomaly/098.JPG,cashew/Stuck Together,cashew/Stuck Together,0.8492,0.2081,0.9079,auto,1,0.886,,cashew/Stuck Together,1,sam,494.6,323.4,216,328457
+snowball,216,chewinggum,chewinggum/Data/Images/Anomaly/025.JPG,chewinggum/Corner Missing,-,0.4904,0.081,0.5105,silent,0,0.003,,fryum/Corner or Edge Breakage,0,gt_fix,522.0,279.7,217,4010
+snowball,217,chewinggum,chewinggum/Data/Images/Anomaly/068.JPG,chewinggum/Scratches,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,176.1,275.8,218,814
+snowball,218,chewinggum,chewinggum/Data/Images/Anomaly/079.JPG,chewinggum/Similar Colour Spot,chewinggum/Similar Colour Spot,0.8539,0.0772,0.8585,suggest,1,0.811,,chewinggum/Similar Colour Spot,1,sam,584.0,548.9,219,5034
+snowball,219,fryum,fryum/Data/Images/Anomaly/004.JPG,fryum/Burnt,fryum/Burnt,0.7955,0.0251,0.8537,suggest,1,0.852,,fryum/Burnt,1,sam,430.2,317.8,220,2469
+snowball,220,fryum,fryum/Data/Images/Anomaly/014.JPG,fryum/Corner or Edge Breakage,-,0.4686,0.0456,0.4985,silent,0,0.003,,fryum/Corner or Edge Breakage,1,gt_fix,566.2,289.2,221,3958
+snowball,221,fryum,fryum/Data/Images/Anomaly/025.JPG,fryum/Different Colour Spot,fryum/Similar Colour Spot,0.6222,0.0233,0.6276,suggest,0,0.432,mask,fryum/Similar Colour Spot,0,gt_fix,527.0,309.0,222,313
+snowball,222,fryum,fryum/Data/Images/Anomaly/044.JPG,fryum/Fryum Stuck Together,fryum/Corner or Edge Breakage,0.628,0.1553,0.6731,suggest,0,0.001,mask,fryum/Corner or Edge Breakage,0,gt_fix,424.9,312.1,223,289857
+snowball,223,fryum,fryum/Data/Images/Anomaly/037.JPG,fryum/Similar Colour Spot,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,159.0,338.2,224,87
+snowball,224,fryum,fryum/Data/Images/Anomaly/092.JPG,fryum/Small Scratches,fryum/Fryum Stuck Together,0.954,0.2168,0.9778,auto,0,0.002,mask,fryum/Fryum Stuck Together,0,gt_fix,485.4,279.3,225,400
+snowball,225,macaroni1,macaroni1/Data/Images/Anomaly/004.JPG,macaroni1/Chip Around Edge and Corner,macaroni1/Small Cracks,0.7317,0.0435,0.743,suggest,0,0.133,mask,macaroni1/Small Cracks,0,gt_fix,474.3,293.3,226,303
+snowball,226,macaroni1,macaroni1/Data/Images/Anomaly/027.JPG,macaroni1/Different Colour Spot,macaroni1/Different Colour Spot,0.8573,0.0371,0.8745,suggest,1,0.871,,macaroni1/Different Colour Spot,1,sam,506.8,321.4,227,487
+snowball,227,macaroni1,macaroni1/Data/Images/Anomaly/052.JPG,macaroni1/Similar Colour Spot,macaroni1/Similar Colour Spot,0.7648,0.0328,0.8105,suggest,1,0.883,,macaroni1/Similar Colour Spot,1,sam,458.1,283.6,228,1075
+snowball,228,macaroni1,macaroni1/Data/Images/Anomaly/075.JPG,macaroni1/Small Cracks,macaroni1/Small Cracks,0.763,0.0006,0.8474,suggest,1,0.002,,macaroni1/Small Cracks,1,gt_fix,424.9,361.4,229,92
+snowball,229,macaroni2,macaroni2/Data/Images/Anomaly/014.JPG,macaroni2/Colour Spot Similar to Object,macaroni2/Small Cracks,0.7756,0.0544,0.8731,suggest,0,0.01,mask,macaroni2/Small Cracks,0,gt_fix,459.2,314.9,230,568
+snowball,230,macaroni2,macaroni2/Data/Images/Anomaly/034.JPG,macaroni2/Different Colour Spot,fryum/Different Colour Spot,0.6897,0.0535,0.6765,suggest,0,0.792,retrieval,fryum/Different Colour Spot,0,sam,434.5,281.4,231,192
+snowball,231,macaroni2,macaroni2/Data/Images/Anomaly/050.JPG,macaroni2/Small Chip Around Edge,macaroni1/Small Cracks,0.7495,0.0092,0.8237,suggest,0,0.02,mask,macaroni1/Small Cracks,0,gt_fix,421.4,289.4,232,871
+snowball,232,macaroni2,macaroni2/Data/Images/Anomaly/078.JPG,macaroni2/Small Cracks,macaroni2/Small Cracks,0.7515,0.036,0.88,suggest,1,0.005,,macaroni2/Small Cracks,1,gt_fix,471.9,319.4,233,221
+snowball,233,pcb1,pcb1/Data/Images/Anomaly/004.JPG,pcb1/Bent,pcb2/Bent,0.6663,0.0107,0.7015,suggest,0,0.824,retrieval,pcb2/Bent,0,sam,433.3,327.7,234,1109
+snowball,234,pcb1,pcb1/Data/Images/Anomaly/044.JPG,pcb1/Missing,pcb1/Missing,0.8892,0.3169,0.9049,auto,1,0.716,,pcb1/Missing,1,sam,463.7,314.2,235,59579
+snowball,235,pcb1,pcb1/Data/Images/Anomaly/089.JPG,pcb1/Scratch,pcb2/Missing,0.6412,0.0354,0.6623,suggest,0,0.01,mask,pcb2/Missing,0,gt_fix,471.5,295.5,236,4295
+snowball,236,pcb2,pcb2/Data/Images/Anomaly/005.JPG,pcb2/Bent,pcb2/Bent,0.9203,0.2231,0.9336,auto,1,0.869,,pcb2/Bent,1,sam,503.3,320.5,237,2264
+snowball,237,pcb2,pcb2/Data/Images/Anomaly/045.JPG,pcb2/Missing,pcb2/Missing,0.7614,0.0555,0.8261,suggest,1,0.039,,pcb2/Missing,1,gt_fix,467.3,329.8,238,877
+snowball,238,pcb2,pcb2/Data/Images/Anomaly/087.JPG,pcb2/Scratch,-,0.0,0.0,0.0,silent,0,0.0,no_mask,-,0,gt_fix,166.1,282.7,239,2000
+snowball,239,pcb3,pcb3/Data/Images/Anomaly/004.JPG,pcb3/Bent,pcb3/Bent,0.677,0.0792,0.725,suggest,1,0.961,,pcb3/Bent,1,sam,430.0,302.9,240,22765
+snowball,240,pcb3,pcb3/Data/Images/Anomaly/044.JPG,pcb3/Missing,-,0.5255,0.0489,0.5877,silent,0,0.016,,pcb3/Missing,1,gt_fix,535.9,326.5,241,21556
+snowball,241,pcb3,pcb3/Data/Images/Anomaly/081.JPG,pcb3/Scratch,pcb2/Scratch,0.7781,0.0162,0.8303,suggest,0,0.718,retrieval,pcb2/Scratch,0,sam,432.2,295.0,242,5495
+snowball,242,pcb4,pcb4/Data/Images/Anomaly/018.JPG,pcb4/Damage,pcb4/Damage,0.7155,0.0073,0.7605,suggest,1,0.676,,pcb4/Damage,1,sam,470.1,406.2,243,9767
+snowball,243,pcb4,pcb4/Data/Images/Anomaly/028.JPG,pcb4/Extra,pcb4/Damage,0.6974,0.0663,0.7154,suggest,0,0.901,retrieval,pcb4/Damage,0,sam,449.9,288.3,244,8842
+snowball,244,pcb4,pcb4/Data/Images/Anomaly/049.JPG,pcb4/Missing,pcb4/Missing,0.6648,0.0258,0.7151,suggest,1,0.113,,pcb4/Missing,1,gt_fix,458.6,292.5,245,38159
+snowball,245,pipe_fryum,pipe_fryum/Data/Images/Anomaly/004.JPG,pipe_fryum/Burnt,cashew/Same Colour Spot,0.8017,0.0387,0.8215,suggest,0,0.772,retrieval,cashew/Same Colour Spot,0,sam,451.7,284.6,246,3777
+snowball,246,pipe_fryum,pipe_fryum/Data/Images/Anomaly/019.JPG,pipe_fryum/Corner and Edge Breakage,pipe_fryum/Corner and Edge Breakage,0.741,0.0823,0.7857,auto,1,0.554,,pipe_fryum/Corner and Edge Breakage,1,sam,457.0,294.3,247,7551
+snowball,247,pipe_fryum,pipe_fryum/Data/Images/Anomaly/034.JPG,pipe_fryum/Different Colour Spot,pipe_fryum/Different Colour Spot,0.8769,0.1188,0.9116,auto,1,0.834,,pipe_fryum/Different Colour Spot,1,sam,452.7,327.9,248,301
+snowball,248,pipe_fryum,pipe_fryum/Data/Images/Anomaly/054.JPG,pipe_fryum/Similar Colour Spot,macaroni2/Colour Spot Similar to Object,0.7932,0.0,0.8284,suggest,0,0.852,retrieval,macaroni2/Colour Spot Similar to Object,0,sam,1318.5,1142.3,249,665
+snowball,249,pipe_fryum,pipe_fryum/Data/Images/Anomaly/094.JPG,pipe_fryum/Stuck Together,pipe_fryum/Stuck Together,0.8468,0.2382,0.8815,auto,1,0.986,,pipe_fryum/Stuck Together,1,sam,2923.6,1151.8,250,227896
+snowball,250,candle,candle/Data/Images/Anomaly/005.JPG,candle/Chunk Of Wax Missing,candle/Chunk Of Wax Missing,0.7518,0.0431,0.8118,suggest,1,0.749,,candle/Chunk Of Wax Missing,1,sam,1293.9,778.5,251,2446
+snowball,251,candle,candle/Data/Images/Anomaly/046.JPG,candle/Different Colour Spot,candle/Wax Melted Out of the Candle,0.7349,0.1097,0.7474,auto,0,0.001,mask,candle/Wax Melted Out of the Candle,0,gt_fix,1582.7,1022.9,252,107
+snowball,252,candle,candle/Data/Images/Anomaly/065.JPG,candle/Extra Wax in Candle,candle/Wax Melted Out of the Candle,0.7411,0.0805,0.7702,auto,0,0.049,mask,candle/Wax Melted Out of the Candle,0,gt_fix,509.7,282.0,253,6580
+snowball,253,candle,candle/Data/Images/Anomaly/075.JPG,candle/Foreign Particles on Candle,candle/Wax Melted Out of the Candle,0.7421,0.098,0.7568,auto,0,0.001,mask,candle/Wax Melted Out of the Candle,0,gt_fix,432.4,279.4,254,133
+snowball,254,candle,candle/Data/Images/Anomaly/092.JPG,candle/Wax Melted Out of the Candle,candle/Wax Melted Out of the Candle,0.7893,0.135,0.8206,auto,1,0.033,,candle/Wax Melted Out of the Candle,1,gt_fix,446.9,297.0,255,4436
+snowball,255,candle,candle/Data/Images/Anomaly/036.JPG,candle/Weird Candle Wick,candle/Weird Candle Wick,0.7732,0.0715,0.7898,suggest,1,0.615,,candle/Weird Candle Wick,1,sam,422.4,313.9,256,1865
+snowball,256,capsules,capsules/Data/Images/Anomaly/035.JPG,capsules/Discolor,capsules/Misshape,0.8227,0.2076,0.8823,auto,0,0.007,mask,capsules/Misshape,0,gt_fix,435.2,288.6,257,134
+snowball,257,capsules,capsules/Data/Images/Anomaly/067.JPG,capsules/Misshape,capsules/Misshape,0.8981,0.2245,0.9174,auto,1,0.983,,capsules/Misshape,1,sam,453.5,267.6,258,22443
+snowball,258,capsules,capsules/Data/Images/Anomaly/090.JPG,capsules/Scratch,capsules/Misshape,0.8507,0.2367,0.8736,auto,0,0.015,mask,capsules/Misshape,0,gt_fix,463.2,335.0,259,336
+snowball,259,cashew,cashew/Data/Images/Anomaly/006.JPG,cashew/Burnt,cashew/Burnt,0.7784,0.0697,0.8373,suggest,1,0.62,,cashew/Burnt,1,sam,414.2,292.6,260,1896
+snowball,260,cashew,cashew/Data/Images/Anomaly/016.JPG,cashew/Corner or Edge Breakage,cashew/Stuck Together,0.8444,0.2389,0.8901,auto,0,0.012,mask,cashew/Stuck Together,0,gt_fix,533.4,298.4,261,3566
+snowball,261,cashew,cashew/Data/Images/Anomaly/030.JPG,cashew/Different Colour Spot,cashew/Different Colour Spot,0.8241,0.102,0.8459,auto,1,0.772,,cashew/Different Colour Spot,1,sam,426.8,533.3,262,971
+snowball,262,cashew,cashew/Data/Images/Anomaly/041.JPG,cashew/Middle Breakage,cashew/Middle Breakage,0.8531,0.0695,0.8655,suggest,1,0.251,,cashew/Middle Breakage,1,gt_fix,441.8,290.8,263,6810
+snowball,263,cashew,cashew/Data/Images/Anomaly/049.JPG,cashew/Same Colour Spot,cashew/Same Colour Spot,0.705,0.0182,0.7163,suggest,1,0.754,,cashew/Same Colour Spot,1,sam,464.9,298.4,264,1136
+snowball,264,cashew,cashew/Data/Images/Anomaly/083.JPG,cashew/Small Scratches,cashew/Stuck Together,0.8354,0.2105,0.9021,auto,0,0.012,mask,cashew/Stuck Together,0,gt_fix,465.3,299.6,265,2788
+snowball,265,cashew,cashew/Data/Images/Anomaly/099.JPG,cashew/Stuck Together,cashew/Stuck Together,0.9009,0.2292,0.9321,auto,1,0.987,,cashew/Stuck Together,1,sam,473.0,320.8,266,382146
+snowball,266,chewinggum,chewinggum/Data/Images/Anomaly/026.JPG,chewinggum/Corner Missing,-,0.4994,0.0071,0.529,silent,0,0.004,,fryum/Corner or Edge Breakage,0,gt_fix,630.3,289.5,267,5292
+snowball,267,chewinggum,chewinggum/Data/Images/Anomaly/069.JPG,chewinggum/Scratches,candle/Foreign Particles on Candle,0.7051,0.0286,0.7045,suggest,0,0.606,retrieval,candle/Foreign Particles on Candle,0,sam,423.8,270.3,268,1751
+snowball,268,chewinggum,chewinggum/Data/Images/Anomaly/080.JPG,chewinggum/Similar Colour Spot,chewinggum/Similar Colour Spot,0.7528,0.0373,0.7577,suggest,1,0.604,,chewinggum/Similar Colour Spot,1,sam,457.1,277.6,269,3772
+snowball,269,fryum,fryum/Data/Images/Anomaly/005.JPG,fryum/Burnt,fryum/Fryum Stuck Together,0.9388,0.1879,0.9667,auto,0,0.035,mask,fryum/Fryum Stuck Together,0,gt_fix,679.4,347.1,270,7575
+snowball,270,fryum,fryum/Data/Images/Anomaly/015.JPG,fryum/Corner or Edge Breakage,-,0.4818,0.0522,0.5502,silent,0,0.001,,fryum/Corner or Edge Breakage,1,gt_fix,524.2,317.7,271,999
+snowball,271,fryum,fryum/Data/Images/Anomaly/026.JPG,fryum/Different Colour Spot,fryum/Different Colour Spot,0.7542,0.0225,0.822,suggest,1,0.497,,fryum/Different Colour Spot,1,gt_fix,442.1,304.2,272,273
+snowball,272,fryum,fryum/Data/Images/Anomaly/045.JPG,fryum/Fryum Stuck Together,cashew/Different Colour Spot,0.7298,0.03,0.7416,suggest,0,0.0,mask,cashew/Different Colour Spot,0,gt_fix,439.5,320.4,273,199078
+snowball,273,fryum,fryum/Data/Images/Anomaly/080.JPG,fryum/Similar Colour Spot,fryum/Fryum Stuck Together,0.9585,0.2186,0.9813,auto,0,0.0,mask,fryum/Fryum Stuck Together,0,gt_fix,825.8,349.2,274,77
+snowball,274,fryum,fryum/Data/Images/Anomaly/093.JPG,fryum/Small Scratches,fryum/Fryum Stuck Together,0.9658,0.2349,0.9818,auto,0,0.003,mask,fryum/Fryum Stuck Together,0,gt_fix,449.4,328.9,275,769
+snowball,275,macaroni1,macaroni1/Data/Images/Anomaly/007.JPG,macaroni1/Chip Around Edge and Corner,macaroni1/Small Cracks,0.7736,0.0191,0.8519,suggest,0,0.082,mask,macaroni1/Small Cracks,0,gt_fix,455.7,367.0,276,4260
+snowball,276,macaroni1,macaroni1/Data/Images/Anomaly/028.JPG,macaroni1/Different Colour Spot,pipe_fryum/Different Colour Spot,0.7366,0.0456,0.7312,suggest,0,0.761,retrieval,pipe_fryum/Different Colour Spot,0,sam,462.2,358.3,277,192
+snowball,277,macaroni1,macaroni1/Data/Images/Anomaly/053.JPG,macaroni1/Similar Colour Spot,macaroni1/Small Cracks,0.7551,0.0199,0.8248,suggest,0,0.024,mask,macaroni1/Small Cracks,0,gt_fix,510.3,828.6,278,1244
+snowball,278,macaroni1,macaroni1/Data/Images/Anomaly/076.JPG,macaroni1/Small Cracks,macaroni2/Small Cracks,0.7664,0.0009,0.85,suggest,0,0.002,mask,macaroni2/Small Cracks,0,gt_fix,1180.3,764.7,279,98
+snowball,279,macaroni2,macaroni2/Data/Images/Anomaly/015.JPG,macaroni2/Colour Spot Similar to Object,macaroni2/Colour Spot Similar to Object,0.872,0.0598,0.8874,suggest,1,0.744,,macaroni2/Colour Spot Similar to Object,1,sam,1274.8,796.8,280,508
+snowball,280,macaroni2,macaroni2/Data/Images/Anomaly/035.JPG,macaroni2/Different Colour Spot,macaroni2/Different Colour Spot,0.7272,0.072,0.7277,suggest,1,0.852,,macaroni2/Different Colour Spot,1,sam,1224.8,810.6,281,352
+snowball,281,macaroni2,macaroni2/Data/Images/Anomaly/051.JPG,macaroni2/Small Chip Around Edge,macaroni2/Small Cracks,0.7736,0.0675,0.8651,suggest,0,0.007,mask,macaroni2/Small Cracks,0,gt_fix,1649.7,1004.8,282,395
+snowball,282,macaroni2,macaroni2/Data/Images/Anomaly/081.JPG,macaroni2/Small Cracks,macaroni2/Small Cracks,0.7376,0.0117,0.7838,suggest,1,0.003,,macaroni2/Small Cracks,1,gt_fix,431.9,286.3,283,170
+snowball,283,pcb1,pcb1/Data/Images/Anomaly/005.JPG,pcb1/Bent,pcb1/Bent,0.8131,0.0257,0.8371,suggest,1,0.619,,pcb1/Bent,1,sam,416.2,281.8,284,2792
+snowball,284,pcb1,pcb1/Data/Images/Anomaly/045.JPG,pcb1/Missing,pcb1/Missing,0.8767,0.2864,0.8875,auto,1,0.651,,pcb1/Missing,1,sam,474.4,308.2,285,59476
+snowball,285,pcb1,pcb1/Data/Images/Anomaly/090.JPG,pcb1/Scratch,pcb1/Scratch,0.8146,0.0231,0.9009,suggest,1,0.568,,pcb1/Scratch,1,sam,438.1,303.2,286,3842
+snowball,286,pcb2,pcb2/Data/Images/Anomaly/007.JPG,pcb2/Bent,pcb2/Bent,0.8018,0.0084,0.8653,suggest,1,0.476,,pcb2/Bent,1,gt_fix,437.0,308.9,287,4959
+snowball,287,pcb2,pcb2/Data/Images/Anomaly/046.JPG,pcb2/Missing,pcb2/Missing,0.8939,0.1359,0.9513,auto,1,0.5,,pcb2/Missing,1,sam,451.6,293.4,288,18900
+snowball,288,pcb2,pcb2/Data/Images/Anomaly/088.JPG,pcb2/Scratch,pcb2/Missing,0.7714,0.0632,0.8139,suggest,0,0.013,mask,pcb2/Missing,0,gt_fix,471.9,289.8,289,5778
+snowball,289,pcb3,pcb3/Data/Images/Anomaly/005.JPG,pcb3/Bent,pcb3/Bent,0.8468,0.208,0.9063,auto,1,0.839,,pcb3/Bent,1,sam,423.7,312.5,290,25321
+snowball,290,pcb3,pcb3/Data/Images/Anomaly/047.JPG,pcb3/Missing,pcb2/Missing,0.692,0.0319,0.7813,suggest,0,0.112,mask,pcb2/Missing,0,gt_fix,481.2,293.6,291,29012
+snowball,291,pcb3,pcb3/Data/Images/Anomaly/082.JPG,pcb3/Scratch,pcb2/Missing,0.6889,0.0486,0.7782,suggest,0,0.018,mask,pcb2/Missing,0,gt_fix,466.1,316.1,292,5323
+snowball,292,pcb4,pcb4/Data/Images/Anomaly/020.JPG,pcb4/Damage,pcb4/Extra,0.8116,0.0079,0.8507,suggest,0,0.865,retrieval,pcb4/Extra,0,sam,426.5,348.3,293,7706
+snowball,293,pcb4,pcb4/Data/Images/Anomaly/030.JPG,pcb4/Extra,pcb4/Damage,0.7496,0.0099,0.7795,suggest,0,0.584,retrieval,pcb4/Damage,0,sam,430.7,292.4,294,2090
+snowball,294,pcb4,pcb4/Data/Images/Anomaly/051.JPG,pcb4/Missing,pcb2/Missing,0.7623,0.0028,0.8334,suggest,0,0.011,mask,pcb2/Missing,0,gt_fix,595.5,446.7,295,4630
+snowball,295,pipe_fryum,pipe_fryum/Data/Images/Anomaly/005.JPG,pipe_fryum/Burnt,pipe_fryum/Burnt,0.8742,0.1038,0.914,auto,1,0.485,,pipe_fryum/Burnt,1,gt_fix,425.4,264.3,296,3048
+snowball,296,pipe_fryum,pipe_fryum/Data/Images/Anomaly/020.JPG,pipe_fryum/Corner and Edge Breakage,-,0.5252,0.103,0.5648,silent,0,0.0,,fryum/Corner or Edge Breakage,0,gt_fix,513.6,286.6,297,787
+snowball,297,pipe_fryum,pipe_fryum/Data/Images/Anomaly/035.JPG,pipe_fryum/Different Colour Spot,pipe_fryum/Different Colour Spot,0.7657,0.0953,0.7761,auto,1,0.795,,pipe_fryum/Different Colour Spot,1,sam,617.3,363.6,298,201
+snowball,298,pipe_fryum,pipe_fryum/Data/Images/Anomaly/055.JPG,pipe_fryum/Similar Colour Spot,pipe_fryum/Similar Colour Spot,0.8197,0.0892,0.861,auto,1,0.891,,pipe_fryum/Similar Colour Spot,1,sam,494.4,342.1,299,595
+snowball,299,pipe_fryum,pipe_fryum/Data/Images/Anomaly/095.JPG,pipe_fryum/Stuck Together,pipe_fryum/Stuck Together,0.8456,0.2188,0.8925,auto,1,0.977,,pipe_fryum/Stuck Together,1,sam,426.3,310.4,300,134934
+openset,0,candle,candle/Data/Images/Anomaly/010.JPG,candle/Damaged Corner of Packaging,candle/Wax Melted Out of the Candle,0.7273,0.0987,0.7382,auto,0,0.018,openset_accept,candle/Wax Melted Out of the Candle,0,,439.5,,300,2394
+openset,1,candle,candle/Data/Images/Anomaly/011.JPG,candle/Damaged Corner of Packaging,candle/Wax Melted Out of the Candle,0.7473,0.105,0.7653,auto,0,0.048,openset_accept,candle/Wax Melted Out of the Candle,0,,477.0,,300,6583
+openset,2,candle,candle/Data/Images/Anomaly/012.JPG,candle/Damaged Corner of Packaging,fryum/Small Scratches,0.713,0.0025,0.7734,suggest,0,0.778,openset_accept,fryum/Small Scratches,0,,438.3,,300,3321
+openset,3,candle,candle/Data/Images/Anomaly/013.JPG,candle/Damaged Corner of Packaging,candle/Wax Melted Out of the Candle,0.6827,0.0087,0.7123,suggest,0,0.785,openset_accept,candle/Wax Melted Out of the Candle,0,,439.0,,300,1244
+openset,4,capsules,capsules/Data/Images/Anomaly/000.JPG,capsules/Bubble,candle/Extra Wax in Candle,0.7146,0.006,0.7139,suggest,0,0.553,openset_accept,candle/Extra Wax in Candle,0,,442.1,,300,837
+openset,5,capsules,capsules/Data/Images/Anomaly/001.JPG,capsules/Bubble,pipe_fryum/Similar Colour Spot,0.7566,0.0278,0.7567,suggest,0,0.846,openset_accept,pipe_fryum/Similar Colour Spot,0,,440.8,,300,1067
+openset,6,capsules,capsules/Data/Images/Anomaly/002.JPG,capsules/Bubble,capsules/Misshape,0.8903,0.2186,0.9163,auto,0,0.106,openset_accept,capsules/Misshape,0,,414.2,,300,2065
+openset,7,capsules,capsules/Data/Images/Anomaly/003.JPG,capsules/Bubble,capsules/Misshape,0.7919,0.1731,0.8498,auto,0,0.127,openset_accept,capsules/Misshape,0,,452.8,,300,2472
+openset,8,cashew,cashew/Data/Images/Anomaly/037.JPG,cashew/Small Holes,cashew/Burnt,0.7905,0.0029,0.8499,suggest,0,0.719,openset_accept,cashew/Burnt,0,,463.4,,300,355
+openset,9,cashew,cashew/Data/Images/Anomaly/038.JPG,cashew/Small Holes,cashew/Middle Breakage,0.7456,0.0102,0.7713,suggest,0,0.77,openset_accept,cashew/Middle Breakage,0,,440.8,,300,1320
+openset,10,cashew,cashew/Data/Images/Anomaly/039.JPG,cashew/Small Holes,cashew/Middle Breakage,0.8186,0.0294,0.8482,suggest,0,0.671,openset_accept,cashew/Middle Breakage,0,,486.9,,300,2155
+openset,11,cashew,cashew/Data/Images/Anomaly/040.JPG,cashew/Small Holes,pipe_fryum/Different Colour Spot,0.5851,0.0031,0.5683,suggest,0,0.506,openset_accept,pipe_fryum/Different Colour Spot,0,,431.0,,300,1423
+openset,12,chewinggum,chewinggum/Data/Images/Anomaly/000.JPG,chewinggum/Chunk of Gum Missing,candle/Chunk Of Wax Missing,0.733,0.0332,0.7486,suggest,0,0.871,openset_accept,candle/Chunk Of Wax Missing,0,,495.5,,300,15281
+openset,13,chewinggum,chewinggum/Data/Images/Anomaly/002.JPG,chewinggum/Chunk of Gum Missing,macaroni2/Small Chip Around Edge,0.6557,0.0165,0.7225,suggest,0,0.771,openset_accept,macaroni2/Small Chip Around Edge,0,,434.4,,300,9343
+openset,14,chewinggum,chewinggum/Data/Images/Anomaly/004.JPG,chewinggum/Chunk of Gum Missing,candle/Chunk Of Wax Missing,0.7833,0.0425,0.809,suggest,0,0.829,openset_accept,candle/Chunk Of Wax Missing,0,,441.9,,300,18654
+openset,15,chewinggum,chewinggum/Data/Images/Anomaly/006.JPG,chewinggum/Chunk of Gum Missing,candle/Chunk Of Wax Missing,0.7499,0.0749,0.7902,suggest,0,0.823,openset_accept,candle/Chunk Of Wax Missing,0,,495.9,,300,24253
+openset,16,fryum,fryum/Data/Images/Anomaly/016.JPG,fryum/Middle Breakage,fryum/Fryum Stuck Together,0.6353,0.0465,0.6291,suggest,0,0.021,openset_accept,fryum/Fryum Stuck Together,0,,1534.8,,300,1979
+openset,17,fryum,fryum/Data/Images/Anomaly/060.JPG,fryum/Middle Breakage,fryum/Corner or Edge Breakage,0.5794,0.0217,0.6249,suggest,0,0.073,openset_accept,fryum/Corner or Edge Breakage,0,,1448.0,,300,2784
+openset,18,fryum,fryum/Data/Images/Anomaly/061.JPG,fryum/Middle Breakage,fryum/Fryum Stuck Together,0.5981,0.0154,0.5911,suggest,0,0.008,openset_accept,fryum/Fryum Stuck Together,0,,1371.7,,300,530
+openset,19,fryum,fryum/Data/Images/Anomaly/062.JPG,fryum/Middle Breakage,fryum/Fryum Stuck Together,0.585,0.0167,0.5801,suggest,0,0.028,openset_accept,fryum/Fryum Stuck Together,0,,1058.9,,300,2105
+openset,20,macaroni1,macaroni1/Data/Images/Anomaly/005.JPG,macaroni1/Small Scratches,macaroni1/Small Cracks,0.7217,0.0043,0.8457,suggest,0,0.003,openset_accept,macaroni1/Small Cracks,0,,412.2,,300,173
+openset,21,macaroni1,macaroni1/Data/Images/Anomaly/006.JPG,macaroni1/Small Scratches,macaroni1/Small Cracks,0.7714,0.0121,0.8492,suggest,0,0.002,openset_accept,macaroni1/Small Cracks,0,,491.1,,300,115
+openset,22,macaroni1,macaroni1/Data/Images/Anomaly/009.JPG,macaroni1/Small Scratches,macaroni1/Small Cracks,0.7234,0.0028,0.8577,suggest,0,0.015,openset_accept,macaroni1/Small Cracks,0,,721.3,,300,994
+openset,23,macaroni1,macaroni1/Data/Images/Anomaly/015.JPG,macaroni1/Small Scratches,macaroni1/Small Cracks,0.7243,0.0083,0.8496,suggest,0,0.002,openset_accept,macaroni1/Small Cracks,0,,389.1,,300,107
+openset,24,macaroni2,macaroni2/Data/Images/Anomaly/000.JPG,macaroni2/Small Scratches,macaroni2/Colour Spot Similar to Object,0.7715,0.0565,0.7959,suggest,0,0.452,openset_accept,macaroni2/Colour Spot Similar to Object,0,,400.2,,300,858
+openset,25,macaroni2,macaroni2/Data/Images/Anomaly/001.JPG,macaroni2/Small Scratches,macaroni2/Small Cracks,0.773,0.0519,0.8679,suggest,0,0.003,openset_accept,macaroni2/Small Cracks,0,,423.2,,300,131
+openset,26,macaroni2,macaroni2/Data/Images/Anomaly/002.JPG,macaroni2/Small Scratches,candle/Chunk Of Wax Missing,0.6623,0.0261,0.6674,suggest,0,0.258,openset_accept,candle/Chunk Of Wax Missing,0,,418.3,,300,909
+openset,27,macaroni2,macaroni2/Data/Images/Anomaly/003.JPG,macaroni2/Small Scratches,chewinggum/Similar Colour Spot,0.6887,0.0024,0.6951,suggest,0,0.159,openset_accept,chewinggum/Similar Colour Spot,0,,401.4,,300,179
+openset,28,pcb1,pcb1/Data/Images/Anomaly/009.JPG,pcb1/Melt,pcb1/Bent,0.7979,0.0216,0.8392,suggest,0,0.034,openset_accept,pcb1/Bent,0,,437.7,,300,163
+openset,29,pcb1,pcb1/Data/Images/Anomaly/015.JPG,pcb1/Melt,pcb4/Damage,0.7483,0.0495,0.7812,suggest,0,0.668,openset_accept,pcb4/Damage,0,,391.7,,300,2392
+openset,30,pcb1,pcb1/Data/Images/Anomaly/016.JPG,pcb1/Melt,pcb2/Bent,0.6766,0.0097,0.6941,suggest,0,0.675,openset_accept,pcb2/Bent,0,,412.4,,300,3542
+openset,31,pcb1,pcb1/Data/Images/Anomaly/017.JPG,pcb1/Melt,pcb4/Damage,0.7055,0.0262,0.7494,suggest,0,0.611,openset_accept,pcb4/Damage,0,,430.7,,300,2948
+openset,32,pcb2,pcb2/Data/Images/Anomaly/001.JPG,pcb2/Melt,pipe_fryum/Similar Colour Spot,0.6451,0.0309,0.6172,suggest,0,0.847,openset_accept,pipe_fryum/Similar Colour Spot,0,,422.6,,300,396
+openset,33,pcb2,pcb2/Data/Images/Anomaly/006.JPG,pcb2/Melt,-,0.0,0.0,0.0,silent,0,0.0,,-,0,,162.1,,300,188
+openset,34,pcb2,pcb2/Data/Images/Anomaly/010.JPG,pcb2/Melt,-,0.0,0.0,0.0,silent,0,0.0,,-,0,,157.3,,300,325
+openset,35,pcb2,pcb2/Data/Images/Anomaly/015.JPG,pcb2/Melt,pcb4/Damage,0.7401,0.0119,0.7818,suggest,0,0.74,openset_accept,pcb4/Damage,0,,433.5,,300,5018
+openset,36,pcb3,pcb3/Data/Images/Anomaly/020.JPG,pcb3/Melt,pcb4/Damage,0.7671,0.0137,0.8244,suggest,0,0.806,openset_accept,pcb4/Damage,0,,433.5,,300,3440
+openset,37,pcb3,pcb3/Data/Images/Anomaly/021.JPG,pcb3/Melt,pcb4/Damage,0.7105,0.01,0.7376,suggest,0,0.59,openset_accept,pcb4/Damage,0,,431.7,,300,1665
+openset,38,pcb3,pcb3/Data/Images/Anomaly/022.JPG,pcb3/Melt,pcb4/Damage,0.6881,0.0371,0.7003,suggest,0,0.612,openset_accept,pcb4/Damage,0,,434.0,,300,3383
+openset,39,pcb3,pcb3/Data/Images/Anomaly/023.JPG,pcb3/Melt,pcb4/Damage,0.7605,0.0164,0.8129,suggest,0,0.191,openset_accept,pcb4/Damage,0,,415.4,,300,3376
+openset,40,pcb4,pcb4/Data/Images/Anomaly/000.JPG,pcb4/Dirt,pcb4/Missing,0.6505,0.0008,0.6711,suggest,0,0.677,openset_accept,pcb4/Missing,0,,452.7,,300,29051
+openset,41,pcb4,pcb4/Data/Images/Anomaly/001.JPG,pcb4/Dirt,pcb4/Missing,0.6801,0.004,0.6925,suggest,0,0.561,openset_accept,pcb4/Missing,0,,437.3,,300,24730
+openset,42,pcb4,pcb4/Data/Images/Anomaly/002.JPG,pcb4/Dirt,pcb4/Missing,0.7023,0.0311,0.7108,suggest,0,0.79,openset_accept,pcb4/Missing,0,,426.1,,300,34450
+openset,43,pcb4,pcb4/Data/Images/Anomaly/003.JPG,pcb4/Dirt,pcb4/Missing,0.6794,0.0205,0.6829,suggest,0,0.086,openset_accept,pcb4/Missing,0,,538.8,,300,3775
+openset,44,pipe_fryum,pipe_fryum/Data/Images/Anomaly/045.JPG,pipe_fryum/Small Scratches,pipe_fryum/Stuck Together,0.7582,0.1372,0.8282,auto,0,0.024,openset_accept,pipe_fryum/Stuck Together,0,,434.2,,300,4168
+openset,45,pipe_fryum,pipe_fryum/Data/Images/Anomaly/046.JPG,pipe_fryum/Small Scratches,-,0.0,0.0,0.0,silent,0,0.0,,-,0,,162.1,,300,138
+openset,46,pipe_fryum,pipe_fryum/Data/Images/Anomaly/070.JPG,pipe_fryum/Small Scratches,pipe_fryum/Stuck Together,0.8207,0.2259,0.8699,auto,0,0.012,openset_accept,pipe_fryum/Stuck Together,0,,428.6,,300,1816
+openset,47,pipe_fryum,pipe_fryum/Data/Images/Anomaly/071.JPG,pipe_fryum/Small Scratches,pipe_fryum/Stuck Together,0.7651,0.1586,0.8143,auto,0,0.038,openset_accept,pipe_fryum/Stuck Together,0,,466.7,,300,5986

@@ -1,8 +1,8 @@
 ﻿# SnowLabel demo — start all three services, each in its own window.
 # Run:  powershell -ExecutionPolicy Bypass -File start_demo.ps1
 $ErrorActionPreference = "Stop"
-$py   = "$env:USERPROFILE\miniconda3\envs\snowlabel\python.exe"
-$ls   = "$env:USERPROFILE\miniconda3\envs\snowlabel\Scripts\label-studio.exe"
+$py   = "D:\conda\envs\snowlabel\python.exe"
+$ls   = "D:\conda\envs\snowlabel\Scripts\label-studio.exe"
 $root = $PSScriptRoot
 
 # 1) SnowLabel ML backend (:9090) — production stack: DINOv3-L + SAM2.1 + Milvus

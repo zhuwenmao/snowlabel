@@ -1,0 +1,5404 @@
+{
+  "dataset": {
+    "name": "VisA_20220922",
+    "source": "https://amazon-visual-anomaly.s3.us-west-2.amazonaws.com/VisA_20220922.tar",
+    "archive_bytes": 1929840640,
+    "license": "CC BY 4.0",
+    "objects": [
+      "candle",
+      "capsules",
+      "cashew",
+      "chewinggum",
+      "fryum",
+      "macaroni1",
+      "macaroni2",
+      "pcb1",
+      "pcb2",
+      "pcb3",
+      "pcb4",
+      "pipe_fryum"
+    ],
+    "accessed": "2026-08-05"
+  },
+  "protocol": {
+    "n_per_seen_class": 6,
+    "openset_per_object": 4,
+    "holdout_rule": "most frequent eligible defect class per object; ties by label",
+    "image_isolation": true,
+    "largest_component_per_class_per_image": true,
+    "min_component_area": 64
+  },
+  "inventory": {
+    "instances": 1395,
+    "classes": 71,
+    "class_counts": {
+      "candle/Chunk Of Wax Missing": 15,
+      "candle/Damaged Corner of Packaging": 24,
+      "candle/Different Colour Spot": 11,
+      "candle/Extra Wax in Candle": 10,
+      "candle/Foreign Particles on Candle": 15,
+      "candle/Wax Melted Out of the Candle": 13,
+      "candle/Weird Candle Wick": 11,
+      "capsules/Bubble": 46,
+      "capsules/Discolor": 15,
+      "capsules/Leak": 20,
+      "capsules/Misshape": 23,
+      "capsules/Scratch": 15,
+      "cashew/Burnt": 13,
+      "cashew/Corner or Edge Breakage": 17,
+      "cashew/Different Colour Spot": 11,
+      "cashew/Middle Breakage": 8,
+      "cashew/Same Colour Spot": 14,
+      "cashew/Small Holes": 21,
+      "cashew/Small Scratches": 16,
+      "cashew/Stuck Together": 6,
+      "chewinggum/Chunk of Gum Missing": 47,
+      "chewinggum/Corner Missing": 36,
+      "chewinggum/Scratches": 16,
+      "chewinggum/Similar Colour Spot": 25,
+      "chewinggum/Small Cracks": 28,
+      "fryum/Burnt": 9,
+      "fryum/Corner or Edge Breakage": 9,
+      "fryum/Different Colour Spot": 18,
+      "fryum/Fryum Stuck Together": 20,
+      "fryum/Middle Breakage": 21,
+      "fryum/Similar Colour Spot": 19,
+      "fryum/Small Scratches": 9,
+      "macaroni1/Chip Around Edge and Corner": 25,
+      "macaroni1/Different Colour Spot": 15,
+      "macaroni1/Middle Breakage": 10,
+      "macaroni1/Similar Colour Spot": 22,
+      "macaroni1/Small Cracks": 13,
+      "macaroni1/Small Scratches": 31,
+      "macaroni2/Breakage Down the Middle": 10,
+      "macaroni2/Colour Spot Similar to Object": 23,
+      "macaroni2/Different Colour Spot": 12,
+      "macaroni2/Small Chip Around Edge": 25,
+      "macaroni2/Small Cracks": 7,
+      "macaroni2/Small Scratches": 32,
+      "pcb1/Bent": 15,
+      "pcb1/Melt": 53,
+      "pcb1/Missing": 20,
+      "pcb1/Scratch": 19,
+      "pcb2/Bent": 15,
+      "pcb2/Melt": 55,
+      "pcb2/Missing": 19,
+      "pcb2/Scratch": 19,
+      "pcb3/Bent": 20,
+      "pcb3/Melt": 41,
+      "pcb3/Missing": 20,
+      "pcb3/Scratch": 25,
+      "pcb4/Burnt": 8,
+      "pcb4/Damage": 21,
+      "pcb4/Dirt": 40,
+      "pcb4/Extra": 29,
+      "pcb4/Missing": 33,
+      "pcb4/Scratch": 12,
+      "pcb4/Wrong Place": 13,
+      "pipe_fryum/Burnt": 15,
+      "pipe_fryum/Corner and Edge Breakage": 15,
+      "pipe_fryum/Different Colour Spot": 10,
+      "pipe_fryum/Middle Breakage": 10,
+      "pipe_fryum/Similar Colour Spot": 21,
+      "pipe_fryum/Small Cracks": 9,
+      "pipe_fryum/Small Scratches": 22,
+      "pipe_fryum/Stuck Together": 10
+    }
+  },
+  "seen": {
+    "classes": [
+      "candle/Chunk Of Wax Missing",
+      "candle/Different Colour Spot",
+      "candle/Extra Wax in Candle",
+      "candle/Foreign Particles on Candle",
+      "candle/Wax Melted Out of the Candle",
+      "candle/Weird Candle Wick",
+      "capsules/Discolor",
+      "capsules/Misshape",
+      "capsules/Scratch",
+      "cashew/Burnt",
+      "cashew/Corner or Edge Breakage",
+      "cashew/Different Colour Spot",
+      "cashew/Middle Breakage",
+      "cashew/Same Colour Spot",
+      "cashew/Small Scratches",
+      "cashew/Stuck Together",
+      "chewinggum/Corner Missing",
+      "chewinggum/Scratches",
+      "chewinggum/Similar Colour Spot",
+      "fryum/Burnt",
+      "fryum/Corner or Edge Breakage",
+      "fryum/Different Colour Spot",
+      "fryum/Fryum Stuck Together",
+      "fryum/Similar Colour Spot",
+      "fryum/Small Scratches",
+      "macaroni1/Chip Around Edge and Corner",
+      "macaroni1/Different Colour Spot",
+      "macaroni1/Similar Colour Spot",
+      "macaroni1/Small Cracks",
+      "macaroni2/Colour Spot Similar to Object",
+      "macaroni2/Different Colour Spot",
+      "macaroni2/Small Chip Around Edge",
+      "macaroni2/Small Cracks",
+      "pcb1/Bent",
+      "pcb1/Missing",
+      "pcb1/Scratch",
+      "pcb2/Bent",
+      "pcb2/Missing",
+      "pcb2/Scratch",
+      "pcb3/Bent",
+      "pcb3/Missing",
+      "pcb3/Scratch",
+      "pcb4/Damage",
+      "pcb4/Extra",
+      "pcb4/Missing",
+      "pipe_fryum/Burnt",
+      "pipe_fryum/Corner and Edge Breakage",
+      "pipe_fryum/Different Colour Spot",
+      "pipe_fryum/Similar Colour Spot",
+      "pipe_fryum/Stuck Together"
+    ],
+    "samples": 300,
+    "items": [
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/000.JPG",
+        "mask": "candle/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Chunk Of Wax Missing",
+        "label": "candle/Chunk Of Wax Missing",
+        "area": 1425,
+        "bbox": [
+          232,
+          272,
+          54,
+          60
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/040.JPG",
+        "mask": "candle/Data/Masks/Anomaly/040.png",
+        "class_id": 4,
+        "class_name": "Different Colour Spot",
+        "label": "candle/Different Colour Spot",
+        "area": 163,
+        "bbox": [
+          308,
+          675,
+          17,
+          13
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/060.JPG",
+        "mask": "candle/Data/Masks/Anomaly/060.png",
+        "class_id": 5,
+        "class_name": "Extra Wax in Candle",
+        "label": "candle/Extra Wax in Candle",
+        "area": 4459,
+        "bbox": [
+          362,
+          651,
+          78,
+          74
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/070.JPG",
+        "mask": "candle/Data/Masks/Anomaly/070.png",
+        "class_id": 6,
+        "class_name": "Foreign Particles on Candle",
+        "label": "candle/Foreign Particles on Candle",
+        "area": 467,
+        "bbox": [
+          754,
+          781,
+          47,
+          33
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/085.JPG",
+        "mask": "candle/Data/Masks/Anomaly/085.png",
+        "class_id": 7,
+        "class_name": "Wax Melted Out of the Candle",
+        "label": "candle/Wax Melted Out of the Candle",
+        "area": 7973,
+        "bbox": [
+          996,
+          903,
+          87,
+          145
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/030.JPG",
+        "mask": "candle/Data/Masks/Anomaly/030.png",
+        "class_id": 3,
+        "class_name": "Weird Candle Wick",
+        "label": "candle/Weird Candle Wick",
+        "area": 6755,
+        "bbox": [
+          913,
+          863,
+          42,
+          288
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/030.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/030.png",
+        "class_id": 2,
+        "class_name": "Discolor",
+        "label": "capsules/Discolor",
+        "area": 154,
+        "bbox": [
+          367,
+          197,
+          16,
+          14
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/056.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/056.png",
+        "class_id": 5,
+        "class_name": "Misshape",
+        "label": "capsules/Misshape",
+        "area": 20610,
+        "bbox": [
+          316,
+          268,
+          200,
+          187
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/085.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/085.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "capsules/Scratch",
+        "area": 6431,
+        "bbox": [
+          217,
+          746,
+          155,
+          139
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/000.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "cashew/Burnt",
+        "area": 1688,
+        "bbox": [
+          508,
+          748,
+          61,
+          41
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/002.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/002.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "cashew/Corner or Edge Breakage",
+        "area": 1358,
+        "bbox": [
+          804,
+          400,
+          157,
+          39
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/025.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/025.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "cashew/Different Colour Spot",
+        "area": 2073,
+        "bbox": [
+          794,
+          378,
+          68,
+          44
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/032.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/032.png",
+        "class_id": 4,
+        "class_name": "Middle Breakage",
+        "label": "cashew/Middle Breakage",
+        "area": 13537,
+        "bbox": [
+          456,
+          664,
+          187,
+          132
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/042.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/042.png",
+        "class_id": 8,
+        "class_name": "Same Colour Spot",
+        "label": "cashew/Same Colour Spot",
+        "area": 320,
+        "bbox": [
+          958,
+          518,
+          21,
+          22
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/078.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/078.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "cashew/Small Scratches",
+        "area": 362,
+        "bbox": [
+          832,
+          575,
+          60,
+          19
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/094.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/094.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "cashew/Stuck Together",
+        "area": 478781,
+        "bbox": [
+          211,
+          184,
+          967,
+          650
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/001.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/001.png",
+        "class_id": 2,
+        "class_name": "Corner Missing",
+        "label": "chewinggum/Corner Missing",
+        "area": 14516,
+        "bbox": [
+          340,
+          469,
+          222,
+          105
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/032.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/032.png",
+        "class_id": 3,
+        "class_name": "Scratches",
+        "label": "chewinggum/Scratches",
+        "area": 755,
+        "bbox": [
+          264,
+          592,
+          14,
+          185
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/075.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/075.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "chewinggum/Similar Colour Spot",
+        "area": 1949,
+        "bbox": [
+          323,
+          822,
+          59,
+          45
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/000.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "fryum/Burnt",
+        "area": 3663,
+        "bbox": [
+          715,
+          620,
+          60,
+          117
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/010.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/010.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "fryum/Corner or Edge Breakage",
+        "area": 3146,
+        "bbox": [
+          433,
+          338,
+          57,
+          227
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/020.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/020.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "fryum/Different Colour Spot",
+        "area": 345,
+        "bbox": [
+          608,
+          431,
+          35,
+          16
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/040.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/040.png",
+        "class_id": 4,
+        "class_name": "Fryum Stuck Together",
+        "label": "fryum/Fryum Stuck Together",
+        "area": 220642,
+        "bbox": [
+          453,
+          192,
+          565,
+          633
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/007.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/007.png",
+        "class_id": 6,
+        "class_name": "Similar Colour Spot",
+        "label": "fryum/Similar Colour Spot",
+        "area": 8793,
+        "bbox": [
+          822,
+          222,
+          229,
+          236
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/017.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/017.png",
+        "class_id": 7,
+        "class_name": "Small Scratches",
+        "label": "fryum/Small Scratches",
+        "area": 1137,
+        "bbox": [
+          1016,
+          448,
+          43,
+          59
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/000.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Chip Around Edge and Corner",
+        "label": "macaroni1/Chip Around Edge and Corner",
+        "area": 1020,
+        "bbox": [
+          873,
+          563,
+          49,
+          36
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/023.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/023.png",
+        "class_id": 2,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni1/Different Colour Spot",
+        "area": 305,
+        "bbox": [
+          410,
+          268,
+          18,
+          25
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/048.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/048.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "macaroni1/Similar Colour Spot",
+        "area": 496,
+        "bbox": [
+          1057,
+          683,
+          25,
+          29
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/022.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/022.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni1/Small Cracks",
+        "area": 155,
+        "bbox": [
+          420,
+          648,
+          42,
+          118
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/010.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/010.png",
+        "class_id": 2,
+        "class_name": "Colour Spot Similar to Object",
+        "label": "macaroni2/Colour Spot Similar to Object",
+        "area": 599,
+        "bbox": [
+          765,
+          366,
+          26,
+          31
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/030.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/030.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni2/Different Colour Spot",
+        "area": 257,
+        "bbox": [
+          375,
+          293,
+          20,
+          17
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/045.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/045.png",
+        "class_id": 4,
+        "class_name": "Small Chip Around Edge",
+        "label": "macaroni2/Small Chip Around Edge",
+        "area": 254,
+        "bbox": [
+          1004,
+          783,
+          27,
+          19
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/073.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/073.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni2/Small Cracks",
+        "area": 409,
+        "bbox": [
+          1098,
+          215,
+          165,
+          222
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/000.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb1/Bent",
+        "area": 1524,
+        "bbox": [
+          537,
+          755,
+          38,
+          102
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/040.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/040.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb1/Missing",
+        "area": 57992,
+        "bbox": [
+          828,
+          363,
+          274,
+          269
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/085.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/085.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb1/Scratch",
+        "area": 2281,
+        "bbox": [
+          495,
+          628,
+          190,
+          48
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/000.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb2/Bent",
+        "area": 1853,
+        "bbox": [
+          538,
+          232,
+          39,
+          142
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/040.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/040.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb2/Missing",
+        "area": 17049,
+        "bbox": [
+          620,
+          440,
+          201,
+          166
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/043.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/043.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb2/Scratch",
+        "area": 700,
+        "bbox": [
+          736,
+          396,
+          58,
+          29
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/000.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb3/Bent",
+        "area": 3187,
+        "bbox": [
+          332,
+          418,
+          125,
+          145
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/040.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/040.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb3/Missing",
+        "area": 3129,
+        "bbox": [
+          233,
+          551,
+          186,
+          18
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/046.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/046.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb3/Scratch",
+        "area": 194,
+        "bbox": [
+          963,
+          397,
+          48,
+          61
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/005.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/005.png",
+        "class_id": 4,
+        "class_name": "Damage",
+        "label": "pcb4/Damage",
+        "area": 3188,
+        "bbox": [
+          635,
+          688,
+          88,
+          51
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/007.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/007.png",
+        "class_id": 5,
+        "class_name": "Extra",
+        "label": "pcb4/Extra",
+        "area": 137,
+        "bbox": [
+          526,
+          503,
+          10,
+          23
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/017.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/017.png",
+        "class_id": 3,
+        "class_name": "Missing",
+        "label": "pcb4/Missing",
+        "area": 4386,
+        "bbox": [
+          691,
+          532,
+          48,
+          93
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/000.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "pipe_fryum/Burnt",
+        "area": 2781,
+        "bbox": [
+          781,
+          555,
+          47,
+          80
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/015.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/015.png",
+        "class_id": 2,
+        "class_name": "Corner and Edge Breakage",
+        "label": "pipe_fryum/Corner and Edge Breakage",
+        "area": 4228,
+        "bbox": [
+          832,
+          403,
+          51,
+          115
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/030.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/030.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "pipe_fryum/Different Colour Spot",
+        "area": 325,
+        "bbox": [
+          695,
+          581,
+          22,
+          21
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/050.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/050.png",
+        "class_id": 5,
+        "class_name": "Similar Colour Spot",
+        "label": "pipe_fryum/Similar Colour Spot",
+        "area": 724,
+        "bbox": [
+          471,
+          620,
+          32,
+          32
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/090.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/090.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "pipe_fryum/Stuck Together",
+        "area": 358090,
+        "bbox": [
+          170,
+          158,
+          815,
+          692
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/001.JPG",
+        "mask": "candle/Data/Masks/Anomaly/001.png",
+        "class_id": 1,
+        "class_name": "Chunk Of Wax Missing",
+        "label": "candle/Chunk Of Wax Missing",
+        "area": 3232,
+        "bbox": [
+          791,
+          923,
+          80,
+          60
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/041.JPG",
+        "mask": "candle/Data/Masks/Anomaly/041.png",
+        "class_id": 4,
+        "class_name": "Different Colour Spot",
+        "label": "candle/Different Colour Spot",
+        "area": 391,
+        "bbox": [
+          166,
+          886,
+          22,
+          24
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/061.JPG",
+        "mask": "candle/Data/Masks/Anomaly/061.png",
+        "class_id": 5,
+        "class_name": "Extra Wax in Candle",
+        "label": "candle/Extra Wax in Candle",
+        "area": 7928,
+        "bbox": [
+          1013,
+          932,
+          116,
+          101
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/071.JPG",
+        "mask": "candle/Data/Masks/Anomaly/071.png",
+        "class_id": 6,
+        "class_name": "Foreign Particles on Candle",
+        "label": "candle/Foreign Particles on Candle",
+        "area": 352,
+        "bbox": [
+          1070,
+          261,
+          33,
+          28
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/086.JPG",
+        "mask": "candle/Data/Masks/Anomaly/086.png",
+        "class_id": 7,
+        "class_name": "Wax Melted Out of the Candle",
+        "label": "candle/Wax Melted Out of the Candle",
+        "area": 10835,
+        "bbox": [
+          800,
+          103,
+          101,
+          157
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/031.JPG",
+        "mask": "candle/Data/Masks/Anomaly/031.png",
+        "class_id": 3,
+        "class_name": "Weird Candle Wick",
+        "label": "candle/Weird Candle Wick",
+        "area": 2366,
+        "bbox": [
+          336,
+          864,
+          53,
+          123
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/031.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/031.png",
+        "class_id": 2,
+        "class_name": "Discolor",
+        "label": "capsules/Discolor",
+        "area": 123,
+        "bbox": [
+          925,
+          612,
+          14,
+          11
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/057.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/057.png",
+        "class_id": 5,
+        "class_name": "Misshape",
+        "label": "capsules/Misshape",
+        "area": 22835,
+        "bbox": [
+          325,
+          142,
+          164,
+          222
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/086.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/086.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "capsules/Scratch",
+        "area": 595,
+        "bbox": [
+          230,
+          214,
+          18,
+          52
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/001.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/001.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "cashew/Burnt",
+        "area": 1690,
+        "bbox": [
+          567,
+          751,
+          91,
+          37
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/012.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/012.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "cashew/Corner or Edge Breakage",
+        "area": 5157,
+        "bbox": [
+          932,
+          600,
+          86,
+          105
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/026.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/026.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "cashew/Different Colour Spot",
+        "area": 950,
+        "bbox": [
+          621,
+          551,
+          39,
+          41
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/033.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/033.png",
+        "class_id": 4,
+        "class_name": "Middle Breakage",
+        "label": "cashew/Middle Breakage",
+        "area": 12478,
+        "bbox": [
+          564,
+          663,
+          185,
+          139
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/044.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/044.png",
+        "class_id": 8,
+        "class_name": "Same Colour Spot",
+        "label": "cashew/Same Colour Spot",
+        "area": 1041,
+        "bbox": [
+          818,
+          667,
+          46,
+          44
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/079.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/079.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "cashew/Small Scratches",
+        "area": 2236,
+        "bbox": [
+          707,
+          674,
+          233,
+          76
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/095.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/095.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "cashew/Stuck Together",
+        "area": 342751,
+        "bbox": [
+          283,
+          221,
+          884,
+          661
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/003.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/003.png",
+        "class_id": 2,
+        "class_name": "Corner Missing",
+        "label": "chewinggum/Corner Missing",
+        "area": 7089,
+        "bbox": [
+          590,
+          773,
+          129,
+          87
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/065.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/065.png",
+        "class_id": 3,
+        "class_name": "Scratches",
+        "label": "chewinggum/Scratches",
+        "area": 2248,
+        "bbox": [
+          577,
+          542,
+          159,
+          167
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/076.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/076.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "chewinggum/Similar Colour Spot",
+        "area": 4491,
+        "bbox": [
+          415,
+          588,
+          84,
+          74
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/001.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/001.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "fryum/Burnt",
+        "area": 36873,
+        "bbox": [
+          620,
+          465,
+          330,
+          245
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/011.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/011.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "fryum/Corner or Edge Breakage",
+        "area": 3963,
+        "bbox": [
+          467,
+          504,
+          77,
+          78
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/021.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/021.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "fryum/Different Colour Spot",
+        "area": 635,
+        "bbox": [
+          477,
+          562,
+          26,
+          46
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/041.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/041.png",
+        "class_id": 4,
+        "class_name": "Fryum Stuck Together",
+        "label": "fryum/Fryum Stuck Together",
+        "area": 302786,
+        "bbox": [
+          367,
+          170,
+          691,
+          576
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/022.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/022.png",
+        "class_id": 6,
+        "class_name": "Similar Colour Spot",
+        "label": "fryum/Similar Colour Spot",
+        "area": 152,
+        "bbox": [
+          721,
+          400,
+          20,
+          15
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/081.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/081.png",
+        "class_id": 7,
+        "class_name": "Small Scratches",
+        "label": "fryum/Small Scratches",
+        "area": 113,
+        "bbox": [
+          722,
+          683,
+          24,
+          44
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/001.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/001.png",
+        "class_id": 1,
+        "class_name": "Chip Around Edge and Corner",
+        "label": "macaroni1/Chip Around Edge and Corner",
+        "area": 765,
+        "bbox": [
+          359,
+          566,
+          38,
+          32
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/024.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/024.png",
+        "class_id": 2,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni1/Different Colour Spot",
+        "area": 471,
+        "bbox": [
+          1013,
+          265,
+          25,
+          26
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/049.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/049.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "macaroni1/Similar Colour Spot",
+        "area": 472,
+        "bbox": [
+          363,
+          645,
+          21,
+          32
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/071.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/071.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni1/Small Cracks",
+        "area": 191,
+        "bbox": [
+          418,
+          692,
+          100,
+          49
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/011.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/011.png",
+        "class_id": 2,
+        "class_name": "Colour Spot Similar to Object",
+        "label": "macaroni2/Colour Spot Similar to Object",
+        "area": 823,
+        "bbox": [
+          178,
+          315,
+          48,
+          23
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/031.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/031.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni2/Different Colour Spot",
+        "area": 301,
+        "bbox": [
+          1083,
+          580,
+          19,
+          23
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/047.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/047.png",
+        "class_id": 4,
+        "class_name": "Small Chip Around Edge",
+        "label": "macaroni2/Small Chip Around Edge",
+        "area": 788,
+        "bbox": [
+          692,
+          424,
+          41,
+          45
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/074.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/074.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni2/Small Cracks",
+        "area": 216,
+        "bbox": [
+          423,
+          667,
+          57,
+          92
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/001.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/001.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb1/Bent",
+        "area": 1687,
+        "bbox": [
+          646,
+          752,
+          41,
+          131
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/041.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/041.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb1/Missing",
+        "area": 95837,
+        "bbox": [
+          233,
+          358,
+          350,
+          348
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/086.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/086.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb1/Scratch",
+        "area": 4149,
+        "bbox": [
+          543,
+          392,
+          164,
+          192
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/002.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/002.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb2/Bent",
+        "area": 2760,
+        "bbox": [
+          766,
+          250,
+          135,
+          121
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/041.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/041.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb2/Missing",
+        "area": 26320,
+        "bbox": [
+          166,
+          440,
+          204,
+          166
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/048.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/048.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb2/Scratch",
+        "area": 372,
+        "bbox": [
+          685,
+          598,
+          9,
+          81
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/001.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/001.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb3/Bent",
+        "area": 24949,
+        "bbox": [
+          922,
+          539,
+          156,
+          251
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/041.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/041.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb3/Missing",
+        "area": 1197,
+        "bbox": [
+          654,
+          523,
+          30,
+          43
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/048.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/048.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb3/Scratch",
+        "area": 125,
+        "bbox": [
+          585,
+          358,
+          18,
+          24
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/011.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/011.png",
+        "class_id": 4,
+        "class_name": "Damage",
+        "label": "pcb4/Damage",
+        "area": 10161,
+        "bbox": [
+          937,
+          484,
+          116,
+          125
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/024.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/024.png",
+        "class_id": 5,
+        "class_name": "Extra",
+        "label": "pcb4/Extra",
+        "area": 2132,
+        "bbox": [
+          618,
+          427,
+          72,
+          43
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/045.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/045.png",
+        "class_id": 3,
+        "class_name": "Missing",
+        "label": "pcb4/Missing",
+        "area": 41341,
+        "bbox": [
+          323,
+          352,
+          191,
+          237
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/001.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/001.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "pipe_fryum/Burnt",
+        "area": 1315,
+        "bbox": [
+          737,
+          726,
+          56,
+          36
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/016.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/016.png",
+        "class_id": 2,
+        "class_name": "Corner and Edge Breakage",
+        "label": "pipe_fryum/Corner and Edge Breakage",
+        "area": 1539,
+        "bbox": [
+          880,
+          581,
+          33,
+          71
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/031.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/031.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "pipe_fryum/Different Colour Spot",
+        "area": 324,
+        "bbox": [
+          608,
+          547,
+          26,
+          21
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/051.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/051.png",
+        "class_id": 5,
+        "class_name": "Similar Colour Spot",
+        "label": "pipe_fryum/Similar Colour Spot",
+        "area": 552,
+        "bbox": [
+          728,
+          661,
+          30,
+          24
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/091.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/091.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "pipe_fryum/Stuck Together",
+        "area": 388747,
+        "bbox": [
+          209,
+          202,
+          793,
+          763
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/002.JPG",
+        "mask": "candle/Data/Masks/Anomaly/002.png",
+        "class_id": 1,
+        "class_name": "Chunk Of Wax Missing",
+        "label": "candle/Chunk Of Wax Missing",
+        "area": 3225,
+        "bbox": [
+          249,
+          878,
+          85,
+          86
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/042.JPG",
+        "mask": "candle/Data/Masks/Anomaly/042.png",
+        "class_id": 4,
+        "class_name": "Different Colour Spot",
+        "label": "candle/Different Colour Spot",
+        "area": 187,
+        "bbox": [
+          830,
+          269,
+          16,
+          17
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/062.JPG",
+        "mask": "candle/Data/Masks/Anomaly/062.png",
+        "class_id": 5,
+        "class_name": "Extra Wax in Candle",
+        "label": "candle/Extra Wax in Candle",
+        "area": 5799,
+        "bbox": [
+          924,
+          654,
+          77,
+          136
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/072.JPG",
+        "mask": "candle/Data/Masks/Anomaly/072.png",
+        "class_id": 6,
+        "class_name": "Foreign Particles on Candle",
+        "label": "candle/Foreign Particles on Candle",
+        "area": 231,
+        "bbox": [
+          460,
+          359,
+          17,
+          30
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/088.JPG",
+        "mask": "candle/Data/Masks/Anomaly/088.png",
+        "class_id": 7,
+        "class_name": "Wax Melted Out of the Candle",
+        "label": "candle/Wax Melted Out of the Candle",
+        "area": 12626,
+        "bbox": [
+          186,
+          663,
+          189,
+          132
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/032.JPG",
+        "mask": "candle/Data/Masks/Anomaly/032.png",
+        "class_id": 3,
+        "class_name": "Weird Candle Wick",
+        "label": "candle/Weird Candle Wick",
+        "area": 930,
+        "bbox": [
+          330,
+          865,
+          38,
+          43
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/032.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/032.png",
+        "class_id": 2,
+        "class_name": "Discolor",
+        "label": "capsules/Discolor",
+        "area": 229,
+        "bbox": [
+          522,
+          534,
+          17,
+          20
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/059.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/059.png",
+        "class_id": 5,
+        "class_name": "Misshape",
+        "label": "capsules/Misshape",
+        "area": 21828,
+        "bbox": [
+          1112,
+          114,
+          121,
+          235
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/087.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/087.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "capsules/Scratch",
+        "area": 107,
+        "bbox": [
+          671,
+          407,
+          15,
+          43
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/003.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/003.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "cashew/Burnt",
+        "area": 2203,
+        "bbox": [
+          446,
+          678,
+          62,
+          72
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/013.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/013.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "cashew/Corner or Edge Breakage",
+        "area": 3474,
+        "bbox": [
+          761,
+          826,
+          116,
+          51
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/027.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/027.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "cashew/Different Colour Spot",
+        "area": 1528,
+        "bbox": [
+          743,
+          732,
+          56,
+          39
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/034.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/034.png",
+        "class_id": 4,
+        "class_name": "Middle Breakage",
+        "label": "cashew/Middle Breakage",
+        "area": 9805,
+        "bbox": [
+          550,
+          518,
+          129,
+          117
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/045.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/045.png",
+        "class_id": 8,
+        "class_name": "Same Colour Spot",
+        "label": "cashew/Same Colour Spot",
+        "area": 955,
+        "bbox": [
+          428,
+          419,
+          31,
+          53
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/080.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/080.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "cashew/Small Scratches",
+        "area": 1993,
+        "bbox": [
+          814,
+          615,
+          113,
+          41
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/096.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/096.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "cashew/Stuck Together",
+        "area": 333751,
+        "bbox": [
+          245,
+          280,
+          723,
+          667
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/005.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/005.png",
+        "class_id": 2,
+        "class_name": "Corner Missing",
+        "label": "chewinggum/Corner Missing",
+        "area": 19964,
+        "bbox": [
+          518,
+          417,
+          190,
+          145
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/066.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/066.png",
+        "class_id": 3,
+        "class_name": "Scratches",
+        "label": "chewinggum/Scratches",
+        "area": 2370,
+        "bbox": [
+          375,
+          646,
+          320,
+          23
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/077.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/077.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "chewinggum/Similar Colour Spot",
+        "area": 3724,
+        "bbox": [
+          758,
+          687,
+          77,
+          74
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/002.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/002.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "fryum/Burnt",
+        "area": 14699,
+        "bbox": [
+          575,
+          426,
+          136,
+          259
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/012.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/012.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "fryum/Corner or Edge Breakage",
+        "area": 2120,
+        "bbox": [
+          494,
+          417,
+          67,
+          105
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/023.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/023.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "fryum/Different Colour Spot",
+        "area": 404,
+        "bbox": [
+          676,
+          452,
+          32,
+          25
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/042.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/042.png",
+        "class_id": 4,
+        "class_name": "Fryum Stuck Together",
+        "label": "fryum/Fryum Stuck Together",
+        "area": 237362,
+        "bbox": [
+          484,
+          267,
+          569,
+          641
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/028.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/028.png",
+        "class_id": 6,
+        "class_name": "Similar Colour Spot",
+        "label": "fryum/Similar Colour Spot",
+        "area": 95,
+        "bbox": [
+          907,
+          292,
+          9,
+          15
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/090.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/090.png",
+        "class_id": 7,
+        "class_name": "Small Scratches",
+        "label": "fryum/Small Scratches",
+        "area": 435,
+        "bbox": [
+          478,
+          568,
+          74,
+          36
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/002.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/002.png",
+        "class_id": 1,
+        "class_name": "Chip Around Edge and Corner",
+        "label": "macaroni1/Chip Around Edge and Corner",
+        "area": 1473,
+        "bbox": [
+          353,
+          164,
+          39,
+          64
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/025.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/025.png",
+        "class_id": 2,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni1/Different Colour Spot",
+        "area": 500,
+        "bbox": [
+          1054,
+          346,
+          34,
+          21
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/050.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/050.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "macaroni1/Similar Colour Spot",
+        "area": 812,
+        "bbox": [
+          366,
+          632,
+          35,
+          37
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/072.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/072.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni1/Small Cracks",
+        "area": 512,
+        "bbox": [
+          463,
+          628,
+          204,
+          144
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/012.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/012.png",
+        "class_id": 2,
+        "class_name": "Colour Spot Similar to Object",
+        "label": "macaroni2/Colour Spot Similar to Object",
+        "area": 429,
+        "bbox": [
+          849,
+          350,
+          23,
+          23
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/032.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/032.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni2/Different Colour Spot",
+        "area": 209,
+        "bbox": [
+          1115,
+          204,
+          16,
+          17
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/048.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/048.png",
+        "class_id": 4,
+        "class_name": "Small Chip Around Edge",
+        "label": "macaroni2/Small Chip Around Edge",
+        "area": 2810,
+        "bbox": [
+          768,
+          628,
+          87,
+          52
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/075.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/075.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni2/Small Cracks",
+        "area": 574,
+        "bbox": [
+          731,
+          163,
+          182,
+          32
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/002.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/002.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb1/Bent",
+        "area": 1702,
+        "bbox": [
+          634,
+          755,
+          98,
+          88
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/042.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/042.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb1/Missing",
+        "area": 15523,
+        "bbox": [
+          570,
+          363,
+          220,
+          72
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/087.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/087.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb1/Scratch",
+        "area": 1768,
+        "bbox": [
+          718,
+          629,
+          123,
+          128
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/003.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/003.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb2/Bent",
+        "area": 1837,
+        "bbox": [
+          550,
+          249,
+          41,
+          121
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/042.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/042.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb2/Missing",
+        "area": 27607,
+        "bbox": [
+          168,
+          429,
+          163,
+          226
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/085.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/085.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb2/Scratch",
+        "area": 3598,
+        "bbox": [
+          369,
+          644,
+          237,
+          74
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/002.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/002.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb3/Bent",
+        "area": 3017,
+        "bbox": [
+          427,
+          450,
+          197,
+          32
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/042.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/042.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb3/Missing",
+        "area": 1539,
+        "bbox": [
+          892,
+          606,
+          47,
+          35
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/051.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/051.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb3/Scratch",
+        "area": 244,
+        "bbox": [
+          368,
+          550,
+          29,
+          22
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/012.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/012.png",
+        "class_id": 4,
+        "class_name": "Damage",
+        "label": "pcb4/Damage",
+        "area": 5298,
+        "bbox": [
+          312,
+          395,
+          95,
+          76
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/025.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/025.png",
+        "class_id": 5,
+        "class_name": "Extra",
+        "label": "pcb4/Extra",
+        "area": 8560,
+        "bbox": [
+          456,
+          266,
+          146,
+          86
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/046.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/046.png",
+        "class_id": 3,
+        "class_name": "Missing",
+        "label": "pcb4/Missing",
+        "area": 1247,
+        "bbox": [
+          660,
+          717,
+          50,
+          28
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/002.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/002.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "pipe_fryum/Burnt",
+        "area": 2641,
+        "bbox": [
+          421,
+          514,
+          56,
+          67
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/017.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/017.png",
+        "class_id": 2,
+        "class_name": "Corner and Edge Breakage",
+        "label": "pipe_fryum/Corner and Edge Breakage",
+        "area": 771,
+        "bbox": [
+          386,
+          480,
+          13,
+          85
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/032.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/032.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "pipe_fryum/Different Colour Spot",
+        "area": 332,
+        "bbox": [
+          788,
+          502,
+          26,
+          17
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/052.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/052.png",
+        "class_id": 5,
+        "class_name": "Similar Colour Spot",
+        "label": "pipe_fryum/Similar Colour Spot",
+        "area": 775,
+        "bbox": [
+          666,
+          555,
+          32,
+          34
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/092.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/092.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "pipe_fryum/Stuck Together",
+        "area": 231035,
+        "bbox": [
+          356,
+          289,
+          561,
+          476
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/003.JPG",
+        "mask": "candle/Data/Masks/Anomaly/003.png",
+        "class_id": 1,
+        "class_name": "Chunk Of Wax Missing",
+        "label": "candle/Chunk Of Wax Missing",
+        "area": 1839,
+        "bbox": [
+          335,
+          250,
+          52,
+          61
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/043.JPG",
+        "mask": "candle/Data/Masks/Anomaly/043.png",
+        "class_id": 4,
+        "class_name": "Different Colour Spot",
+        "label": "candle/Different Colour Spot",
+        "area": 111,
+        "bbox": [
+          1038,
+          799,
+          13,
+          11
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/063.JPG",
+        "mask": "candle/Data/Masks/Anomaly/063.png",
+        "class_id": 5,
+        "class_name": "Extra Wax in Candle",
+        "label": "candle/Extra Wax in Candle",
+        "area": 10834,
+        "bbox": [
+          762,
+          132,
+          175,
+          109
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/073.JPG",
+        "mask": "candle/Data/Masks/Anomaly/073.png",
+        "class_id": 6,
+        "class_name": "Foreign Particles on Candle",
+        "label": "candle/Foreign Particles on Candle",
+        "area": 130,
+        "bbox": [
+          266,
+          811,
+          24,
+          24
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/089.JPG",
+        "mask": "candle/Data/Masks/Anomaly/089.png",
+        "class_id": 7,
+        "class_name": "Wax Melted Out of the Candle",
+        "label": "candle/Wax Melted Out of the Candle",
+        "area": 8359,
+        "bbox": [
+          820,
+          386,
+          213,
+          103
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/033.JPG",
+        "mask": "candle/Data/Masks/Anomaly/033.png",
+        "class_id": 3,
+        "class_name": "Weird Candle Wick",
+        "label": "candle/Weird Candle Wick",
+        "area": 2400,
+        "bbox": [
+          350,
+          310,
+          24,
+          124
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/033.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/033.png",
+        "class_id": 2,
+        "class_name": "Discolor",
+        "label": "capsules/Discolor",
+        "area": 173,
+        "bbox": [
+          796,
+          613,
+          16,
+          14
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/065.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/065.png",
+        "class_id": 5,
+        "class_name": "Misshape",
+        "label": "capsules/Misshape",
+        "area": 20857,
+        "bbox": [
+          443,
+          737,
+          237,
+          110
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/088.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/088.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "capsules/Scratch",
+        "area": 718,
+        "bbox": [
+          476,
+          377,
+          39,
+          55
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/004.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/004.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "cashew/Burnt",
+        "area": 2330,
+        "bbox": [
+          421,
+          688,
+          71,
+          66
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/014.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/014.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "cashew/Corner or Edge Breakage",
+        "area": 3375,
+        "bbox": [
+          890,
+          647,
+          62,
+          110
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/028.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/028.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "cashew/Different Colour Spot",
+        "area": 1054,
+        "bbox": [
+          937,
+          365,
+          38,
+          55
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/035.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/035.png",
+        "class_id": 4,
+        "class_name": "Middle Breakage",
+        "label": "cashew/Middle Breakage",
+        "area": 10039,
+        "bbox": [
+          675,
+          615,
+          142,
+          110
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/046.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/046.png",
+        "class_id": 8,
+        "class_name": "Same Colour Spot",
+        "label": "cashew/Same Colour Spot",
+        "area": 2798,
+        "bbox": [
+          404,
+          618,
+          84,
+          68
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/081.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/081.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "cashew/Small Scratches",
+        "area": 2321,
+        "bbox": [
+          476,
+          545,
+          49,
+          159
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/097.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/097.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "cashew/Stuck Together",
+        "area": 406113,
+        "bbox": [
+          378,
+          58,
+          665,
+          909
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/008.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/008.png",
+        "class_id": 2,
+        "class_name": "Corner Missing",
+        "label": "chewinggum/Corner Missing",
+        "area": 19494,
+        "bbox": [
+          250,
+          751,
+          349,
+          115
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/067.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/067.png",
+        "class_id": 3,
+        "class_name": "Scratches",
+        "label": "chewinggum/Scratches",
+        "area": 693,
+        "bbox": [
+          644,
+          599,
+          44,
+          124
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/078.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/078.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "chewinggum/Similar Colour Spot",
+        "area": 3550,
+        "bbox": [
+          403,
+          541,
+          77,
+          60
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/003.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/003.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "fryum/Burnt",
+        "area": 5438,
+        "bbox": [
+          868,
+          439,
+          77,
+          95
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/013.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/013.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "fryum/Corner or Edge Breakage",
+        "area": 729,
+        "bbox": [
+          835,
+          736,
+          83,
+          57
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/024.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/024.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "fryum/Different Colour Spot",
+        "area": 258,
+        "bbox": [
+          705,
+          468,
+          14,
+          28
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/043.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/043.png",
+        "class_id": 4,
+        "class_name": "Fryum Stuck Together",
+        "label": "fryum/Fryum Stuck Together",
+        "area": 212429,
+        "bbox": [
+          515,
+          222,
+          610,
+          610
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/035.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/035.png",
+        "class_id": 6,
+        "class_name": "Similar Colour Spot",
+        "label": "fryum/Similar Colour Spot",
+        "area": 373,
+        "bbox": [
+          565,
+          333,
+          27,
+          20
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/091.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/091.png",
+        "class_id": 7,
+        "class_name": "Small Scratches",
+        "label": "fryum/Small Scratches",
+        "area": 584,
+        "bbox": [
+          504,
+          592,
+          61,
+          40
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/003.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/003.png",
+        "class_id": 1,
+        "class_name": "Chip Around Edge and Corner",
+        "label": "macaroni1/Chip Around Edge and Corner",
+        "area": 518,
+        "bbox": [
+          1104,
+          587,
+          41,
+          29
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/026.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/026.png",
+        "class_id": 2,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni1/Different Colour Spot",
+        "area": 309,
+        "bbox": [
+          439,
+          681,
+          28,
+          20
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/051.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/051.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "macaroni1/Similar Colour Spot",
+        "area": 1024,
+        "bbox": [
+          887,
+          231,
+          43,
+          42
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/074.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/074.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni1/Small Cracks",
+        "area": 428,
+        "bbox": [
+          436,
+          626,
+          62,
+          154
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/013.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/013.png",
+        "class_id": 2,
+        "class_name": "Colour Spot Similar to Object",
+        "label": "macaroni2/Colour Spot Similar to Object",
+        "area": 533,
+        "bbox": [
+          691,
+          460,
+          25,
+          32
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/033.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/033.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni2/Different Colour Spot",
+        "area": 263,
+        "bbox": [
+          315,
+          284,
+          20,
+          20
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/049.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/049.png",
+        "class_id": 4,
+        "class_name": "Small Chip Around Edge",
+        "label": "macaroni2/Small Chip Around Edge",
+        "area": 2614,
+        "bbox": [
+          302,
+          337,
+          53,
+          79
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/076.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/076.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni2/Small Cracks",
+        "area": 127,
+        "bbox": [
+          206,
+          312,
+          90,
+          66
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/003.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/003.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb1/Bent",
+        "area": 1618,
+        "bbox": [
+          797,
+          753,
+          102,
+          79
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/043.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/043.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb1/Missing",
+        "area": 95789,
+        "bbox": [
+          783,
+          361,
+          351,
+          349
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/088.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/088.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb1/Scratch",
+        "area": 1567,
+        "bbox": [
+          622,
+          446,
+          160,
+          98
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/004.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/004.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb2/Bent",
+        "area": 4398,
+        "bbox": [
+          684,
+          205,
+          152,
+          157
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/044.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/044.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb2/Missing",
+        "area": 29046,
+        "bbox": [
+          200,
+          424,
+          164,
+          226
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/086.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/086.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb2/Scratch",
+        "area": 4333,
+        "bbox": [
+          861,
+          327,
+          223,
+          107
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/003.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/003.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb3/Bent",
+        "area": 3674,
+        "bbox": [
+          425,
+          398,
+          117,
+          166
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/043.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/043.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb3/Missing",
+        "area": 19638,
+        "bbox": [
+          258,
+          352,
+          243,
+          118
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/080.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/080.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb3/Scratch",
+        "area": 5308,
+        "bbox": [
+          434,
+          331,
+          61,
+          245
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/015.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/015.png",
+        "class_id": 4,
+        "class_name": "Damage",
+        "label": "pcb4/Damage",
+        "area": 5640,
+        "bbox": [
+          341,
+          391,
+          98,
+          91
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/026.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/026.png",
+        "class_id": 5,
+        "class_name": "Extra",
+        "label": "pcb4/Extra",
+        "area": 6743,
+        "bbox": [
+          508,
+          661,
+          92,
+          97
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/048.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/048.png",
+        "class_id": 3,
+        "class_name": "Missing",
+        "label": "pcb4/Missing",
+        "area": 4999,
+        "bbox": [
+          682,
+          290,
+          51,
+          99
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/003.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/003.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "pipe_fryum/Burnt",
+        "area": 3392,
+        "bbox": [
+          636,
+          626,
+          102,
+          55
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/018.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/018.png",
+        "class_id": 2,
+        "class_name": "Corner and Edge Breakage",
+        "label": "pipe_fryum/Corner and Edge Breakage",
+        "area": 1333,
+        "bbox": [
+          368,
+          494,
+          26,
+          87
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/033.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/033.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "pipe_fryum/Different Colour Spot",
+        "area": 367,
+        "bbox": [
+          852,
+          521,
+          21,
+          29
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/053.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/053.png",
+        "class_id": 5,
+        "class_name": "Similar Colour Spot",
+        "label": "pipe_fryum/Similar Colour Spot",
+        "area": 712,
+        "bbox": [
+          852,
+          696,
+          31,
+          30
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/093.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/093.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "pipe_fryum/Stuck Together",
+        "area": 189936,
+        "bbox": [
+          319,
+          361,
+          695,
+          387
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/004.JPG",
+        "mask": "candle/Data/Masks/Anomaly/004.png",
+        "class_id": 1,
+        "class_name": "Chunk Of Wax Missing",
+        "label": "candle/Chunk Of Wax Missing",
+        "area": 4993,
+        "bbox": [
+          990,
+          272,
+          83,
+          107
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/045.JPG",
+        "mask": "candle/Data/Masks/Anomaly/045.png",
+        "class_id": 4,
+        "class_name": "Different Colour Spot",
+        "label": "candle/Different Colour Spot",
+        "area": 70,
+        "bbox": [
+          957,
+          217,
+          13,
+          8
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/064.JPG",
+        "mask": "candle/Data/Masks/Anomaly/064.png",
+        "class_id": 5,
+        "class_name": "Extra Wax in Candle",
+        "label": "candle/Extra Wax in Candle",
+        "area": 6866,
+        "bbox": [
+          399,
+          656,
+          87,
+          149
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/074.JPG",
+        "mask": "candle/Data/Masks/Anomaly/074.png",
+        "class_id": 6,
+        "class_name": "Foreign Particles on Candle",
+        "label": "candle/Foreign Particles on Candle",
+        "area": 863,
+        "bbox": [
+          292,
+          217,
+          27,
+          61
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/091.JPG",
+        "mask": "candle/Data/Masks/Anomaly/091.png",
+        "class_id": 7,
+        "class_name": "Wax Melted Out of the Candle",
+        "label": "candle/Wax Melted Out of the Candle",
+        "area": 21517,
+        "bbox": [
+          257,
+          861,
+          174,
+          199
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/035.JPG",
+        "mask": "candle/Data/Masks/Anomaly/035.png",
+        "class_id": 3,
+        "class_name": "Weird Candle Wick",
+        "label": "candle/Weird Candle Wick",
+        "area": 2230,
+        "bbox": [
+          320,
+          975,
+          27,
+          96
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/034.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/034.png",
+        "class_id": 2,
+        "class_name": "Discolor",
+        "label": "capsules/Discolor",
+        "area": 130,
+        "bbox": [
+          638,
+          637,
+          15,
+          11
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/066.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/066.png",
+        "class_id": 5,
+        "class_name": "Misshape",
+        "label": "capsules/Misshape",
+        "area": 19848,
+        "bbox": [
+          221,
+          40,
+          205,
+          181
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/089.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/089.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "capsules/Scratch",
+        "area": 417,
+        "bbox": [
+          692,
+          555,
+          37,
+          44
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/005.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/005.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "cashew/Burnt",
+        "area": 2823,
+        "bbox": [
+          803,
+          421,
+          53,
+          91
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/015.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/015.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "cashew/Corner or Edge Breakage",
+        "area": 2461,
+        "bbox": [
+          800,
+          340,
+          83,
+          41
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/029.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/029.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "cashew/Different Colour Spot",
+        "area": 1524,
+        "bbox": [
+          412,
+          460,
+          62,
+          33
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/036.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/036.png",
+        "class_id": 4,
+        "class_name": "Middle Breakage",
+        "label": "cashew/Middle Breakage",
+        "area": 14623,
+        "bbox": [
+          438,
+          498,
+          147,
+          147
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/047.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/047.png",
+        "class_id": 8,
+        "class_name": "Same Colour Spot",
+        "label": "cashew/Same Colour Spot",
+        "area": 2996,
+        "bbox": [
+          678,
+          759,
+          66,
+          59
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/082.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/082.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "cashew/Small Scratches",
+        "area": 3006,
+        "bbox": [
+          564,
+          600,
+          81,
+          172
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/098.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/098.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "cashew/Stuck Together",
+        "area": 328457,
+        "bbox": [
+          403,
+          196,
+          671,
+          706
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/025.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/025.png",
+        "class_id": 2,
+        "class_name": "Corner Missing",
+        "label": "chewinggum/Corner Missing",
+        "area": 4010,
+        "bbox": [
+          901,
+          759,
+          99,
+          93
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/068.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/068.png",
+        "class_id": 3,
+        "class_name": "Scratches",
+        "label": "chewinggum/Scratches",
+        "area": 814,
+        "bbox": [
+          929,
+          589,
+          71,
+          121
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/079.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/079.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "chewinggum/Similar Colour Spot",
+        "area": 5034,
+        "bbox": [
+          789,
+          481,
+          91,
+          74
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/004.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/004.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "fryum/Burnt",
+        "area": 2469,
+        "bbox": [
+          771,
+          613,
+          68,
+          75
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/014.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/014.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "fryum/Corner or Edge Breakage",
+        "area": 3958,
+        "bbox": [
+          995,
+          424,
+          70,
+          147
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/025.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/025.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "fryum/Different Colour Spot",
+        "area": 313,
+        "bbox": [
+          624,
+          454,
+          38,
+          43
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/044.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/044.png",
+        "class_id": 4,
+        "class_name": "Fryum Stuck Together",
+        "label": "fryum/Fryum Stuck Together",
+        "area": 289857,
+        "bbox": [
+          128,
+          79,
+          903,
+          714
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/037.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/037.png",
+        "class_id": 6,
+        "class_name": "Similar Colour Spot",
+        "label": "fryum/Similar Colour Spot",
+        "area": 87,
+        "bbox": [
+          671,
+          534,
+          13,
+          14
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/092.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/092.png",
+        "class_id": 7,
+        "class_name": "Small Scratches",
+        "label": "fryum/Small Scratches",
+        "area": 400,
+        "bbox": [
+          708,
+          267,
+          35,
+          36
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/004.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/004.png",
+        "class_id": 1,
+        "class_name": "Chip Around Edge and Corner",
+        "label": "macaroni1/Chip Around Edge and Corner",
+        "area": 303,
+        "bbox": [
+          1153,
+          162,
+          22,
+          25
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/027.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/027.png",
+        "class_id": 2,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni1/Different Colour Spot",
+        "area": 487,
+        "bbox": [
+          554,
+          345,
+          26,
+          28
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/052.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/052.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "macaroni1/Similar Colour Spot",
+        "area": 1075,
+        "bbox": [
+          1016,
+          339,
+          58,
+          31
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/075.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/075.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni1/Small Cracks",
+        "area": 92,
+        "bbox": [
+          889,
+          646,
+          9,
+          75
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/014.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/014.png",
+        "class_id": 2,
+        "class_name": "Colour Spot Similar to Object",
+        "label": "macaroni2/Colour Spot Similar to Object",
+        "area": 568,
+        "bbox": [
+          924,
+          596,
+          23,
+          33
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/034.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/034.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni2/Different Colour Spot",
+        "area": 192,
+        "bbox": [
+          912,
+          707,
+          22,
+          13
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/050.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/050.png",
+        "class_id": 4,
+        "class_name": "Small Chip Around Edge",
+        "label": "macaroni2/Small Chip Around Edge",
+        "area": 871,
+        "bbox": [
+          1026,
+          143,
+          49,
+          40
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/078.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/078.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni2/Small Cracks",
+        "area": 221,
+        "bbox": [
+          1175,
+          605,
+          124,
+          116
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/004.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/004.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb1/Bent",
+        "area": 1109,
+        "bbox": [
+          475,
+          762,
+          39,
+          76
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/044.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/044.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb1/Missing",
+        "area": 59579,
+        "bbox": [
+          257,
+          356,
+          275,
+          277
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/089.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/089.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb1/Scratch",
+        "area": 4295,
+        "bbox": [
+          410,
+          620,
+          260,
+          100
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/005.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/005.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb2/Bent",
+        "area": 2264,
+        "bbox": [
+          564,
+          220,
+          41,
+          135
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/045.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/045.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb2/Missing",
+        "area": 877,
+        "bbox": [
+          483,
+          623,
+          41,
+          22
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/087.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/087.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb2/Scratch",
+        "area": 2000,
+        "bbox": [
+          953,
+          318,
+          152,
+          134
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/004.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/004.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb3/Bent",
+        "area": 22765,
+        "bbox": [
+          1026,
+          364,
+          196,
+          176
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/044.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/044.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb3/Missing",
+        "area": 21556,
+        "bbox": [
+          1055,
+          347,
+          253,
+          121
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/081.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/081.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb3/Scratch",
+        "area": 5495,
+        "bbox": [
+          954,
+          515,
+          132,
+          136
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/018.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/018.png",
+        "class_id": 4,
+        "class_name": "Damage",
+        "label": "pcb4/Damage",
+        "area": 9767,
+        "bbox": [
+          843,
+          501,
+          132,
+          143
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/028.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/028.png",
+        "class_id": 5,
+        "class_name": "Extra",
+        "label": "pcb4/Extra",
+        "area": 8842,
+        "bbox": [
+          741,
+          276,
+          110,
+          144
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/049.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/049.png",
+        "class_id": 3,
+        "class_name": "Missing",
+        "label": "pcb4/Missing",
+        "area": 38159,
+        "bbox": [
+          287,
+          414,
+          200,
+          204
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/004.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/004.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "pipe_fryum/Burnt",
+        "area": 3777,
+        "bbox": [
+          438,
+          662,
+          108,
+          68
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/019.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/019.png",
+        "class_id": 2,
+        "class_name": "Corner and Edge Breakage",
+        "label": "pipe_fryum/Corner and Edge Breakage",
+        "area": 7551,
+        "bbox": [
+          794,
+          408,
+          107,
+          133
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/034.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/034.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "pipe_fryum/Different Colour Spot",
+        "area": 301,
+        "bbox": [
+          832,
+          476,
+          22,
+          19
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/054.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/054.png",
+        "class_id": 5,
+        "class_name": "Similar Colour Spot",
+        "label": "pipe_fryum/Similar Colour Spot",
+        "area": 665,
+        "bbox": [
+          551,
+          646,
+          25,
+          38
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/094.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/094.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "pipe_fryum/Stuck Together",
+        "area": 227896,
+        "bbox": [
+          363,
+          319,
+          567,
+          581
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/005.JPG",
+        "mask": "candle/Data/Masks/Anomaly/005.png",
+        "class_id": 1,
+        "class_name": "Chunk Of Wax Missing",
+        "label": "candle/Chunk Of Wax Missing",
+        "area": 2446,
+        "bbox": [
+          783,
+          240,
+          34,
+          129
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/046.JPG",
+        "mask": "candle/Data/Masks/Anomaly/046.png",
+        "class_id": 4,
+        "class_name": "Different Colour Spot",
+        "label": "candle/Different Colour Spot",
+        "area": 107,
+        "bbox": [
+          263,
+          764,
+          13,
+          14
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/065.JPG",
+        "mask": "candle/Data/Masks/Anomaly/065.png",
+        "class_id": 5,
+        "class_name": "Extra Wax in Candle",
+        "label": "candle/Extra Wax in Candle",
+        "area": 6580,
+        "bbox": [
+          238,
+          650,
+          115,
+          109
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/075.JPG",
+        "mask": "candle/Data/Masks/Anomaly/075.png",
+        "class_id": 6,
+        "class_name": "Foreign Particles on Candle",
+        "label": "candle/Foreign Particles on Candle",
+        "area": 133,
+        "bbox": [
+          856,
+          852,
+          15,
+          29
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/092.JPG",
+        "mask": "candle/Data/Masks/Anomaly/092.png",
+        "class_id": 7,
+        "class_name": "Wax Melted Out of the Candle",
+        "label": "candle/Wax Melted Out of the Candle",
+        "area": 4436,
+        "bbox": [
+          915,
+          256,
+          85,
+          83
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/036.JPG",
+        "mask": "candle/Data/Masks/Anomaly/036.png",
+        "class_id": 3,
+        "class_name": "Weird Candle Wick",
+        "label": "candle/Weird Candle Wick",
+        "area": 1865,
+        "bbox": [
+          891,
+          303,
+          43,
+          76
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/035.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/035.png",
+        "class_id": 2,
+        "class_name": "Discolor",
+        "label": "capsules/Discolor",
+        "area": 134,
+        "bbox": [
+          329,
+          137,
+          16,
+          12
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/067.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/067.png",
+        "class_id": 5,
+        "class_name": "Misshape",
+        "label": "capsules/Misshape",
+        "area": 22443,
+        "bbox": [
+          841,
+          17,
+          197,
+          193
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/090.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/090.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "capsules/Scratch",
+        "area": 336,
+        "bbox": [
+          643,
+          404,
+          36,
+          29
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/006.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/006.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "cashew/Burnt",
+        "area": 1896,
+        "bbox": [
+          435,
+          443,
+          32,
+          91
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/016.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/016.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "cashew/Corner or Edge Breakage",
+        "area": 3566,
+        "bbox": [
+          565,
+          744,
+          84,
+          63
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/030.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/030.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "cashew/Different Colour Spot",
+        "area": 971,
+        "bbox": [
+          877,
+          553,
+          46,
+          28
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/041.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/041.png",
+        "class_id": 4,
+        "class_name": "Middle Breakage",
+        "label": "cashew/Middle Breakage",
+        "area": 6810,
+        "bbox": [
+          603,
+          590,
+          117,
+          92
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/049.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/049.png",
+        "class_id": 8,
+        "class_name": "Same Colour Spot",
+        "label": "cashew/Same Colour Spot",
+        "area": 1136,
+        "bbox": [
+          467,
+          642,
+          60,
+          26
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/083.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/083.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "cashew/Small Scratches",
+        "area": 2788,
+        "bbox": [
+          650,
+          556,
+          152,
+          84
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/099.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/099.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "cashew/Stuck Together",
+        "area": 382146,
+        "bbox": [
+          284,
+          85,
+          672,
+          799
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/026.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/026.png",
+        "class_id": 2,
+        "class_name": "Corner Missing",
+        "label": "chewinggum/Corner Missing",
+        "area": 5292,
+        "bbox": [
+          310,
+          791,
+          192,
+          64
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/069.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/069.png",
+        "class_id": 3,
+        "class_name": "Scratches",
+        "label": "chewinggum/Scratches",
+        "area": 1751,
+        "bbox": [
+          669,
+          503,
+          61,
+          122
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/080.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/080.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "chewinggum/Similar Colour Spot",
+        "area": 3772,
+        "bbox": [
+          409,
+          599,
+          79,
+          69
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/005.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/005.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "fryum/Burnt",
+        "area": 7575,
+        "bbox": [
+          485,
+          507,
+          108,
+          124
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/015.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/015.png",
+        "class_id": 2,
+        "class_name": "Corner or Edge Breakage",
+        "label": "fryum/Corner or Edge Breakage",
+        "area": 999,
+        "bbox": [
+          528,
+          260,
+          66,
+          72
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/026.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/026.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "fryum/Different Colour Spot",
+        "area": 273,
+        "bbox": [
+          817,
+          451,
+          20,
+          35
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/045.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/045.png",
+        "class_id": 4,
+        "class_name": "Fryum Stuck Together",
+        "label": "fryum/Fryum Stuck Together",
+        "area": 199078,
+        "bbox": [
+          487,
+          142,
+          591,
+          599
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/080.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/080.png",
+        "class_id": 6,
+        "class_name": "Similar Colour Spot",
+        "label": "fryum/Similar Colour Spot",
+        "area": 77,
+        "bbox": [
+          545,
+          360,
+          11,
+          20
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/093.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/093.png",
+        "class_id": 7,
+        "class_name": "Small Scratches",
+        "label": "fryum/Small Scratches",
+        "area": 769,
+        "bbox": [
+          472,
+          505,
+          18,
+          97
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/007.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/007.png",
+        "class_id": 1,
+        "class_name": "Chip Around Edge and Corner",
+        "label": "macaroni1/Chip Around Edge and Corner",
+        "area": 4260,
+        "bbox": [
+          327,
+          602,
+          93,
+          63
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/028.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/028.png",
+        "class_id": 2,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni1/Different Colour Spot",
+        "area": 192,
+        "bbox": [
+          945,
+          624,
+          18,
+          17
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/053.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/053.png",
+        "class_id": 4,
+        "class_name": "Similar Colour Spot",
+        "label": "macaroni1/Similar Colour Spot",
+        "area": 1244,
+        "bbox": [
+          344,
+          204,
+          62,
+          33
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/076.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/076.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni1/Small Cracks",
+        "area": 98,
+        "bbox": [
+          905,
+          604,
+          7,
+          87
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/015.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/015.png",
+        "class_id": 2,
+        "class_name": "Colour Spot Similar to Object",
+        "label": "macaroni2/Colour Spot Similar to Object",
+        "area": 508,
+        "bbox": [
+          259,
+          196,
+          27,
+          27
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/035.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/035.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "macaroni2/Different Colour Spot",
+        "area": 352,
+        "bbox": [
+          323,
+          678,
+          24,
+          23
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/051.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/051.png",
+        "class_id": 4,
+        "class_name": "Small Chip Around Edge",
+        "label": "macaroni2/Small Chip Around Edge",
+        "area": 395,
+        "bbox": [
+          1309,
+          395,
+          28,
+          29
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/081.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/081.png",
+        "class_id": 5,
+        "class_name": "Small Cracks",
+        "label": "macaroni2/Small Cracks",
+        "area": 170,
+        "bbox": [
+          1079,
+          142,
+          52,
+          124
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/005.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/005.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb1/Bent",
+        "area": 2792,
+        "bbox": [
+          723,
+          749,
+          119,
+          116
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/045.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/045.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb1/Missing",
+        "area": 59476,
+        "bbox": [
+          269,
+          370,
+          280,
+          279
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/090.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/090.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb1/Scratch",
+        "area": 3842,
+        "bbox": [
+          582,
+          577,
+          125,
+          96
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/007.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/007.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb2/Bent",
+        "area": 4959,
+        "bbox": [
+          598,
+          191,
+          127,
+          170
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/046.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/046.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb2/Missing",
+        "area": 18900,
+        "bbox": [
+          617,
+          447,
+          198,
+          163
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/088.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/088.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb2/Scratch",
+        "area": 5778,
+        "bbox": [
+          144,
+          327,
+          272,
+          67
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/005.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/005.png",
+        "class_id": 1,
+        "class_name": "Bent",
+        "label": "pcb3/Bent",
+        "area": 25321,
+        "bbox": [
+          854,
+          334,
+          249,
+          138
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/047.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/047.png",
+        "class_id": 4,
+        "class_name": "Missing",
+        "label": "pcb3/Missing",
+        "area": 29012,
+        "bbox": [
+          680,
+          474,
+          175,
+          171
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/082.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/082.png",
+        "class_id": 3,
+        "class_name": "Scratch",
+        "label": "pcb3/Scratch",
+        "area": 5323,
+        "bbox": [
+          939,
+          372,
+          99,
+          208
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/020.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/020.png",
+        "class_id": 4,
+        "class_name": "Damage",
+        "label": "pcb4/Damage",
+        "area": 7706,
+        "bbox": [
+          546,
+          579,
+          102,
+          105
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/030.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/030.png",
+        "class_id": 5,
+        "class_name": "Extra",
+        "label": "pcb4/Extra",
+        "area": 2090,
+        "bbox": [
+          516,
+          243,
+          47,
+          66
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/051.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/051.png",
+        "class_id": 3,
+        "class_name": "Missing",
+        "label": "pcb4/Missing",
+        "area": 4630,
+        "bbox": [
+          654,
+          293,
+          45,
+          108
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/005.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/005.png",
+        "class_id": 1,
+        "class_name": "Burnt",
+        "label": "pipe_fryum/Burnt",
+        "area": 3048,
+        "bbox": [
+          511,
+          633,
+          99,
+          63
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/020.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/020.png",
+        "class_id": 2,
+        "class_name": "Corner and Edge Breakage",
+        "label": "pipe_fryum/Corner and Edge Breakage",
+        "area": 787,
+        "bbox": [
+          339,
+          437,
+          16,
+          76
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/035.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/035.png",
+        "class_id": 3,
+        "class_name": "Different Colour Spot",
+        "label": "pipe_fryum/Different Colour Spot",
+        "area": 201,
+        "bbox": [
+          726,
+          693,
+          22,
+          13
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/055.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/055.png",
+        "class_id": 5,
+        "class_name": "Similar Colour Spot",
+        "label": "pipe_fryum/Similar Colour Spot",
+        "area": 595,
+        "bbox": [
+          850,
+          576,
+          22,
+          36
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/095.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/095.png",
+        "class_id": 7,
+        "class_name": "Stuck Together",
+        "label": "pipe_fryum/Stuck Together",
+        "area": 134934,
+        "bbox": [
+          404,
+          309,
+          499,
+          439
+        ]
+      }
+    ]
+  },
+  "openset": {
+    "holdout_by_object": {
+      "candle": "candle/Damaged Corner of Packaging",
+      "capsules": "capsules/Bubble",
+      "cashew": "cashew/Small Holes",
+      "chewinggum": "chewinggum/Chunk of Gum Missing",
+      "fryum": "fryum/Middle Breakage",
+      "macaroni1": "macaroni1/Small Scratches",
+      "macaroni2": "macaroni2/Small Scratches",
+      "pcb1": "pcb1/Melt",
+      "pcb2": "pcb2/Melt",
+      "pcb3": "pcb3/Melt",
+      "pcb4": "pcb4/Dirt",
+      "pipe_fryum": "pipe_fryum/Small Scratches"
+    },
+    "samples": 48,
+    "items": [
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/010.JPG",
+        "mask": "candle/Data/Masks/Anomaly/010.png",
+        "class_id": 2,
+        "class_name": "Damaged Corner of Packaging",
+        "label": "candle/Damaged Corner of Packaging",
+        "area": 2394,
+        "bbox": [
+          342,
+          660,
+          83,
+          49
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/011.JPG",
+        "mask": "candle/Data/Masks/Anomaly/011.png",
+        "class_id": 2,
+        "class_name": "Damaged Corner of Packaging",
+        "label": "candle/Damaged Corner of Packaging",
+        "area": 6583,
+        "bbox": [
+          881,
+          984,
+          188,
+          89
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/012.JPG",
+        "mask": "candle/Data/Masks/Anomaly/012.png",
+        "class_id": 2,
+        "class_name": "Damaged Corner of Packaging",
+        "label": "candle/Damaged Corner of Packaging",
+        "area": 3321,
+        "bbox": [
+          754,
+          386,
+          72,
+          87
+        ]
+      },
+      {
+        "object_name": "candle",
+        "image": "candle/Data/Images/Anomaly/013.JPG",
+        "mask": "candle/Data/Masks/Anomaly/013.png",
+        "class_id": 2,
+        "class_name": "Damaged Corner of Packaging",
+        "label": "candle/Damaged Corner of Packaging",
+        "area": 1244,
+        "bbox": [
+          741,
+          889,
+          49,
+          109
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/000.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Bubble",
+        "label": "capsules/Bubble",
+        "area": 837,
+        "bbox": [
+          525,
+          239,
+          34,
+          32
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/001.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/001.png",
+        "class_id": 1,
+        "class_name": "Bubble",
+        "label": "capsules/Bubble",
+        "area": 1067,
+        "bbox": [
+          476,
+          691,
+          37,
+          36
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/002.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/002.png",
+        "class_id": 1,
+        "class_name": "Bubble",
+        "label": "capsules/Bubble",
+        "area": 2065,
+        "bbox": [
+          593,
+          515,
+          55,
+          47
+        ]
+      },
+      {
+        "object_name": "capsules",
+        "image": "capsules/Data/Images/Anomaly/003.JPG",
+        "mask": "capsules/Data/Masks/Anomaly/003.png",
+        "class_id": 1,
+        "class_name": "Bubble",
+        "label": "capsules/Bubble",
+        "area": 2472,
+        "bbox": [
+          815,
+          821,
+          60,
+          54
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/037.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/037.png",
+        "class_id": 5,
+        "class_name": "Small Holes",
+        "label": "cashew/Small Holes",
+        "area": 355,
+        "bbox": [
+          798,
+          722,
+          18,
+          31
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/038.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/038.png",
+        "class_id": 5,
+        "class_name": "Small Holes",
+        "label": "cashew/Small Holes",
+        "area": 1320,
+        "bbox": [
+          638,
+          665,
+          44,
+          46
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/039.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/039.png",
+        "class_id": 5,
+        "class_name": "Small Holes",
+        "label": "cashew/Small Holes",
+        "area": 2155,
+        "bbox": [
+          810,
+          564,
+          52,
+          54
+        ]
+      },
+      {
+        "object_name": "cashew",
+        "image": "cashew/Data/Images/Anomaly/040.JPG",
+        "mask": "cashew/Data/Masks/Anomaly/040.png",
+        "class_id": 5,
+        "class_name": "Small Holes",
+        "label": "cashew/Small Holes",
+        "area": 1423,
+        "bbox": [
+          822,
+          651,
+          48,
+          48
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/000.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/000.png",
+        "class_id": 1,
+        "class_name": "Chunk of Gum Missing",
+        "label": "chewinggum/Chunk of Gum Missing",
+        "area": 15281,
+        "bbox": [
+          429,
+          565,
+          143,
+          175
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/002.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/002.png",
+        "class_id": 1,
+        "class_name": "Chunk of Gum Missing",
+        "label": "chewinggum/Chunk of Gum Missing",
+        "area": 9343,
+        "bbox": [
+          423,
+          735,
+          118,
+          115
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/004.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/004.png",
+        "class_id": 1,
+        "class_name": "Chunk of Gum Missing",
+        "label": "chewinggum/Chunk of Gum Missing",
+        "area": 18654,
+        "bbox": [
+          596,
+          494,
+          234,
+          123
+        ]
+      },
+      {
+        "object_name": "chewinggum",
+        "image": "chewinggum/Data/Images/Anomaly/006.JPG",
+        "mask": "chewinggum/Data/Masks/Anomaly/006.png",
+        "class_id": 1,
+        "class_name": "Chunk of Gum Missing",
+        "label": "chewinggum/Chunk of Gum Missing",
+        "area": 24253,
+        "bbox": [
+          424,
+          501,
+          259,
+          168
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/016.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/016.png",
+        "class_id": 5,
+        "class_name": "Middle Breakage",
+        "label": "fryum/Middle Breakage",
+        "area": 1979,
+        "bbox": [
+          1013,
+          500,
+          62,
+          51
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/060.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/060.png",
+        "class_id": 5,
+        "class_name": "Middle Breakage",
+        "label": "fryum/Middle Breakage",
+        "area": 2784,
+        "bbox": [
+          882,
+          536,
+          69,
+          87
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/061.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/061.png",
+        "class_id": 5,
+        "class_name": "Middle Breakage",
+        "label": "fryum/Middle Breakage",
+        "area": 530,
+        "bbox": [
+          901,
+          542,
+          45,
+          35
+        ]
+      },
+      {
+        "object_name": "fryum",
+        "image": "fryum/Data/Images/Anomaly/062.JPG",
+        "mask": "fryum/Data/Masks/Anomaly/062.png",
+        "class_id": 5,
+        "class_name": "Middle Breakage",
+        "label": "fryum/Middle Breakage",
+        "area": 2105,
+        "bbox": [
+          714,
+          303,
+          89,
+          69
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/005.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/005.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "macaroni1/Small Scratches",
+        "area": 173,
+        "bbox": [
+          879,
+          610,
+          23,
+          18
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/006.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/006.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "macaroni1/Small Scratches",
+        "area": 115,
+        "bbox": [
+          365,
+          339,
+          9,
+          23
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/009.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/009.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "macaroni1/Small Scratches",
+        "area": 994,
+        "bbox": [
+          576,
+          662,
+          34,
+          59
+        ]
+      },
+      {
+        "object_name": "macaroni1",
+        "image": "macaroni1/Data/Images/Anomaly/015.JPG",
+        "mask": "macaroni1/Data/Masks/Anomaly/015.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "macaroni1/Small Scratches",
+        "area": 107,
+        "bbox": [
+          401,
+          212,
+          13,
+          19
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/000.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/000.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "macaroni2/Small Scratches",
+        "area": 858,
+        "bbox": [
+          342,
+          240,
+          46,
+          50
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/001.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/001.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "macaroni2/Small Scratches",
+        "area": 131,
+        "bbox": [
+          812,
+          700,
+          22,
+          24
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/002.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/002.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "macaroni2/Small Scratches",
+        "area": 909,
+        "bbox": [
+          266,
+          647,
+          49,
+          56
+        ]
+      },
+      {
+        "object_name": "macaroni2",
+        "image": "macaroni2/Data/Images/Anomaly/003.JPG",
+        "mask": "macaroni2/Data/Masks/Anomaly/003.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "macaroni2/Small Scratches",
+        "area": 179,
+        "bbox": [
+          902,
+          344,
+          24,
+          18
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/009.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/009.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb1/Melt",
+        "area": 163,
+        "bbox": [
+          683,
+          853,
+          20,
+          18
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/015.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/015.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb1/Melt",
+        "area": 2392,
+        "bbox": [
+          644,
+          692,
+          103,
+          36
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/016.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/016.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb1/Melt",
+        "area": 3542,
+        "bbox": [
+          601,
+          824,
+          122,
+          61
+        ]
+      },
+      {
+        "object_name": "pcb1",
+        "image": "pcb1/Data/Images/Anomaly/017.JPG",
+        "mask": "pcb1/Data/Masks/Anomaly/017.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb1/Melt",
+        "area": 2948,
+        "bbox": [
+          659,
+          691,
+          113,
+          36
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/001.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/001.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb2/Melt",
+        "area": 396,
+        "bbox": [
+          375,
+          391,
+          18,
+          31
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/006.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/006.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb2/Melt",
+        "area": 188,
+        "bbox": [
+          597,
+          716,
+          20,
+          18
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/010.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/010.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb2/Melt",
+        "area": 325,
+        "bbox": [
+          543,
+          723,
+          32,
+          16
+        ]
+      },
+      {
+        "object_name": "pcb2",
+        "image": "pcb2/Data/Images/Anomaly/015.JPG",
+        "mask": "pcb2/Data/Masks/Anomaly/015.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb2/Melt",
+        "area": 5018,
+        "bbox": [
+          926,
+          574,
+          117,
+          107
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/020.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/020.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb3/Melt",
+        "area": 3440,
+        "bbox": [
+          681,
+          337,
+          65,
+          91
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/021.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/021.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb3/Melt",
+        "area": 1665,
+        "bbox": [
+          680,
+          341,
+          45,
+          48
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/022.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/022.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb3/Melt",
+        "area": 3383,
+        "bbox": [
+          882,
+          334,
+          59,
+          98
+        ]
+      },
+      {
+        "object_name": "pcb3",
+        "image": "pcb3/Data/Images/Anomaly/023.JPG",
+        "mask": "pcb3/Data/Masks/Anomaly/023.png",
+        "class_id": 2,
+        "class_name": "Melt",
+        "label": "pcb3/Melt",
+        "area": 3376,
+        "bbox": [
+          417,
+          463,
+          76,
+          76
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/000.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/000.png",
+        "class_id": 7,
+        "class_name": "Dirt",
+        "label": "pcb4/Dirt",
+        "area": 29051,
+        "bbox": [
+          261,
+          434,
+          182,
+          217
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/001.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/001.png",
+        "class_id": 7,
+        "class_name": "Dirt",
+        "label": "pcb4/Dirt",
+        "area": 24730,
+        "bbox": [
+          291,
+          382,
+          183,
+          216
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/002.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/002.png",
+        "class_id": 7,
+        "class_name": "Dirt",
+        "label": "pcb4/Dirt",
+        "area": 34450,
+        "bbox": [
+          272,
+          397,
+          183,
+          237
+        ]
+      },
+      {
+        "object_name": "pcb4",
+        "image": "pcb4/Data/Images/Anomaly/003.JPG",
+        "mask": "pcb4/Data/Masks/Anomaly/003.png",
+        "class_id": 7,
+        "class_name": "Dirt",
+        "label": "pcb4/Dirt",
+        "area": 3775,
+        "bbox": [
+          453,
+          423,
+          46,
+          140
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/045.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/045.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "pipe_fryum/Small Scratches",
+        "area": 4168,
+        "bbox": [
+          543,
+          529,
+          255,
+          48
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/046.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/046.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "pipe_fryum/Small Scratches",
+        "area": 138,
+        "bbox": [
+          566,
+          510,
+          16,
+          26
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/070.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/070.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "pipe_fryum/Small Scratches",
+        "area": 1816,
+        "bbox": [
+          412,
+          453,
+          208,
+          76
+        ]
+      },
+      {
+        "object_name": "pipe_fryum",
+        "image": "pipe_fryum/Data/Images/Anomaly/071.JPG",
+        "mask": "pipe_fryum/Data/Masks/Anomaly/071.png",
+        "class_id": 6,
+        "class_name": "Small Scratches",
+        "label": "pipe_fryum/Small Scratches",
+        "area": 5986,
+        "bbox": [
+          637,
+          414,
+          208,
+          143
+        ]
+      }
+    ]
+  }
+}

@@ -18,9 +18,9 @@ log = logging.getLogger("snowlabel.imgcache.prefetch")
 
 
 class Prefetcher:
-    def __init__(self, predictor, max_masks: int = 16, gap_sec: float = 0.4):
+    def __init__(self, predictor, max_masks: int | None = None, gap_sec: float = 0.4):
         self.predictor = predictor
-        self.max_masks = max_masks
+        self.max_masks = int(max_masks or predictor.cfg.sam_auto_max_masks)
         self.gap_sec = gap_sec
         self._q: "queue.Queue[tuple[str, str]]" = queue.Queue()
         self._seen: set[tuple[str, str]] = set()

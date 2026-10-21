@@ -1,0 +1,49 @@
+{
+  "tag": "dino-offload-latency-full",
+  "timestamp": "2026-08-05 12:21:08",
+  "config": {
+    "dino_variant": "weights\\facebookdinov3-vitl16-pretrain-lvd1689m",
+    "sam_variant": "sam2.1_t.pt",
+    "input_resolution": 512,
+    "parts_grid": 4,
+    "rerank_n": 24,
+    "rerank_weights": [
+      0.55,
+      0.35,
+      0.1
+    ],
+    "open_set_min_sim": 0.45,
+    "conf_auto_apply": 0.68,
+    "conf_suggest": 0.55,
+    "margin_auto": 0.08,
+    "min_support_auto": 3,
+    "min_support_suggest": 1,
+    "memory": "numpy isolated (data/memory_supervise)"
+  },
+  "n_snowball": 125,
+  "n_openset": 50,
+  "auto_precision_late": 1.0,
+  "n_auto_late": 39,
+  "poison_rate": 0.0,
+  "openset_false_auto": 0.0,
+  "openset_false_any": 0.08,
+  "effort_saving_late": 0.6667,
+  "latency_p95_ms": 1304.3,
+  "late_auto_coverage": 0.6349,
+  "late_suggest_coverage": 0.3016,
+  "late_labeled_acc": 1.0,
+  "effort_saving_overall": 0.552,
+  "latency_p50_ms": 455.1,
+  "mask_miou": 0.7716,
+  "mask_fail_rate": 0.152,
+  "fail_mask": 1,
+  "fail_retrieval": 0,
+  "fail_no_mask": 1,
+  "per_class_late_acc": {
+    "bird": 1.0,
+    "bottle": 1.0,
+    "car": 1.0,
+    "cat": 1.0,
+    "dog": 1.0
+  }
+}

@@ -42,6 +42,25 @@ class SnowConfig:
     sam_variant: str = field(
         default_factory=lambda: _env("SNOWLABEL_SAM", "sam2.1_t.pt"),
     )
+    # SAM automatic mask generation. 64x64 sampling exceeded five minutes on
+    # the public-demo RTX 4060 Laptop, so the interactive default stays 32x32.
+    # Offline recall experiments can raise SNOWLABEL_SAM_POINTS_PER_SIDE; the
+    # lower confidence/stability thresholds below still improve proposal recall.
+    sam_auto_max_masks: int = field(
+        default_factory=lambda: int(_env("SNOWLABEL_SAM_AUTO_MAX_MASKS", "80")),
+    )
+    sam_auto_points_per_side: int = field(
+        default_factory=lambda: int(_env("SNOWLABEL_SAM_POINTS_PER_SIDE", "32")),
+    )
+    sam_auto_crop_layers: int = field(
+        default_factory=lambda: int(_env("SNOWLABEL_SAM_CROP_LAYERS", "0")),
+    )
+    sam_auto_conf_thres: float = field(
+        default_factory=lambda: float(_env("SNOWLABEL_SAM_CONF_THRES", "0.80")),
+    )
+    sam_auto_stability_thres: float = field(
+        default_factory=lambda: float(_env("SNOWLABEL_SAM_STABILITY_THRES", "0.90")),
+    )
     input_resolution: int = field(
         default_factory=lambda: int(_env("SNOWLABEL_RES", "224")),
     )
@@ -123,6 +142,13 @@ class SnowConfig:
         default_factory=lambda: _env("SNOWLABEL_IMGCACHE", "0").lower()
         in ("1", "true", "yes"),
     )
+    # Background prefetch can monopolize the single GPU immediately after a
+    # folder/sample import. Keep it opt-in; on-demand cache population gives
+    # the foreground image priority and a much more predictable first action.
+    imgcache_prefetch_enabled: bool = field(
+        default_factory=lambda: _env("SNOWLABEL_IMGCACHE_PREFETCH", "0").lower()
+        in ("1", "true", "yes"),
+    )
     # MySQL/MariaDB:连接串走 mysql+pymysql 方言,连 MariaDB 与 MySQL 官方版完全一致,
     # 将来换 MySQL 只改 host/账号即可,代码零改动。
     mysql_host: str = field(default_factory=lambda: _env("SNOWLABEL_MYSQL_HOST", "127.0.0.1"))
@@ -157,6 +183,23 @@ class SnowConfig:
     multi_user: bool = field(
         default_factory=lambda: _env("SNOWLABEL_MULTIUSER", "0").lower()
         in ("1", "true", "yes"),
+    )
+    # Public mode exposes only the Canvas workflow by default. Supplying an
+    # admin token explicitly re-enables legacy Label Studio/SAM3 endpoints for
+    # trusted integrations via X-Snow-Admin.
+    admin_token: str = field(
+        default_factory=lambda: _env("SNOWLABEL_ADMIN_TOKEN", ""),
+    )
+    allowed_origins: tuple[str, ...] = field(
+        default_factory=lambda: tuple(
+            origin.strip()
+            for origin in _env(
+                "SNOWLABEL_ALLOWED_ORIGINS",
+                "https://snowlabel.zhuwenmao.com,http://localhost:9090,"
+                "http://127.0.0.1:9090",
+            ).split(",")
+            if origin.strip()
+        ),
     )
 
     def __post_init__(self) -> None:

@@ -1,105 +1,151 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SnowLabel Memory Inspector</title>
+<title>SnowLabel · Anchor 记忆</title>
 <style>
-  :root{--bg:#0f1115;--card:#1a1d24;--fg:#e6e8eb;--muted:#9aa0a8;--accent:#4da3ff;--line:#262a33;}
+  :root{--bg:#0f1115;--card:#1a1d24;--card2:#20242d;--fg:#eef0f4;--muted:#9aa2af;
+        --accent:#3880f3;--line:#2a303b;--danger:#ef5b68}
   *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg)}
-  header{padding:18px 28px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}
-  header h1{font-size:18px;margin:0;font-weight:600}
-  header .snow{font-size:22px}
-  .sub{color:var(--muted);font-size:13px;margin-top:3px}
-  main{padding:24px 28px;max-width:1080px;margin:0 auto}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:8px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
-  .card .k{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
-  .card .v{font-size:24px;font-weight:600;margin-top:6px}
-  h2{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:26px 0 12px}
-  .bar{display:flex;align-items:center;gap:10px;margin:6px 0}
-  .bar .lbl{width:64px;font-size:13px}
-  .bar .track{flex:1;background:var(--line);border-radius:6px;height:18px;overflow:hidden}
-  .bar .fill{height:100%;border-radius:6px;transition:width .4s}
-  .bar .cnt{width:36px;text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
-  th{color:var(--muted);font-weight:500}
-  .chip{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12px;color:#fff}
-  .v-yes{color:#52c41a}.v-no{color:#777}
-  button{background:var(--accent);border:0;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px}
-  button.ghost{background:var(--line);color:var(--fg)}
-  .row{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
-  select{background:var(--line);color:var(--fg);border:1px solid #333;border-radius:8px;padding:7px 10px}
-  .err{color:#ff6b6b;font-size:13px;margin:10px 0}
-  .muted{color:var(--muted)}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:"Segoe UI Variable","Segoe UI","Microsoft YaHei UI","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  button,select{font:inherit}
+  header{height:64px;padding:0 max(20px,4vw);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;background:#111319}
+  .brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:750}
+  .snow{font-size:20px}.grow{flex:1}
+  header a{color:#72a7ff;text-decoration:none;font-size:13px;font-weight:650}
+  header a:hover{text-decoration:underline}
+  main{padding:28px;max-width:1120px;margin:0 auto}
+  .titlebar{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:22px}
+  h1{font-size:24px;margin:0 0 5px;letter-spacing:0}.sub,.muted{color:var(--muted)}
+  .sub{font-size:13px}
+  .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px}
+  .card .k{color:var(--muted);font-size:11px}.card .v{font-size:24px;font-weight:750;margin-top:7px;font-variant-numeric:tabular-nums}
+  h2{font-size:13px;color:var(--muted);margin:28px 0 12px;text-transform:uppercase;letter-spacing:.05em}
+  .bar{display:grid;grid-template-columns:110px 1fr 38px;align-items:center;gap:10px;margin:7px 0}
+  .bar .lbl{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .track{height:16px;background:var(--line);border-radius:4px;overflow:hidden}.fill{height:100%;border-radius:4px}
+  .cnt{text-align:right;font-size:12px;font-variant-numeric:tabular-nums}
+  .tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  select,button{border:1px solid var(--line);border-radius:7px;background:var(--card2);color:var(--fg);padding:7px 10px}
+  button{cursor:pointer}button:hover{border-color:#536071}
+  .count{font-size:12px;color:var(--muted);margin-left:auto}
+  .memorylist{display:flex;flex-direction:column;gap:8px}
+  .mrow{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px}
+  .thumb{width:58px;height:58px;border-radius:6px;overflow:hidden;background:#0b0d11;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:10px}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .mhead{display:flex;align-items:center;gap:8px;min-width:0}.dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+  .label{font-size:14px;font-weight:750;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .meta{font-size:12px;color:var(--muted);margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .verified{font-size:11px;color:#42ca62;border:1px solid rgba(66,202,98,.35);border-radius:999px;padding:2px 7px}
+  .delete{width:34px;height:34px;padding:0;font-size:19px;color:var(--muted);background:transparent}
+  .delete:hover{color:#fff;border-color:var(--danger);background:rgba(239,91,104,.12)}
+  .empty{padding:36px 18px;text-align:center;border:1px dashed var(--line);border-radius:8px;color:var(--muted)}
+  .err{color:#ff7a84;font-size:13px;margin-top:12px}
+  @media(max-width:680px){
+    header{height:auto;min-height:64px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}.grow{display:none}
+    header a:first-of-type{margin-left:auto}
+    main{padding:20px 14px}.titlebar{align-items:start}.titlebar button{flex:0 0 auto}
+    .cards{grid-template-columns:repeat(2,minmax(0,1fr))}.card{padding:14px}.card .v{font-size:21px}
+    .bar{grid-template-columns:82px 1fr 28px}
+    .mrow{grid-template-columns:50px minmax(0,1fr) 32px;gap:9px;padding:8px}
+    .thumb{width:50px;height:50px}.verified{display:none}.count{width:100%;margin-left:0}
+  }
 </style>
 </head>
 <body>
 <header>
-  <span class="snow">&#10052;&#65039;</span>
-  <div>
-    <h1>SnowLabel Memory Inspector</h1>
-    <div class="sub" id="sub">connecting&hellip;</div>
-  </div>
+  <div class="brand"><span class="snow">&#10052;&#65039;</span><span>SnowLabel</span></div>
+  <span class="grow"></span>
+  <a href="/label">返回标注</a>
+  <a href="/">首页</a>
 </header>
 <main>
-  <div class="cards" id="cards"></div>
-  <h2>Class distribution</h2>
-  <div id="dist"></div>
-  <h2>Entries</h2>
-  <div class="row">
-    <select id="filter"><option value="">all classes</option></select>
-    <button class="ghost" onclick="load()">&#8635; Refresh</button>
-    <span class="muted" id="count"></span>
+  <div class="titlebar">
+    <div><h1>Anchor 记忆</h1><div class="sub" id="sub">连接中&hellip;</div></div>
+    <button id="refresh" title="刷新记忆">刷新</button>
   </div>
+  <div class="cards" id="cards"></div>
+  <h2>类别分布</h2>
+  <div id="dist"></div>
+  <h2>记忆条目</h2>
+  <div class="tools">
+    <select id="filter"><option value="">全部类别</option></select>
+    <span class="count" id="count"></span>
+  </div>
+  <div id="rows" class="memorylist"></div>
   <div id="err" class="err"></div>
-  <table>
-    <thead><tr><th>ID</th><th>Class</th><th>Image</th><th>Verified</th></tr></thead>
-    <tbody id="rows"></tbody>
-  </table>
 </main>
 <script>
-const API = location.origin;
-const COLORS = {cat:"#FF6F00",dog:"#1976D2",car:"#388E3C",bird:"#7B1FA2",bottle:"#D32F2F",other:"#616161"};
-const base = s => (s||"").split(/[\\/]/).pop();
-async function j(path,opts){const r=await fetch(API+path,opts);if(!r.ok)throw new Error(path+" -> "+r.status);return r.json();}
+const API=location.origin;
+const PALETTE=["#00C7C7","#7C68EE","#FF8A1D","#38A3FF","#EF5B68","#45C96B","#F3C84B","#D65AC8"];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const base=s=>(s||"").split(/[\\/]/).pop();
+function colorFor(s){let h=0;for(const c of String(s||""))h=(h*31+c.charCodeAt(0))>>>0;return PALETTE[h%PALETTE.length];}
+const UID=(()=>{
+  let uid="";try{uid=localStorage.getItem("snow_uid")||"";}catch(e){}
+  if(!/^[A-Za-z0-9_-]{1,64}$/.test(uid)){
+    uid=((crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)).replace(/[^A-Za-z0-9_-]/g,"").slice(0,64);
+    try{localStorage.setItem("snow_uid",uid);}catch(e){}
+  }
+  try{document.cookie="snow_user="+uid+";path=/;SameSite=Lax";}catch(e){}
+  return uid;
+})();
+async function j(path,opts={}){
+  const headers=Object.assign({"X-Snow-User":UID},opts.headers||{});
+  const r=await fetch(API+path,Object.assign({},opts,{headers}));
+  if(!r.ok){let msg="";try{msg=(await r.json()).detail||"";}catch(e){}throw new Error(msg||String(r.status));}
+  return r.json();
+}
+let entries=[];
+function renderEntries(){
+  const value=document.getElementById("filter").value;
+  const rows=entries.filter(e=>!value||e.label===value);
+  document.getElementById("count").textContent=`${rows.length} 条`;
+  const host=document.getElementById("rows");
+  host.innerHTML=rows.length?rows.map(e=>{
+    const preview=e.preview_url?`<img src="${esc(API+e.preview_url)}" loading="lazy" alt="${esc(e.label)}">`:`<span>#${Number(e.entry_id)}</span>`;
+    return `<div class="mrow">
+      <div class="thumb">${preview}</div>
+      <div><div class="mhead"><span class="dot" style="background:${colorFor(e.label)}"></span><span class="label">${esc(e.label)}</span>${e.verified?'<span class="verified">已确认</span>':''}</div>
+      <div class="meta">#${Number(e.entry_id)} · ${esc(e.image_name||base(e.image_uri)||"来源未知")}</div></div>
+      <button class="delete" data-id="${Number(e.entry_id)}" data-label="${esc(e.label)}" title="删除这个 anchor">&times;</button>
+    </div>`;
+  }).join(""):'<div class="empty">当前会话还没有 Anchor</div>';
+  host.querySelectorAll(".thumb img").forEach(img=>img.onerror=()=>{img.parentElement.textContent="无预览";});
+  host.querySelectorAll(".delete").forEach(btn=>btn.onclick=()=>removeEntry(Number(btn.dataset.id),btn.dataset.label||""));
+}
+async function removeEntry(id,label){
+  if(!confirm(`删除 anchor #${id}${label?`（${label}）`:""}？`))return;
+  await j("/forget",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({entry_id:id})});
+  await load();
+}
 async function load(){
   document.getElementById("err").textContent="";
   try{
-    const [stats,dist] = await Promise.all([j("/stats"), j("/memory/distribution")]);
-    document.getElementById("sub").textContent =
-      `${base(stats.dino_variant)} · SAM ${stats.sam_variant} · ${stats.memory_backend} · ${stats.predict_mode}`;
-    const total = dist.total||0;
-    document.getElementById("cards").innerHTML = `
-      <div class="card"><div class="k">Entries</div><div class="v">${total}</div></div>
-      <div class="card"><div class="k">Classes</div><div class="v">${Object.keys(dist.classes||{}).length}</div></div>
-      <div class="card"><div class="k">Embedding dim</div><div class="v">${dist.dim||"&ndash;"}</div></div>
-      <div class="card"><div class="k">Auto / Suggest thr</div><div class="v">${stats.thresholds.auto_apply} / ${stats.thresholds.suggest}</div></div>`;
-    const max = Math.max(1, ...Object.values(dist.classes||{}));
-    document.getElementById("dist").innerHTML =
-      Object.entries(dist.classes||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
-        `<div class="bar"><div class="lbl">${k}</div><div class="track"><div class="fill" style="width:${100*v/max}%;background:${COLORS[k]||"#888"}"></div></div><div class="cnt">${v}</div></div>`
-      ).join("") || '<span class="muted">memory is empty &mdash; go label something!</span>';
-    const fil = document.getElementById("filter");
-    const cur = fil.value;
-    fil.innerHTML = '<option value="">all classes</option>' +
-      Object.keys(dist.classes||{}).map(k=>`<option ${k===cur?"selected":""}>${k}</option>`).join("");
-    const q = fil.value ? `/memory/by-class/${encodeURIComponent(fil.value)}` : "/memory?limit=300";
-    const data = await j(q);
-    const entries = data.entries||[];
-    document.getElementById("count").textContent = `${entries.length} shown`;
-    document.getElementById("rows").innerHTML = entries.map(e=>
-      `<tr><td>${e.entry_id}</td><td><span class="chip" style="background:${COLORS[e.label]||"#888"}">${e.label}</span></td>`+
-      `<td class="muted">${base(e.image_uri)}</td><td class="${e.verified?"v-yes":"v-no"}">${e.verified?"&#10003;":"&mdash;"}</td></tr>`
-    ).join("") || '<tr><td colspan="4" class="muted">no entries</td></tr>';
-  }catch(err){
-    document.getElementById("err").textContent =
-      "Cannot reach SnowLabel server at "+API+" — is `python -m snowlabel.server` running? ("+err.message+")";
-  }
+    const [stats,dist,mem]=await Promise.all([j("/stats"),j("/memory/distribution"),j("/memory?limit=500&include_preview=1")]);
+    entries=mem.entries||[];
+    document.getElementById("sub").textContent="当前试用会话";
+    document.getElementById("sub").title=`${base(stats.dino_variant)} · SAM ${stats.sam_variant} · ${stats.memory_backend}`;
+    const classes=dist.classes||{}, total=Number(dist.total||0);
+    document.getElementById("cards").innerHTML=`
+      <div class="card"><div class="k">Anchor</div><div class="v">${total}</div></div>
+      <div class="card"><div class="k">类别</div><div class="v">${Object.keys(classes).length}</div></div>
+      <div class="card"><div class="k">向量维度</div><div class="v">${Number(dist.dim)||"-"}</div></div>
+      <div class="card"><div class="k">自动阈值</div><div class="v">${Number(stats.thresholds.auto_apply).toFixed(2)}</div></div>`;
+    const max=Math.max(1,...Object.values(classes).map(Number));
+    document.getElementById("dist").innerHTML=Object.entries(classes).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
+      `<div class="bar"><div class="lbl" title="${esc(k)}">${esc(k)}</div><div class="track"><div class="fill" style="width:${100*Number(v)/max}%;background:${colorFor(k)}"></div></div><div class="cnt">${Number(v)}</div></div>`
+    ).join("")||'<div class="muted">暂无记忆</div>';
+    const filter=document.getElementById("filter"), cur=filter.value;
+    filter.innerHTML='<option value="">全部类别</option>'+Object.keys(classes).sort().map(k=>`<option value="${esc(k)}">${esc(k)}</option>`).join("");
+    if([...filter.options].some(o=>o.value===cur))filter.value=cur;
+    renderEntries();
+  }catch(err){document.getElementById("sub").textContent="连接失败";document.getElementById("err").textContent="无法读取记忆："+err.message;}
 }
-document.getElementById("filter").addEventListener("change", load);
+document.getElementById("filter").onchange=renderEntries;
+document.getElementById("refresh").onclick=load;
 load();
 </script>
 </body>
