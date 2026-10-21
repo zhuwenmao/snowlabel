@@ -29,10 +29,10 @@
   - 继续左键加**正点**精修这个新 mask(`pts.push({label:1})` → `segmentDraft()`);
   - 右键加**负点**抑制(`contextmenu` 在 all 模式"正在画 draft 时"才生效:
     `tool==="point" || (tool==="all" && (pts.length||draft))`);
-  - **Space** = `addDraft()` 把当前 draft 收下,继续画下一个;
+  - **Space** = `addDraft()`「完成此物体」:把当前 draft 收下,继续画下一个;
   - **C / Esc**:不在画 draft 时=重跑全分割;正在画时=取消当前 draft
     (`if(tool==="all" && !(pts.length||draft)){ runSegmentAll(); } else { clearDraft(); }`)。
-- **Enter** = `commitImage()` 入库本图。
+- **Enter** = `commitImage()`「保存本图」:存进记忆并跳到下一张。
 
 > 关键点:负点要生效,SAM 必须收**嵌套格式** `points=[pts], labels=[labs]`
 > (后端 `models.SamSegmenter`);扁平格式会把每个点当独立物体,负点失效。
@@ -44,13 +44,19 @@
   简化),`/api/segment` 与 `/api/segment_all` 响应里带 `contour` 字段;前端兜底用
   `bboxContour(bbox)`(cv2 不可用或无轮廓时退化成矩形)。
 - **绕质心向外扩 10%**:`k=1.10`,每点 `X=cx+(p[0]-cx)*k`。
-- **很细的线**:`lineWidth=Math.max(1.5, cImg.width/720)*(sel?2.2:1)`——选中的略粗。
+- **按屏幕像素绘制**:画布按原图分辨率绘制再被 CSS 缩放,`dispScale()=cImg.width/显示宽度`。
+  线宽 `1.6*dispScale()`(选中 3 倍)、标签字号 `12.5*dispScale()`、点半径 `6.5*dispScale()`,
+  所以无论原图多大,屏幕上的线、字、点大小恒定;窗口 resize 时重画。
 - **每类一色**:`strokeStyle=colorFor(label)`(预设色板命中即用,否则按类名 hash 成 HSL)。
-- **label 画在 mask 质心**、**文字色=轮廓色**(底下深色小药丸只为可读,不影响主色)。
+- **标签位置 `tagPlace()`**:屏幕上 ≥56px 的物体,标签放在独占区域质心;更小的物体把标签
+  挪到外接框上方(否则会盖住整个缺陷),< 28px 的微小物体再画一圈圆环 `drawRing()` 标出位置。
+  草稿的标签贴在框顶,不压住用户刚点的点。标签互相重叠时 `drawTag()` 会上下挪开。
+- **标签样式表达入库状态**:实心胶囊(类别色底)= 待保存(新增 / 新标 / 改过);
+  深底描边 = 识别正确、无需保存。右侧「本图物体」顶部有图例。
 - render 顺序:先描所有 mask 轮廓 → set 标签 → draft 轮廓 → 点 → 框选虚线框。
   ownership(`recomputeOwnership`)仍保留,只为算质心和入库时切互斥区,不再画填充。
 
-## 入库语义:"加入本图" vs "入库本图"
+## 入库语义:"完成此物体"(Space) vs "保存本图"(Enter)
 
 只把**模型没做对的** mask 入库(labeler.html 注释 L159-162):
 - `source==="added"`(你手动加的漏检) → 入库;
@@ -58,15 +64,29 @@
 - `source==="auto"` 且没改 → 识别对了,**免入库**(不重复污染记忆)。
 
 两个动作:
-- **加入本图(Space / `addDraftBtn`)= `addDraft()`**:把当前 draft 收进本图的
+> 2026-10 改名:旧文案"加入本图 / 入库本图"两个都叫"…本图",用户容易以为 Space 也在存图。
+> 现在 Space 叫**完成此物体**(完成对这一个实例的标注),Enter 叫**保存本图**。
+
+- **完成此物体(Space / `addDraftBtn`)= `addDraft()`**:把当前 draft 收进本图的
   `masks[]`(`source:"added"`),**还没落库**,只是攒着。
-- **入库本图(Enter / `commitImgBtn`)= `commitImage()`**:对每个 dirty mask 取其
+- **保存本图(Enter / `commitImgBtn`)= `commitImage()`**:对每个 dirty mask 取其
   **互斥区** `ownedMaskPng(m)`(重叠裁掉,同一像素不会被两个标签存),POST
   `/api/commit_batch`。识别对、没动过的预测放进 `accepted`(**不存**,只回传给遥测
-  统计真实接受率)。提示区 `queue` 实时显示"本图待入库"的类别 chip。
+  统计真实接受率)。右侧「本图物体」只列已标类别的物体,未命名候选折叠成一行计数。
 
 > 用户确认过的语义:**点对了直接 Enter 跳下一张,不会重复入库**——因为没 dirty
 > mask,只记一条"全对确认"的遥测,记忆库不增长。这是有意的:记忆只长"教过的修正"。
+
+## 示例数据集与推荐类别
+
+- 注册表在 `snowlabel/sample_datasets.py`。`classes` 是按场景组织的**图片文件夹**
+  (例如「缺件槽位」是一类图);`recommended` 才是图上要点选标注的**物体类别**
+  (零件、空槽位、多余零件)。`/api/sample_datasets` 和 `/api/load_samples` 都返回 `recommended`。
+- `featured=True` 的数据集(车辆、鸟类)在选择页置顶,带「首次推荐」标识;`level` 显示入门 / 进阶。
+- 载入后 `setRecommended()` 把类别栏换成「推荐类别 + 记忆里已有的类别」,按 UID 存进
+  `localStorage.snow_rec`,刷新页面不丢;「重新开始」会清掉。
+- 推荐类别按顺序取色 `recColor(i)`(避开绿=自动、蓝=选中),同一数据集里各类颜色一定不同;
+  其他类别仍按类名哈希取色。
 
 ## 与后端 API 的对应
 

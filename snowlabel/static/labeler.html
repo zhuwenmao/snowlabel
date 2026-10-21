@@ -76,7 +76,7 @@
   #modeRemove.sel{background:rgba(230,25,59,.9);color:#fff}
   .instruction{flex:1 1 320px;min-width:220px;min-height:38px;padding:8px 12px;border:1px solid var(--line);
                border-radius:999px;background:rgba(255,255,255,.035);color:var(--fg);font-size:13px;
-               line-height:1.35;font-weight:700;display:flex;align-items:center;gap:8px;
+               line-height:1.35;font-weight:600;display:flex;align-items:center;gap:8px;
                box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
   .instruction.is-empty{visibility:hidden}
   .hinticon{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
@@ -89,7 +89,7 @@
   .hint-warn .hinticon{background:var(--suggest);color:#111}
   .hint-error{border-color:rgba(230,25,59,.7);background:rgba(230,25,59,.14);color:#ffc7d0}
   .hint-error .hinticon{background:var(--err)}
-  .hint-success{border-color:rgba(40,210,50,.6);background:rgba(40,210,50,.12);color:#bdf5c2}
+  .hint-success{border-color:rgba(40,210,50,.38);background:rgba(40,210,50,.07);color:#c9f3cd}
   .hint-success .hinticon{background:var(--auto)}
   .abright{display:flex;align-items:center;gap:8px;flex:0 0 auto;margin-left:auto}
   .ablink{background:transparent;border:1px solid var(--line);color:var(--muted);padding:7px 12px;
@@ -106,7 +106,14 @@
   h2{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0;margin:18px 0 10px}
   h2:first-child{margin-top:0}
   .predhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-  .tierbadge{color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;text-transform:uppercase;letter-spacing:0}
+  .tierbadge{color:#111;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:800;letter-spacing:0}
+  .predstate{color:var(--fg);font-size:12.5px;margin:0 0 10px}
+  .tklabel{color:var(--muted);font-size:11px;font-weight:700;margin:2px 0 4px}
+  .legend{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:11px;margin:0 0 8px}
+  .legend i{display:inline-block;width:22px;height:11px;border-radius:6px;vertical-align:-1px;margin-right:5px}
+  .legend .lf{background:var(--accent)}
+  .legend .lo{border:1.3px solid var(--accent);background:rgba(10,12,16,.78)}
+  .morecand{color:var(--muted);font-size:12px;border:1px dashed var(--line);border-radius:var(--r-sm);padding:8px 10px;margin-top:2px}
   .bar{display:flex;align-items:center;gap:8px;margin:5px 0}
   .bar .lbl{width:58px;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .bar .track{flex:1;background:var(--line);border-radius:6px;height:14px;overflow:hidden}
@@ -224,24 +231,39 @@
   /* ---- 空状态里的示例按钮(次级) ---- */
   .esample{margin-top:9px;background:var(--line);color:var(--fg);padding:10px 18px;font-size:13px;font-weight:600}
   .esample:hover{background:#2f3540}
-  .samplecard{width:min(900px,94vw)}
-  .samplelead{color:var(--muted);font-size:13px;line-height:1.55;margin:8px 0 18px}
-  .samplegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .sampleitem{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:left;color:var(--fg)}
-  .sampleitem:hover{filter:none;border-color:var(--accent);background:#252a34}
+  .samplecard{width:min(960px,94vw)}
+  .samplelead{color:var(--muted);font-size:13px;line-height:1.55;margin:8px 0 20px}
+  .samplegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .sgroup{grid-column:1/-1;display:flex;align-items:baseline;gap:10px;margin:6px 0 -2px}
+  .sgroup:not(:first-child){margin-top:14px;padding-top:16px;border-top:1px solid var(--line)}
+  .sgroup b{font-size:14px}.sgroup span{color:var(--muted);font-size:12px}
+  .sampleitem{position:relative;display:flex;flex-direction:column;background:var(--card2);border:1px solid var(--line);
+              border-radius:12px;padding:0;overflow:hidden;text-align:left;color:var(--fg);transition:border-color .15s,transform .15s,box-shadow .15s}
+  .sampleitem:hover{filter:none;border-color:#3a4252;transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.35)}
+  .sampleitem.featured{background:linear-gradient(var(--card2),var(--card2)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
+  .sampleitem.featured:hover{box-shadow:0 12px 30px rgba(89,95,239,.22)}
   .sampleitem.disabled{opacity:.45;cursor:not-allowed}
-  .sampleitem.disabled:hover{border-color:var(--line);background:var(--card2)}
-  .samplepreview{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:5px;margin:-4px -4px 12px}
-  .samplepreview img{width:100%;height:94px;object-fit:cover;border-radius:8px;background:#0b0c10;border:1px solid var(--line)}
-  .samplepreview img:first-child{height:94px}
-  .sampletop{display:flex;align-items:center;gap:8px;margin-bottom:7px}
-  .sampletag{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:2px 7px;color:var(--muted);font-weight:700}
-  .sampletag.synthetic{color:#f3c84b;border-color:rgba(243,200,75,.4)}
-  .sampletitle{font-size:15px;font-weight:800}
-  .samplesummary{color:var(--muted);font-size:12px;line-height:1.45;margin:0 0 9px}
-  .sampleclasses{display:flex;gap:5px;flex-wrap:wrap}
-  .sampleclasses span{font-size:11px;color:var(--fg);background:#303642;border-radius:999px;padding:3px 7px}
-  .samplesource{display:block;color:var(--muted);font-size:11px;margin-top:9px;line-height:1.35}
+  .sampleitem.disabled:hover{transform:none;box-shadow:none;border-color:var(--line)}
+  .sampleitem.loading{pointer-events:none;opacity:.7}
+  .samplepreview{position:relative;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3px;background:#0b0c10}
+  .samplepreview img{width:100%;height:104px;object-fit:cover;display:block;background:#0b0c10}
+  .srec{position:absolute;top:9px;left:9px;background:var(--grad);color:#fff;font-size:11.5px;font-weight:800;
+        border-radius:999px;padding:3px 10px;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+  .sbody{padding:13px 15px 4px;flex:1}
+  .sampletop{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .sampletitle{font-size:15.5px;font-weight:800}
+  .slevel{font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px;border:1px solid var(--line);color:var(--muted)}
+  .slevel.easy{color:#9be7a1;border-color:rgba(40,210,50,.4)}
+  .samplesummary{color:var(--muted);font-size:12.5px;line-height:1.5;margin:0 0 11px}
+  .srecl{color:var(--muted);font-size:11px;font-weight:700;margin-bottom:6px}
+  .sampleclasses{display:flex;gap:6px;flex-wrap:wrap}
+  .sampleclasses span{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--fg);
+                      background:#2a303b;border-radius:999px;padding:3px 9px}
+  .sampleclasses i{width:7px;height:7px;border-radius:50%}
+  .sfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 15px 13px;color:var(--muted);font-size:12px}
+  .scta{color:var(--accent);font-weight:800;font-size:13px;white-space:nowrap}
+  .sampleitem.featured .scta{color:#fff}
+  .clshint{color:var(--muted);font-size:12px;margin:-4px 0 9px}
   /* ---- 啊哈时刻 toast ---- */
   #toast{position:fixed;left:50%;top:18px;z-index:120;
          background:linear-gradient(135deg,#1f9d55,#52c41a);color:#fff;font-weight:600;font-size:14px;
@@ -370,6 +392,8 @@
     .v3 .gside{padding:9px;gap:6px}
     .v3 .gl,.v3 .obj2 img{display:none}
     .gtip.r{left:auto!important;right:3%}
+    .toolbar .tool{white-space:nowrap;padding:7px 10px}
+    .toolbar .name{display:none}
     .actionbar{flex-wrap:wrap}
     .instruction{order:3;flex-basis:100%;min-width:0;border-radius:12px}
     .hinttext{white-space:normal}
@@ -452,34 +476,35 @@
         <span class="hinticon">i</span><span class="hinttext"></span>
       </div>
       <div class="abright">
-        <button id="clearBtn" class="ablink" title="清除当前未入库的选择 (C)">↺ 清除</button>
-        <button id="addDraftBtn" class="ghost" style="display:none">＋ 加入本图 (Space)</button>
-        <button id="commitImgBtn" class="gpill" disabled title="只把模型『没做对』的存进记忆：你改了类的、或手动加的漏检；识别对的不必重复存。">入库本图 (0) · Enter</button>
+        <button id="clearBtn" class="ablink" title="放弃当前还没完成的物体 (C / Esc)">↺ 清除</button>
+        <button id="addDraftBtn" class="ghost" style="display:none" title="这个物体标好了，收进本图列表，接着标下一个">✓ 完成此物体 · Space</button>
+        <button id="commitImgBtn" class="gpill" disabled title="把新增和改过类别的物体存进记忆，然后跳到下一张；识别正确的不会重复保存。">保存本图 (0) · Enter</button>
       </div>
     </div>
   </div>
 
   <!-- RIGHT: prediction + classes + memory -->
   <div class="right">
-    <h2>当前物体<span class="hq" title="auto 可用；suggest 需确认；conf 是记忆匹配分。">?</span></h2>
-    <div id="pred"><span class="muted">等待选择物体</span></div>
+    <h2>当前物体<span class="hq" title="记忆给出的类别和把握。自动：把握高，可直接用；建议：需要你确认；未识别：记忆里没有相似样本。">?</span></h2>
+    <div id="pred"><span class="muted">在图上点一个物体，这里显示记忆给出的类别和把握。</span></div>
 
-    <h2>类别<span class="hq" title="点选类别即可确认或修改当前物体；也可以输入新类别。">?</span></h2>
+    <h2>类别<span class="hq" title="点选类别即可确认或修改当前物体；数字键 1–9 也能快速选择。">?</span></h2>
+    <div class="clshint" id="clsHint"></div>
     <div class="classes" id="classes"></div>
     <div class="addrow">
       <input id="newcls" placeholder="+ 新类别，回车添加">
       <button class="ghost" id="addBtn">添加</button>
     </div>
     <h2>本图物体 <span id="objcount" class="muted" style="text-transform:none;letter-spacing:0;font-size:12px"></span>
-        <span class="hq" title="新增或改过的物体会待入库；识别正确的结果不重复保存。">?</span></h2>
+        <span class="hq" title="实心标签 = 待保存（新增或改过类别）；描边标签 = 识别正确，无需重复保存。">?</span></h2>
     <div id="objlist"></div>
 
-    <h2>雪球记忆<span class="hq" title="你每次入库的物体都被编码成向量存进这里。它越大，模型认得越多、越准——而且模型从不重训，全靠检索记忆。">?</span></h2>
+    <h2>雪球记忆<span class="hq" title="每次保存的物体都会编码成向量存进记忆。记忆越多，自动认出的就越多——模型本身从不重训。">?</span></h2>
     <div class="memhead"><span class="muted">已记忆实例</span><span class="big" id="memTotal">0</span></div>
     <div id="memBars" style="margin-top:8px"></div>
-    <div class="anchortools">
-      <select id="anchorFilter" title="按类别筛选 anchor"><option value="">全部 anchor</option></select>
-      <button id="anchorRefresh" class="ghost" title="刷新 anchor 列表">刷新</button>
+    <div class="anchortools" id="anchorTools" style="display:none">
+      <select id="anchorFilter" title="按类别筛选记忆样本"><option value="">全部类别</option></select>
+      <button id="anchorRefresh" class="ghost" title="刷新记忆样本">刷新</button>
     </div>
     <div id="anchorList" class="anchorlist"></div>
   </div>
@@ -499,20 +524,20 @@
               <b>上传图片</b><span>支持整个文件夹</span>
             </div>
             <div class="dsets">
-              <div class="ds on"><span class="rec">推荐</span>
+              <div class="ds on"><span class="rec">首次推荐</span>
                 <div class="th"><img src="/static/guide/t-car.webp" alt=""><img src="/static/guide/t-truck.webp" alt=""><img src="/static/guide/t-bus.webp" alt=""></div>
                 <b>常识物体：车辆</b><span>汽车 · 卡车 · 公交车</span>
               </div>
               <div class="ds">
-                <div class="th"><img src="/static/guide/t-ind1.webp" alt=""><img src="/static/guide/t-ind2.webp" alt=""><img src="/static/guide/t-ind3.webp" alt=""></div>
-                <b>合成挑战：微小与透明缺陷</b><span>工业质检 · 参考 MVTec AD 2</span>
+                <div class="th"><img src="/static/guide/t-bird1.webp" alt=""><img src="/static/guide/t-bird2.webp" alt=""><img src="/static/guide/t-bird3.webp" alt=""></div>
+                <b>鸟类细分类</b><span>赫氏鸥 · 里海燕鸥 · 仙人掌鹪鹩</span>
               </div>
             </div>
           </div>
           <div class="gcopy">
             <div class="gh">① 选一组图片</div>
             <p>上传自己的图片或整个文件夹；手边没图，就点<b>「选择示例数据集」</b>。</p>
-            <div class="gcue">第一次试用推荐「常识物体：车辆」——类别少、差异明显，最容易看出越标越准。</div>
+            <div class="gcue">第一次试用推荐「常识物体：车辆」或「鸟类细分类」——载入后自带推荐类别，最容易看出越标越准。</div>
           </div>
         </div>
       </div>
@@ -564,22 +589,22 @@
                 <span class="chip2"><i style="background:#00C8F0"></i>卡车</span>
                 <span class="chip2 sel"><i style="background:#8773FF"></i>公交车</span>
               </div>
-              <div class="gl">本图物体 · 1 个待入库</div>
+              <div class="gl">本图物体 · 1 个待保存</div>
               <div class="obj2"><img src="/static/guide/t-bus.webp" alt=""><i style="background:#8773FF"></i>公交车<em>新增</em></div>
               <div class="gl">快捷键</div>
-              <div class="krow"><kbd>Space</kbd> 加入本图</div>
-              <div class="krow"><kbd>Enter</kbd> 入库本图</div>
+              <div class="krow"><kbd>Space</kbd> 完成此物体</div>
+              <div class="krow"><kbd>Enter</kbd> 保存本图</div>
               <span class="mem">✓ 记忆 +1</span>
             </div>
           </div>
           <div class="gcopy">
-            <div class="gh">③ 确认类别，入库本图</div>
+            <div class="gh">③ 选类别，保存本图</div>
             <ul class="gacts">
               <li><span>选类别</span><span>点类别标签，或按数字键 <kbd>1</kbd>–<kbd>9</kbd></span></li>
-              <li><span>加入本图</span><span>按 <kbd>Space</kbd>，可以继续标下一个物体</span></li>
-              <li><span>入库</span><span>按 <kbd>Enter</kbd>，把本图写进记忆</span></li>
+              <li><span>完成物体</span><span>按 <kbd>Space</kbd> 收下这个物体，接着标下一个</span></li>
+              <li><span>保存本图</span><span>按 <kbd>Enter</kbd> 存进记忆，自动跳到下一张</span></li>
             </ul>
-            <div class="gcue">只有新增或改过类别的物体才写入记忆；下一张相似图会自动复用它。</div>
+            <div class="gcue">只有新增或改过类别的物体会存进记忆；识别正确的不重复保存。下一张相似图会自动复用。</div>
           </div>
         </div>
       </div>
@@ -596,7 +621,7 @@
   <div class="mcard samplecard">
     <button id="sampleClose" class="mclose" title="关闭">&#10005;</button>
     <div class="mhead">选择示例数据集</div>
-    <div class="samplelead">选择后会载入一组图片到当前试用空间。<span class="hq" title="公网 demo 按浏览器隔离数据；每组用于演示全分割、确认类别和自动复用。">?</span></div>
+    <div class="samplelead">载入后会自动带上推荐类别，可以直接开始标注。图片只进入你自己的试用空间，不影响别人。</div>
     <div id="sampleGrid" class="samplegrid"></div>
   </div>
 </div>
@@ -607,6 +632,7 @@
 <script>
 const API = location.origin;
 const TIER_COLOR = {auto:"var(--auto)", suggest:"var(--suggest)", silent:"var(--silent)"};
+const TIER_TEXT = {auto:"自动", suggest:"建议", silent:"未识别", manual:"手动"};
 // SAM 2 demo 同款 9 色高亮板:类名 → 稳定取色,同一类永远同色。
 const THEME_COLORS = ["#3880F3","#F0AA19","#00D2BE","#28D232","#8773FF","#00C8F0","#FA8719","#E6193B","#FA7DC8"];
 // 默认不预置任何类别 —— "你从零教它"才是产品叙事;类别从你新增的 + 记忆分布里长出来。
@@ -619,6 +645,8 @@ let sampleDatasets=[];
 let anchorEntries=[];
 let currentAnchorRefs=[];
 let memoryTotal=0;
+let memClasses=[];          // 记忆里已有的类别
+let recInfo=null;           // 当前示例集的推荐类别 {title, classes}
 const IS_TRY_DEMO = location.pathname.replace(/\/+$/,"")==="/try";
 const DEFAULT_TOOL = IS_TRY_DEMO ? "all" : "point";
 const AUTO_MAX_MASKS = 80;
@@ -660,7 +688,13 @@ const UID = (()=>{
 try{ document.cookie="snow_user="+UID+";path=/;SameSite=Lax"; }catch(e){}
 async function j(path,opts){opts=opts||{};const headers=Object.assign({'X-Snow-User':UID},opts.headers||{});const r=await fetch(API+path,Object.assign({},opts,{headers}));if(!r.ok){let t="";try{t=(await r.json()).detail||"";}catch(e){}throw new Error((t||r.status));}return r.json();}
 function hexToRgb(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
-function colorFor(c){if(!c)return"#8a8f98";let h=0;for(const ch of c)h=(h*31+ch.charCodeAt(0))>>>0;return THEME_COLORS[h%THEME_COLORS.length];}
+// 推荐类别按顺序取色,保证同一数据集里各类颜色不同(哈希取色会撞色,如汽车/公交车同为紫色)。
+// 避开绿色(=自动命中)和蓝色(=选中/草稿)。
+const REC_COLORS = ["#8773FF","#F0AA19","#00C8F0","#FA7DC8","#00D2BE","#FA8719","#E6193B"];
+function recColor(i){ return REC_COLORS[i%REC_COLORS.length]; }
+function colorFor(c){if(!c)return"#8a8f98";
+  if(typeof recInfo!=="undefined"&&recInfo){ const i=recInfo.classes.indexOf(c); if(i>=0) return recColor(i); }
+  let h=0;for(const ch of c)h=(h*31+ch.charCodeAt(0))>>>0;return THEME_COLORS[h%THEME_COLORS.length];}
 function loadImg(src){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src;});}
 const HINT_KINDS = ["tip","busy","warn","error","success"];
 function inferHintKind(msg){
@@ -668,8 +702,8 @@ function inferHintKind(msg){
   if(!s) return "tip";
   if(/失败|错误|无法|后端|500/.test(s)) return "error";
   if(/没有|没选|未找到|先|需要|不能|0 个/.test(s)) return "warn";
-  if(/中…|处理中|上传中|载入|分割中|连接服务/.test(s)) return "busy";
-  if(/^已|完成|入库 \d+ 个/.test(s)) return "success";
+  if(/中…|处理中|上传中|载入|分割中|连接服务|保存中/.test(s)) return "busy";
+  if(/^已|完成/.test(s)) return "success";
   return "tip";
 }
 function flash(msg,kind){
@@ -677,7 +711,7 @@ function flash(msg,kind){
   const text=box.querySelector(".hinttext")||box;
   const icon=box.querySelector(".hinticon");
   const k=kind||inferHintKind(msg);
-  text.textContent=msg||"";
+  text.textContent=msg||""; box.title=msg||"";
   box.classList.remove(...HINT_KINDS.map(x=>"hint-"+x));
   box.classList.add("hint-"+k);
   box.classList.toggle("is-empty",!msg);
@@ -705,13 +739,22 @@ function setBusy(on,msg,buttonIds){
   }
 }
 function toolHint(){
-  return tool==="point" ? "点物体 · Space 加入 · Enter 入库"
-       : tool==="box"   ? "框选物体 · Space 加入 · Enter 入库"
-       :                  "点物体改类 · 点空白补漏 · Enter 入库";
+  if(tool==="point") return "左键点物体分割，右键去掉多余部分";
+  if(tool==="box")   return "拖一个框圈住物体";
+  return memoryTotal===0 ? "点一个候选物体，再选类别；点空白可以补漏检"
+                         : "点物体可改类，点空白补漏检；没问题就按 Enter 保存本图";
 }
 function emptyPredictionText(){
-  return "等待选择物体";
+  return "在图上点一个物体，这里显示记忆给出的类别和把握。";
 }
+// 草稿出来后告诉用户下一步:有类别 → Space 完成;没类别 → 先选类别
+function draftHint(){
+  if(!draft) return [toolHint(),"tip"];
+  if(!draft.label) return ["先选类别（右侧或 1–9），再按 Space 完成","warn"];
+  const auto=draft.tier==="auto"&&draft.label===draft.pred_label;
+  return [`${auto?"记忆认出":"类别"}「${draft.label}」 · 按 Space 完成`,"tip"];
+}
+function flashDraftHint(){ const h=draftHint(); flash(h[0],h[1]); }
 
 /* ---------------- dirty logic ----------------
    只把"模型没做对"的 mask 入库:
@@ -797,8 +840,14 @@ function ownedMaskPng(m){
   c.getContext("2d").putImageData(id,0,0);
   return c.toDataURL("image/png").split(",",2)[1];
 }
+/* 画布按原图像素绘制、再被 CSS 缩放显示。标签/线宽/点都乘上这个系数,
+   保证在屏幕上大小恒定:大图不再巨字,小图也看得清。 */
+function dispScale(){
+  const w=cImg.getBoundingClientRect().width;
+  return w>0 ? cImg.width/w : 1;
+}
 function drawPoints(ctx){
-  const r=Math.max(5,cImg.width/110);
+  const r=6.5*dispScale();
   for(const p of pts){
     ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);
     ctx.fillStyle=p.label?"#52c41a":"#ff4d4f";ctx.fill();
@@ -809,21 +858,58 @@ function drawPoints(ctx){
   }
 }
 function roundRectPath(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
-function drawTag(ctx,cx,cy,text,col,highlight){
-  const f=Math.max(12,cImg.width/48); ctx.font=`700 ${f}px system-ui`; ctx.textAlign="center"; ctx.textBaseline="middle";
-  const tw=ctx.measureText(text).width, bw=tw+14, bh=f+8;
-  roundRectPath(ctx,cx-bw/2,cy-bh/2,bw,bh,7);
-  ctx.fillStyle="rgba(0,0,0,0.62)"; ctx.fill();
-  if(highlight){ ctx.strokeStyle="#fff"; ctx.lineWidth=Math.max(2,cImg.width/350); ctx.stroke(); }
-  ctx.fillStyle=col; ctx.fillText(text,cx,cy);
+function isLightColor(hex){ const [r,g,b]=hexToRgb(hex); return (0.299*r+0.587*g+0.114*b)/255>0.62; }
+// filled=true:实心胶囊(待保存:新增或改过);false:深底描边(识别正确,无需保存)
+let _tagRects=[];   // 本帧已画标签的矩形,用于避让
+function drawTag(ctx,cx,cy,text,col,highlight,filled){
+  const s=dispScale(), f=12.5*s;
+  ctx.font=`700 ${f}px "Inter","Microsoft YaHei UI","Microsoft YaHei",system-ui,sans-serif`;
+  ctx.textAlign="center"; ctx.textBaseline="middle";
+  const tw=ctx.measureText(text).width, bw=tw+18*s, bh=f+10*s;
+  cx=Math.min(Math.max(cx,bw/2+2*s),cImg.width-bw/2-2*s);        // 不让标签出画布
+  cy=Math.min(Math.max(cy,bh/2+2*s),cImg.height-bh/2-2*s);
+  const hit=(y)=>_tagRects.some(r=>Math.abs(r.x-cx)<(r.w+bw)/2+2*s && Math.abs(r.y-y)<(r.h+bh)/2+2*s);
+  for(let k=1;k<=8&&hit(cy);k++){                          // 上下交替试探
+    const dy=Math.ceil(k/2)*(bh+3*s)*(k%2?1:-1), y=cy+dy;
+    if(y>bh/2&&y<cImg.height-bh/2&&!hit(y)){ cy=y; break; }
+  }
+  _tagRects.push({x:cx,y:cy,w:bw,h:bh});
+  roundRectPath(ctx,cx-bw/2,cy-bh/2,bw,bh,bh/2);
+  if(filled){ ctx.fillStyle=col; ctx.fill(); }
+  else{ ctx.fillStyle="rgba(10,12,16,0.78)"; ctx.fill(); ctx.lineWidth=1.3*s; ctx.strokeStyle=col; ctx.stroke(); }
+  if(highlight){ ctx.lineWidth=2.2*s; ctx.strokeStyle="#fff"; ctx.stroke(); }
+  ctx.fillStyle=filled?(isLightColor(col)?"#111":"#fff"):col;
+  ctx.fillText(text,cx,cy+0.5*s);
   ctx.textAlign="left"; ctx.textBaseline="alphabetic";
 }
+/* 标签放哪:大物体放在质心(SAM 风);小物体(屏幕上 < 56px)放到外接框上方,
+   否则标签会把整个缺陷盖住。tiny 表示需要额外画圆环标出位置。 */
+function tagPlace(bb,cx,cy,above){
+  const s=dispScale();
+  if(!bb) return {x:cx,y:cy,tiny:false};
+  const bw=(bb[2]-bb[0])/s, bh=(bb[3]-bb[1])/s;
+  if(above && Math.min(bw,bh)>=56){                        // 大草稿:标签贴在框顶内侧
+    return {x:(bb[0]+bb[2])/2, y:Math.max(bb[1]+16*s, 14*s), tiny:false};
+  }
+  if(Math.min(bw,bh)>=56) return {x:cx,y:cy,tiny:false};
+  const gap=10*s, half=11*s, ring=Math.max(bw,bh)*s/2+7*s;
+  const mx=(bb[0]+bb[2])/2, my=(bb[1]+bb[3])/2;
+  let y=my-ring-gap-half; if(y<half) y=my+ring+gap+half;
+  return {x:mx,y,tiny:Math.max(bw,bh)<28,ring,mx,my};
+}
+function drawRing(ctx,pl,col,sel){
+  const s=dispScale();
+  ctx.beginPath(); ctx.arc(pl.mx,pl.my,pl.ring,0,Math.PI*2);
+  ctx.lineWidth=(sel?3:2)*s; ctx.strokeStyle=col; ctx.stroke();
+}
 function drawSetTags(ctx){
-  // label sits at the centroid of each mask's OWNED region (no overlap, in the middle)
+  // 大物体:标签在独占区域质心;小物体:标签挪到上方,微小物体再画圆环
   masks.forEach((m,i)=>{
-    if(!(m.ownedCount>0) || !m.label) return;
-    const col=m.label?colorFor(m.label):"#9aa0a8", d=isDirty(m);
-    drawTag(ctx, m.cx, m.cy, `${d?'✎ ':''}${m.label}`, col, i===picked);
+    if(!(m.ownedCount>0)) return;
+    const col=m.label?colorFor(m.label):"#9aa0a8";
+    const pl=tagPlace(m.bbox,m.cx,m.cy);
+    if(pl.tiny) drawRing(ctx,pl,col,i===picked);
+    if(m.label) drawTag(ctx, pl.x, pl.y, m.label, col, i===picked, isDirty(m));
   });
 }
 /* thin class-colored OUTLINE, expanded ~10% outward from the mask centroid —
@@ -837,7 +923,7 @@ function drawContour(ctx, contour, color, sel){
   contour.forEach((p,i)=>{ const X=cx+(p[0]-cx)*k, Y=cy+(p[1]-cy)*k; i?ctx.lineTo(X,Y):ctx.moveTo(X,Y); });
   ctx.closePath();
   ctx.lineJoin="round";
-  ctx.lineWidth=Math.max(1.5, cImg.width/720)*(sel?2.2:1);   // 很细;选中略粗
+  ctx.lineWidth=dispScale()*(sel?3:1.6);   // 屏幕上约 1.6px;选中 3px
   ctx.strokeStyle=color; ctx.stroke();
 }
 function render(){
@@ -845,17 +931,22 @@ function render(){
   const ctx=cImg.getContext("2d");
   ctx.clearRect(0,0,cImg.width,cImg.height);
   ctx.drawImage(img,0,0);
+  _tagRects=[];
   masks.forEach((m,i)=>drawContour(ctx, m.contour||bboxContour(m.bbox),
                                    m.label?colorFor(m.label):"#9aa0a8", i===picked));
   drawSetTags(ctx);
   if(draft){
     const col=draft.label?colorFor(draft.label):"#3880F3";
     drawContour(ctx, draft.contour||bboxContour(draft.bbox), col, true);
-    if(draft.label&&draft.cx!=null) drawTag(ctx,draft.cx,draft.cy,draft.label,col,true);
+    if(draft.cx!=null){
+      const pl=tagPlace(draft.bbox,draft.cx,draft.cy,true);
+      if(pl.tiny) drawRing(ctx,pl,col,true);
+      if(draft.label) drawTag(ctx,pl.x,pl.y,draft.label,col,true,true);
+    }
   }
   drawPoints(ctx);
   if(drag){
-    ctx.strokeStyle="#3880F3";ctx.lineWidth=Math.max(2,cImg.width/350);ctx.setLineDash([7,5]);
+    const s=dispScale(); ctx.strokeStyle="#3880F3";ctx.lineWidth=2*s;ctx.setLineDash([7*s,5*s]);
     ctx.strokeRect(Math.min(drag.x0,drag.x1),Math.min(drag.y0,drag.y1),Math.abs(drag.x1-drag.x0),Math.abs(drag.y1-drag.y0));
     ctx.setLineDash([]);
   }
@@ -879,7 +970,7 @@ function setPointMode(m){
 function placePoint(p){
   const lbl = pointMode==="add" ? 1 : 0;
   if(lbl===0 && !pts.some(pt=>pt.label===1)){
-    flash("先添加正点，再使用排除点"); return;
+    flash("先左键点中物体，再用排除点去掉多余部分", "warn"); return;
   }
   pts.push({x:p.x,y:p.y,label:lbl}); render(); segmentDraft();
 }
@@ -893,7 +984,7 @@ async function doDraft(body){
   try{
     const res=await j("/api/segment",{method:"POST",headers:{'Content-Type':'application/json'},
       body:JSON.stringify(Object.assign({image_id:DS[curIdx].id},body))});
-    if(!res.ok){ draft=null; render(); flash("没分出 mask，换点或框选", "warn"); }
+    if(!res.ok){ draft=null; render(); flash("这里没分出物体，换个位置点，或改用框选", "warn"); }
     else{
       draft={mask_png:res.mask_png,bbox:res.bbox,tier:res.tier,confidence:res.confidence,
              top_k:res.top_k,anchor_refs:res.anchor_refs||[],
@@ -904,13 +995,14 @@ async function doDraft(body){
       draft.label=selectedLabel; picked=-1;
       if(res.tier==="auto") maybeAha();
       showPrediction(draft); renderClasses(); render(); updateCommitBtn();
-      flash(toolHint());
+      flashDraftHint();
     }
-  }catch(err){ flash("分割失败: "+err.message); }
+  }catch(err){ flash("分割失败: "+err.message, "error"); }
   setBusy(false); cImg.style.cursor=cursorForTool();
 }
 function addDraft(){
-  if(!(draft&&draft.label)){ if(draft)flash("先给这个 mask 选一个类别", "warn"); return; }
+  if(!(draft&&draft.label)){ if(draft)flash("先给这个物体选一个类别（右侧点选或按 1–9）", "warn"); return; }
+  const doneLabel=draft.label;
   const bb=draft.bbox;
   masks.push({mask_png:draft.mask_png,bbox:bb,off:draft.off,contour:draft.contour,
     bA:bb?(bb[2]-bb[0])*(bb[3]-bb[1]):1e12,
@@ -918,7 +1010,7 @@ function addDraft(){
     anchor_refs:draft.anchor_refs||[],label:draft.label,source:"added"});
   draft=null; pts=[];
   recomputeOwnership(); render(); clearPrediction(); updateCommitBtn();
-  flash("已加入本图");
+  flash(`已完成「${doneLabel}」 · 继续标下一个，或按 Enter 保存本图`, "success");
 }
 function clearDraft(){ draft=null; pts=[]; picked=-1; if(img.naturalWidth)render(); clearPrediction(); updateCommitBtn(); flash(toolHint()); }
 
@@ -980,11 +1072,11 @@ async function runSegmentAll(){
     picked=-1; draft=null; pts=[]; recomputeOwnership(); render(); clearPrediction(); updateCommitBtn();
     if(kept.some(m=>m.tier==="auto")) maybeAha();
     const capped=res.limit_reached?` · 已到 ${res.max_masks||AUTO_MAX_MASKS} 上限`:``;
-    if(coldStart && shown) flash(`已分割 ${shown} 个候选；点一个并选择类别${capped}`, "success");
-    else if(shown) flash(`全分割完成: ${shown} 个物体${capped}`, "success");
-    else if((res.masks||[]).length) flash(`SAM 找到 ${res.masks.length} 个候选，但未匹配已有记忆；点目标补一个`, "warn");
-    else flash("SAM 未分割出候选；点目标补一个", "warn");
-  }catch(err){ flash(err.message==="500" ? "全分割失败：后端内部错误" : "全分割失败: "+err.message); }
+    if(coldStart && shown) flash(`分割出 ${shown} 个候选 · 点一个物体，再选类别${capped}`, "tip");
+    else if(shown) flash(`认出 ${shown} 个物体 · 检查标签，没问题就按 Enter 保存本图${capped}`, "success");
+    else if((res.masks||[]).length) flash(`找到 ${res.masks.length} 个候选，但记忆里没有相似物体 · 点目标手动补一个`, "warn");
+    else flash("没有分割出候选 · 点目标手动补一个", "warn");
+  }catch(err){ flash(err.message==="500" ? "全分割失败：后端内部错误" : "全分割失败: "+err.message, "error"); }
   setBusy(false); cImg.style.cursor=cursorForTool();
 }
 // 命中点所在的最小 mask 的下标(没有则 -1)。pickSetMaskAt 的纯查找版,供右键抠图用。
@@ -1000,8 +1092,8 @@ function pickSetMaskAt(x,y){
     showPrediction(masks[o.i]); renderClasses(); render(); updateCommitBtn();
     ensureAnchorRefs(masks[o.i]);
     flash(
-      masks[o.i].label ? `已选中「${masks[o.i].label}」` : "已选中候选；请选择类别",
-      masks[o.i].label ? "success" : "warn"
+      masks[o.i].label ? `已选中「${masks[o.i].label}」 · 类别不对就在右侧改` : "已选中候选 · 选一个类别（右侧点选或按 1–9）",
+      masks[o.i].label ? "tip" : "warn"
     );
     return true;
   }}
@@ -1019,9 +1111,9 @@ async function commitImage(){
   // accepted = predictions the user did NOT touch — not stored (redundant),
   // but reported so the real acceptance rate is measurable.
   const accepted=masks.filter(m=>!isDirty(m)&&m.pred_label).map(m=>({label:m.label??null,...meta(m)}));
-  if(!items.length&&!accepted.length){ flash("没有待入库物体"); return; }
-  setBusy(true,items.length?`入库 ${items.length} 个…`:"记录确认…",["commitImgBtn"]);
-  flash(items.length?`入库 ${items.length} 个…`:"记录确认…");
+  if(!items.length&&!accepted.length){ flash("本图还没有可保存的物体", "warn"); return; }
+  setBusy(true,items.length?`保存中 ${items.length} 个…`:"记录确认中…",["commitImgBtn"]);
+  flash(items.length?`保存中 ${items.length} 个…`:"记录确认中…", "busy");
   try{
     const res=await j("/api/commit_batch",{method:"POST",headers:{'Content-Type':'application/json'},
       body:JSON.stringify({image_id:DS[curIdx].id,items,accepted})});
@@ -1029,18 +1121,18 @@ async function commitImage(){
     masks=[]; draft=null; pts=[]; picked=-1; setOverlay=null; _owner=null;
     renderFilmstrip(); updateProgress(); clearPrediction(); updateCommitBtn();
     await refreshMemory();
-    flash(res.committed?`已入库 ${res.committed} 个 · 记忆 ${res.memory_size} 条`
-                       :"已记录确认");
+    flash(res.committed?`已保存 ${res.committed} 个物体到记忆（共 ${res.memory_size} 条） · 已切到下一张`
+                       :"本图结果已确认 · 已切到下一张", "success");
     setBusy(false);
     nextImage();
     return;
-  }catch(err){ flash("入库失败: "+err.message); }
+  }catch(err){ flash("保存失败: "+err.message, "error"); }
   setBusy(false);
 }
 function updateCommitBtn(){
   const dq=dirtyMasks();
   const n=dq.length+((draft&&draft.label)?1:0);
-  const b=document.getElementById("commitImgBtn"); b.textContent=`入库本图 (${n}) · Enter`; b.disabled=n===0;
+  const b=document.getElementById("commitImgBtn"); b.textContent=`保存本图 (${n}) · Enter`; b.disabled=n===0;
   document.getElementById("addDraftBtn").style.display=(draft&&draft.label)?"inline-flex":"none";
   renderObjList();
 }
@@ -1059,10 +1151,14 @@ function objThumb(m){
 }
 function renderObjList(){
   const host=document.getElementById("objlist"); if(!host) return;
-  host.innerHTML = masks.length ? masks.map((m,i)=>{
+  const legend = masks.length ? '<div class="legend"><span><i class="lf"></i>实心 = 待保存</span><span><i class="lo"></i>描边 = 已识别</span></div>' : "";
+  const shownIdx = masks.map((m,i)=>i).filter(i=>masks[i].label || i===picked);
+  const pending = masks.length - shownIdx.length;
+  const more = pending ? `<div class="morecand">另有 ${pending} 个未命名候选 · 在图上点灰色轮廓给它们选类别</div>` : "";
+  host.innerHTML = masks.length ? legend + shownIdx.map(i=>{ const m=masks[i];
     const col=colorFor(m.label), d=isDirty(m), th=objThumb(m);
-    const stateText=!m.label?"选类别":d?(m.source==="added"?"新增":"改过"):"已确认";
-    const stateTitle=!m.label?"选择类别后可入库":d?"待入库:新增或改过":"识别正确，不必重复入库";
+    const stateText=!m.label?"选类别":d?(m.source==="added"?"新增":(m.pred_label?"改过":"新标")):"已识别";
+    const stateTitle=!m.label?"选择类别后才能保存":d?"待保存：新增、新标或改过类别":"识别正确，无需重复保存";
     return `<div class="objrow ${i===picked?'sel':''}" data-i="${i}" title="点选改类 / ✕ 删除">
       ${th?`<img class="othumb" src="${th}">`:`<span class="othumb"></span>`}
       <span class="odot" style="background:${col}"></span>
@@ -1070,11 +1166,12 @@ function renderObjList(){
       <span class="ostate ${d||!m.label?'dirty':'clean'}" title="${stateTitle}">${stateText}</span>
       <button class="odel" data-i="${i}" title="从本图删除这个物体">✕</button>
     </div>`;
-  }).join("") : '<span class="muted">本图暂无物体</span>';
+  }).join("") + more : `<span class="muted">${tool==="all"?"全分割出的物体会列在这里":"在图上点选物体，标好后会列在这里"}</span>`;
   host.querySelectorAll(".objrow").forEach(r=>r.onclick=e=>{ if(e.target.classList.contains("odel"))return; selectObj(+r.dataset.i); });
   host.querySelectorAll(".odel").forEach(btn=>btn.onclick=e=>{ e.stopPropagation(); delObj(+btn.dataset.i); });
   const dirty=dirtyMasks().length+((draft&&draft.label)?1:0);
-  const oc=document.getElementById("objcount"); if(oc) oc.textContent = masks.length? `· 共 ${masks.length} 个${dirty?` · 待入库 ${dirty}`:''}` : "";
+  const named=masks.filter(m=>m.label).length;
+  const oc=document.getElementById("objcount"); if(oc) oc.textContent = masks.length? `· 已标 ${named} 个${dirty?` · 待保存 ${dirty}`:''}` : "";
 }
 function selectObj(i){
   if(i<0||i>=masks.length) return;
@@ -1082,8 +1179,8 @@ function selectObj(i){
   showPrediction(masks[i]); renderClasses(); render(); updateCommitBtn();
   ensureAnchorRefs(masks[i]);
   flash(
-    masks[i].label ? `已选中「${masks[i].label}」` : "已选中候选；请选择类别",
-    masks[i].label ? "success" : "warn"
+    masks[i].label ? `已选中「${masks[i].label}」 · 类别不对就在右侧改` : "已选中候选 · 选一个类别（右侧点选或按 1–9）",
+    masks[i].label ? "tip" : "warn"
   );
 }
 function delObj(i){
@@ -1091,7 +1188,7 @@ function delObj(i){
   masks.splice(i,1);
   if(picked===i) picked=-1; else if(picked>i) picked--;
   recomputeOwnership(); render(); clearPrediction(); updateCommitBtn();
-  flash("已删除一个物体");
+  flash("已从本图移除这个物体", "success");
 }
 
 /* ---------------- right panel ---------------- */
@@ -1101,25 +1198,27 @@ function showPrediction(o){
   renderAnchorList();
   if(!o){ box.innerHTML=`<span class="muted">${emptyPredictionText()}</span>`; return; }
   if(!o.label){
-    box.innerHTML='<span class="muted">未命名候选；选择类别后可入库</span>';
+    box.innerHTML='<span class="muted">未命名候选 · 选一个类别后才能保存</span>';
     return;
   }
   const tier=o.tier||"manual", tc=TIER_COLOR[tier]||"#888", lbl=o.label||"—";
-  const changed = o.pred_label!==undefined && o.label!==o.pred_label;
-  const state = o.source==="auto"&&!changed ? "已确认"
-              : changed ? "待入库"
-              : o.source==="added" ? "待入库"
-              : "草稿";
+  const isDraft=!o.source, added=o.source==="added";
+  const hadPred=!!o.pred_label, same=o.label===o.pred_label;
+  const note = added ? "手动新增" : !same ? (hadPred?`原预测「${o.pred_label}」`:"记忆未识别") : "";
+  const state = isDraft ? "未完成 · 按 Space 完成此物体"
+              : added ? "待保存"
+              : !same ? (hadPred?"已改类 · 待保存":"已选类别 · 待保存")
+              : "识别正确，无需保存";
   const tk=(o.top_k||[]).slice(0,5).map(([k,s])=>
     `<div class="bar"><div class="lbl">${esc(k)}</div><div class="track"><div class="fill" style="width:${Math.max(2,Math.round(100*Number(s)||0))}%;background:${colorFor(k)}"></div></div><div class="cnt">${fmtScore(s)}</div></div>`).join("");
   box.innerHTML=`
     <div class="predhead">
       <span class="chip" style="background:${colorFor(o.label)}">${esc(lbl)}</span>
-      <span class="tierbadge" style="background:${tc}" title="auto=可用 · suggest=需确认 · conf ${fmtScore(o.confidence)}">${esc(tier)}</span>
-      ${changed?`<span class="muted">· 原预测 ${esc(o.pred_label||'—')}</span>`:''}
+      ${hadPred&&same?`<span class="tierbadge" style="background:${tc}" title="自动：把握高，可直接用 · 建议：需要你确认 · 记忆匹配分 ${fmtScore(o.confidence)}">${esc(TIER_TEXT[tier]||tier)}</span>`:''}
+      ${note?`<span class="muted">${esc(note)}</span>`:''}
     </div>
-    <div class="muted" style="margin-bottom:8px">${state}</div>
-    <div>${tk||'<span class="muted">暂无可用记忆</span>'}</div>`;
+    <div class="predstate">${state}</div>
+    ${tk?`<div class="tklabel">记忆匹配度</div>${tk}`:'<span class="muted">记忆里还没有相似样本</span>'}`;
 }
 function clearPrediction(){ showPrediction(null); }
 async function ensureAnchorRefs(m){
@@ -1141,12 +1240,32 @@ function chooseLabel(c){
   if(draft){ draft.label=c; showPrediction(draft); }
   else if(picked>=0){ masks[picked].label=c; paintSetOverlay(); showPrediction(masks[picked]); }
   renderClasses(); render(); updateCommitBtn();
+  if(draft) flashDraftHint();
+  else if(picked>=0) flash(isDirty(masks[picked])?`已${masks[picked].pred_label?"改为":"标为"}「${c}」 · 按 Enter 保存本图`:`保持「${c}」`, "success");
 }
 function renderClasses(){
   const host=document.getElementById("classes");
   host.innerHTML=classes.map((c,i)=>
     `<button class="cls ${c===selectedLabel?'sel':''}" data-i="${i}" title="按 ${i+1} 选择"><span class="dot" style="background:${colorFor(c)}"></span>${esc(c)}</button>`).join("");
   host.querySelectorAll(".cls").forEach(b=>b.onclick=()=>chooseLabel(classes[+b.dataset.i]));
+  const hint=document.getElementById("clsHint");
+  if(hint) hint.textContent = recInfo ? `「${recInfo.title}」的推荐类别 · 不够用可在下方新增`
+                          : classes.length ? "" : "还没有类别 · 在下方输入第一个类别，或先选一个示例数据集";
+}
+function setRecommended(title, rec){
+  recInfo = rec&&rec.length ? {title, classes:[...rec]} : null;
+  classes = [...new Set([...(recInfo?recInfo.classes:[]), ...memClasses])];
+  selectedLabel = null;
+  try{ recInfo ? localStorage.setItem("snow_rec", JSON.stringify({uid:UID, ...recInfo}))
+               : localStorage.removeItem("snow_rec"); }catch(e){}
+  renderClasses();
+}
+function restoreRecommended(){
+  try{
+    const s=JSON.parse(localStorage.getItem("snow_rec")||"null");
+    if(s && s.uid===UID && Array.isArray(s.classes)){ recInfo={title:s.title, classes:s.classes};
+      classes=[...new Set([...s.classes, ...classes])]; }
+  }catch(e){}
 }
 function addClass(c){ c=(c||"").trim(); if(!c)return; if(!classes.includes(c))classes.push(c); chooseLabel(c); }
 
@@ -1172,7 +1291,7 @@ function selectImage(i){
   clearPrediction(); updateCommitBtn();
   document.getElementById("imgname").textContent=DS[i].name;
   img=new Image();
-  img.onload=()=>{cImg.width=img.naturalWidth;cImg.height=img.naturalHeight;render();if(tool==="all")runSegmentAll();};
+  img.onload=()=>{cImg.width=img.naturalWidth;cImg.height=img.naturalHeight;render();requestAnimationFrame(render);if(tool==="all")runSegmentAll();};
   img.onerror=()=>flash("图片加载失败");
   img.src=API+DS[i].url;
   renderFilmstrip(); flash(toolHint());
@@ -1196,7 +1315,7 @@ function anchorRoleMap(){
 function renderAnchorFilter(dist){
   const sel=document.getElementById("anchorFilter"); if(!sel) return;
   const cur=sel.value;
-  const opts=['<option value="">全部 anchor</option>'].concat(
+  const opts=['<option value="">全部类别</option>'].concat(
     Object.keys((dist&&dist.classes)||{}).sort().map(c=>`<option value="${esc(c)}">${esc(c)}</option>`)
   );
   sel.innerHTML=opts.join("");
@@ -1220,9 +1339,10 @@ function renderAnchorList(){
         <div class="asub">#${esc(id)} · ${esc(e.image_name||previewNote)}</div>
         ${roleText?`<span class="arole">${roleText}</span>`:`<span class="arole">${previewNote}</span>`}
       </div>
-      <button class="adel" data-id="${esc(id)}" data-label="${esc(e.label||'')}" title="删除这个 anchor">×</button>
+      <button class="adel" data-id="${esc(id)}" data-label="${esc(e.label||'')}" title="删除这条记忆样本">×</button>
     </div>`;
-  }).join("") : '<span class="muted">暂无 anchor</span>';
+  }).join("") : '';
+  const tools=document.getElementById("anchorTools"); if(tools) tools.style.display=(anchorEntries||[]).length?"flex":"none";
   host.querySelectorAll(".athumb img").forEach(img=>{
     img.onerror=()=>{
       const txt=img.dataset.fallback || "无预览";
@@ -1238,15 +1358,15 @@ function renderAnchorList(){
 }
 async function deleteAnchor(entryId,label){
   if(!entryId) return;
-  if(!confirm(`删除 anchor #${entryId}${label?`（${label}）`:""}？\n\n删除后会影响后续自动识别。`)) return;
+  if(!confirm(`删除记忆样本 #${entryId}${label?`（${label}）`:""}？\n\n删除后会影响后续自动识别。`)) return;
   try{
     const res=await j("/forget",{method:"POST",headers:{'Content-Type':'application/json'},
       body:JSON.stringify({entry_id:entryId})});
-    if(res.status!=="ok"){ flash("anchor 已不存在", "warn"); await refreshMemory(); return; }
+    if(res.status!=="ok"){ flash("这条记忆样本已不存在", "warn"); await refreshMemory(); return; }
     currentAnchorRefs=(currentAnchorRefs||[]).filter(r=>Number(r.entry_id)!==Number(entryId));
     await refreshMemory();
-    flash(masks.some(m=>m.source==="auto")?"已删除 anchor；重新全分割后生效":"已删除 anchor", masks.some(m=>m.source==="auto")?"warn":"success");
-  }catch(err){ flash("删除 anchor 失败: "+err.message, "error"); }
+    flash(masks.some(m=>m.source==="auto")?"已删除记忆样本 · 按 C 重新全分割后生效":"已删除记忆样本", masks.some(m=>m.source==="auto")?"warn":"success");
+  }catch(err){ flash("删除记忆样本失败: "+err.message, "error"); }
 }
 async function refreshMemory(){
   try{
@@ -1257,13 +1377,14 @@ async function refreshMemory(){
     ]);
     anchorEntries=mem.entries||[];
     memoryTotal=Number(dist.total||0);
-    Object.keys(dist.classes||{}).forEach(c=>{if(!classes.includes(c))classes.push(c);});
+    memClasses=Object.keys(dist.classes||{});
+    memClasses.forEach(c=>{if(!classes.includes(c))classes.push(c);});
     document.getElementById("memTotal").textContent=memoryTotal;
     const max=Math.max(1,...Object.values(dist.classes||{}));
     document.getElementById("memBars").innerHTML=
       Object.entries(dist.classes||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
         `<div class="bar"><div class="lbl">${esc(k)}</div><div class="track"><div class="fill" style="width:${100*v/max}%;background:${colorFor(k)}"></div></div><div class="cnt">${v}</div></div>`
-      ).join("")||'<span class="muted">暂无记忆</span>';
+      ).join("")||'<span class="muted">还没有记忆 · 保存第一张图后，这里会开始增长</span>';
     const status=document.getElementById("statusline");
     status.textContent=`已连接 · 记忆 ${dist.total||0}`;
     status.title=`${base(stats.dino_variant)} · SAM ${stats.sam_variant} · ${stats.memory_backend} · auto≥${stats.thresholds.auto_apply} suggest≥${stats.thresholds.suggest}`;
@@ -1342,6 +1463,7 @@ window.addEventListener("keydown",e=>{
   }
   else if(/^[1-9]$/.test(e.key)){ const i=+e.key-1; if(classes[i]) chooseLabel(classes[i]); }
 });
+let _rz=0; window.addEventListener("resize",()=>{ clearTimeout(_rz); _rz=setTimeout(()=>{ if(img.naturalWidth) render(); },120); });
 document.getElementById("toolPoint").onclick=()=>setTool("point");
 document.getElementById("toolBox").onclick=()=>setTool("box");
 document.getElementById("toolAll").onclick=()=>setTool("all");
@@ -1358,7 +1480,7 @@ document.getElementById("resetBtn").onclick=resetAll;
 async function reloadDataset(selectName){
   const d=await j("/api/dataset");
   DS=d.images||[];
-  document.getElementById("dsdir").textContent=DS.length ? `${DS.length} 张图片` : "暂无图片";
+  document.getElementById("dsdir").textContent=DS.length ? `共 ${DS.length} 张` : "暂无图片";
   updateProgress(); renderFilmstrip();
   let idx = selectName ? DS.findIndex(x=>x.id===selectName) : -1;
   if(idx<0){ idx=DS.findIndex(x=>!x.labeled); if(idx<0)idx=0; }
@@ -1409,25 +1531,34 @@ async function ensureSampleDatasets(){
   return sampleDatasets;
 }
 function closeSamplePicker(){ document.getElementById("sampleModal").classList.add("hidden"); }
+function sampleCard(ds){
+  const disabled=ds.available?"":" disabled";
+  const rec=(ds.recommended&&ds.recommended.length?ds.recommended:ds.classes)||[];
+  const chips=rec.map((c,i)=>`<span><i style="background:${recColor(i)}"></i>${esc(c)}</span>`).join("");
+  const count=Number(ds.image_count||0);
+  const previews=ds.available ? [0,1,2].map(i=>`<img src="${API}/api/sample_datasets/${encodeURIComponent(ds.slug)}/preview/${i}" alt="" loading="lazy">`).join("") : "";
+  const detail=esc(`${ds.source_name||""}${ds.license_note?" · "+ds.license_note:""}`);
+  const title=String(ds.title||"").replace(/^合成挑战：/,"");
+  const easy=ds.level==="入门";
+  return `<button class="sampleitem${ds.featured?' featured':''}${disabled}" data-slug="${esc(ds.slug)}" ${ds.available?"":"disabled"}>
+    <div class="samplepreview">${previews}${ds.featured?'<span class="srec">首次推荐</span>':''}</div>
+    <div class="sbody">
+      <div class="sampletop"><span class="sampletitle">${esc(title)}</span>${ds.level?`<span class="slevel${easy?' easy':''}">${esc(ds.level)}</span>`:''}</div>
+      <p class="samplesummary">${esc(ds.summary||"")}</p>
+      <div class="srecl">载入后的推荐类别</div>
+      <div class="sampleclasses">${chips}</div>
+    </div>
+    <div class="sfoot"><span title="${detail}">${count} 张 · ${ds.synthetic?"程序生成":esc(ds.source_name||"")}</span>
+      <span class="scta">${ds.available?"载入 →":"本机未安装"}</span></div>
+  </button>`;
+}
 function renderSampleDatasets(items){
   const host=document.getElementById("sampleGrid");
   if(!items.length){ host.innerHTML='<div class="muted">暂无可用示例数据集</div>'; return; }
-  const order={industrial:0,common:1};
-  host.innerHTML=items.map((ds,i)=>({...ds,_order:i})).sort((a,b)=>(order[a.group]??9)-(order[b.group]??9)||a._order-b._order).map(ds=>{
-    const tag=ds.synthetic?"合成工业":(ds.group==="industrial"?"工业":"常识");
-    const disabled=ds.available?"":" disabled";
-    const classes=(ds.classes||[]).slice(0,5).map(c=>`<span>${esc(c)}</span>`).join("");
-    const count=Number(ds.image_count||0);
-    const previews=ds.available ? [0,1,2].map(i=>`<img src="${API}/api/sample_datasets/${encodeURIComponent(ds.slug)}/preview/${i}" alt="${esc(ds.title)} 示例 ${i+1}" loading="lazy">`).join("") : "";
-    const detail=esc(`${ds.source_name||""}${ds.license_note?" · "+ds.license_note:""}`);
-    return `<button class="sampleitem${disabled}" data-slug="${esc(ds.slug)}" ${ds.available?"":"disabled"} title="${esc(ds.title)}">
-      ${previews?`<div class="samplepreview">${previews}</div>`:""}
-      <div class="sampletop"><span class="sampletag${ds.synthetic?' synthetic':''}">${tag}</span><span class="sampletitle">${esc(ds.title)}</span><span class="hq" title="${detail}">?</span></div>
-      <p class="samplesummary">${esc(ds.summary||"")}</p>
-      <div class="sampleclasses">${classes}</div>
-      <span class="samplesource">${ds.synthetic?"程序生成 · ":""}${count||0} 张${ds.available?"":" · 本机未安装"}</span>
-    </button>`;
-  }).join("");
+  const featured=items.filter(d=>d.featured), rest=items.filter(d=>!d.featured);
+  host.innerHTML=
+    (featured.length?`<div class="sgroup"><b>首次推荐</b><span>类别直观，最容易看出「越标越准」</span></div>${featured.map(sampleCard).join("")}`:"")+
+    (rest.length?`<div class="sgroup"><b>工业质检 · 合成挑战</b><span>程序生成的产线难题，缺陷更细、更难</span></div>${rest.map(sampleCard).join("")}`:"");
   host.querySelectorAll(".sampleitem").forEach(btn=>btn.onclick=()=>loadSamples(btn,btn.dataset.slug));
 }
 async function openSamplePicker(btn){
@@ -1446,14 +1577,14 @@ async function loadSamples(btn,datasetSlug){
   closeSamplePicker();
   setBusy(true,`载入 ${title} 中…`,["emptySample","pickSamples","sampleMain"]);
   if(btn) btn.disabled=true;
-  flash(`载入 ${title} 中…`);
+  flash(`载入「${title.replace(/^合成挑战：/,"")}」中…`);
   try{
     const r=await j("/api/load_samples",{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify({dataset:datasetSlug})});
-    (r.classes||[]).forEach(c=>{ if(!classes.includes(c))classes.push(c); });
-    renderClasses();
-    await reloadDataset();
     const loadedTitle=r.dataset_title||title;
-    flash(`已载入「${loadedTitle}」${r.copied} 张`);
+    const rec=(r.recommended&&r.recommended.length?r.recommended:r.classes)||[];
+    setRecommended(loadedTitle.replace(/^合成挑战：/,""), rec);
+    await reloadDataset();
+    flash(`已载入「${loadedTitle.replace(/^合成挑战：/,"")}」${r.copied} 张 · 推荐类别：${rec.join(" / ")}`, "success");
   }catch(err){ flash("载入示例失败: "+err.message); }
   if(btn) btn.disabled=false;
   setBusy(false);
@@ -1468,6 +1599,7 @@ async function resetAll(){
   try{
     const r=await j("/api/reset",{method:"POST"});
     classes=[...DEFAULT_CLASSES]; selectedLabel=null; ahaShown=false;
+    recInfo=null; memClasses=[]; try{localStorage.removeItem("snow_rec");}catch(e){}
     memoryTotal=0;
     masks=[]; draft=null; pts=[]; picked=-1; curIdx=-1;
     setTool(DEFAULT_TOOL);
@@ -1510,6 +1642,7 @@ async function init(){
   const af=document.getElementById("anchorFilter"); if(af)af.onchange=renderAnchorList;
   const ar=document.getElementById("anchorRefresh"); if(ar)ar.onclick=()=>refreshMemory();
   flash("连接服务中…");
+  restoreRecommended(); renderClasses();
   try{
     await refreshMemory();
     await reloadDataset();
